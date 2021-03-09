@@ -13,9 +13,14 @@ public class Mission extends Thread{
     public void run(){
         while (true){
             //System.out.println(destination);
-            
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            eventLog.writeFile("Mission still running!");
         }
-        
     }
 
     public String toString(){

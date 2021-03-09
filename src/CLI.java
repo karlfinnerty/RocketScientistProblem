@@ -14,7 +14,7 @@ public class CLI {
         Scanner userInput = new Scanner(System.in);   
         // Initialise output file
         EventLog eventLog = new EventLog();
-        eventLog.writeFile("Command centre initialising...\n");
+        eventLog.writeFile("Command centre initialising...");
 
         Controller theController = new Controller(eventLog);
         

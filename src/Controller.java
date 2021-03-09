@@ -32,7 +32,7 @@ class Controller {
         // Start mission thread
         newMission.start();
         System.out.println("\nNew mission to " + newMission.destination + " successfully made");
-        eventLog.writeFile("Mission '" +  newMission.name + "' to destination " + newMission.destination + " created.\n");
+        eventLog.writeFile("Mission '" +  newMission.name + "' to destination " + newMission.destination + " created.");
     }
 
     public DataTransmission createSoftwareUpdate(Mission mission){

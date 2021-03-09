@@ -27,7 +27,7 @@ public class EventLog {
             // Time will probably be replaced with our own version 
 
             Instant time = Instant.now();
-            output.write(time + ": " + str);
+            output.write(time + ": " + str + "\n");
             output.close();
           } catch (IOException e) {
             System.out.println("File error occurred.");
