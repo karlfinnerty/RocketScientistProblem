@@ -1,14 +1,18 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 
 class Controller {
     ArrayList<Mission> missions;
     EventLog eventLog;
+    Queue<DataTransmission> inbox;
 
     Controller(EventLog eventLog){
         this.missions = new ArrayList<Mission>();
         this.eventLog = eventLog;
+        this.inbox = new LinkedList<DataTransmission>(); 
     }   
 
     public void getMissions(){
@@ -42,5 +46,4 @@ class Controller {
         // Create new thread to burn CPU time? New class?
         return swUpdate;
     }
-    
 }

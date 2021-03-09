@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.time.Instant;
 
-public class EventLog {
+public class EventLog extends Thread{
     EventLog(){
         try {
             File output = new File("output.dat");
