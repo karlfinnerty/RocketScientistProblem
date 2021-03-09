@@ -16,7 +16,35 @@ public class CLI {
         EventLog eventLog = new EventLog();
         eventLog.writeFile("Command centre initialising...");
 
-        Controller theController = new Controller(eventLog);
+        Celestial sol = new Celestial(
+            "Sol", 
+            null, 
+            null, 
+            1.9885 * Math.pow(10, 30), 
+            696342.0, 
+            0.0, 
+            0.0);
+
+        Celestial earth = new Celestial(
+            "Earth", 
+            sol, 
+            new Spherical(new double[]{149600000, 0.0, 0.0}), 
+            5.98 * Math.pow(10, 24), 
+            6371.0, 
+            149600000, 
+            149600000);
+
+        Celestial mars = new Celestial(
+            "Mars", 
+            sol, 
+            new Spherical(new double[]{249200000, 0.0, 0.0}), 
+            6.4171 * Math.pow(10, 23), 
+            3389.0, 
+            249200000, 
+            249200000);
+
+        StarSystem solarSystem = new StarSystem(new Celestial[]{sol, earth, mars});
+        Controller theController = new Controller(eventLog, solarSystem);
         
         while (true) { 
             System.out.println("\nGreetings Commander, \n" 
