@@ -51,6 +51,10 @@ public class DataTransmission {
         return this.reciever;
     }
 
+    public String toString(){
+        return "DataTransmission of type" + this.getType() + " regarding " + this.getContent();
+       }
+
     private Integer getRandom(Integer min, Integer max){
         Random ran = new Random();
         Integer range = max - min + 1;

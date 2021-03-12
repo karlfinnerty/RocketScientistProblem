@@ -1,5 +1,3 @@
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue; 
 
 public class Mission extends Thread{
@@ -33,6 +31,7 @@ public class Mission extends Thread{
         this.eventLog = eventLog;
         this.inbox = new LinkedBlockingQueue<DataTransmission>(); ; 
         this.network = new Network(controller, this);
+        network.start();
     }
 
     public void run(){
@@ -40,7 +39,7 @@ public class Mission extends Thread{
             //System.out.println(destination);
             // Check inbox
             for (DataTransmission dataTransmission : inbox) {
-                eventLog.writeFile(dataTransmission + " recieved by controller." );        // Need tostring for dataTransmission
+                eventLog.writeFile(dataTransmission + " recieved by mission." );  
                 switch(dataTransmission.getType()){
                     case "telemetry":
                         this.checkTelemetry(dataTransmission);
@@ -49,10 +48,12 @@ public class Mission extends Thread{
                         this.implementSwUpdate(dataTransmission);
                         break; 
                 }
+                inbox.remove(dataTransmission);
 
             }
             DataTransmission report = new DataTransmission(this, "telemetry", "this is the content", "controller");
             sendDataTransmission(report);
+            
             try {
                 Thread.sleep(4000);
             } catch (InterruptedException e) {

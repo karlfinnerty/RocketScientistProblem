@@ -26,7 +26,7 @@ class Controller extends Thread{
         while (true){
             // Check inbox
             for (DataTransmission dataTransmission : inbox) {
-                eventLog.writeFile(dataTransmission.getContent() + " recieved by controller." );        // Need tostring for dataTransmission
+                eventLog.writeFile(dataTransmission + " recieved by controller." );     
                 switch(dataTransmission.getType()){
                     case "telemetry":
                         this.checkTelemetry(dataTransmission);

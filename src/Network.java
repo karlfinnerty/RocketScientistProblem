@@ -1,22 +1,30 @@
-import java.util.ArrayList;
+import java.util.concurrent.LinkedBlockingQueue; 
 
-public class Network{
+public class Network extends Thread{
 	Controller controller;
     Mission mission;
-    ArrayList<DataTransmission> buffer;
+    LinkedBlockingQueue<DataTransmission> buffer;
 
     Network(Controller controller, Mission mission){
         this.controller = controller;
         this.mission = mission;
-        this.buffer = new ArrayList<DataTransmission>();
+        this.buffer = new LinkedBlockingQueue<DataTransmission>(); ; 
     }
 
     public void postFiles(DataTransmission dataTransmission) {
-        // Add DT to buffer 
-        // New method...for item in buffer
-            // getConnection() - Figure out what connection it needs to be sent across on 
-            // sendFile
-        sendFile(dataTransmission);
+        buffer.add(dataTransmission);        
+    }
+
+    public void run() {
+        while (true){
+            // Is this a potential concurrency issue? Fairness maybe. 
+            for (DataTransmission dataTransmission : buffer) {
+                // getConnection() - Figure out what connection it needs to be sent across on 
+                // sendFile - realistically will be part of the Connection class/method
+                sendFile(dataTransmission);
+                buffer.remove(dataTransmission);
+            }
+        }
     }
 
     private void sendFile(DataTransmission dataTransmission) {       //send file will also be parameterised by Connection once those are set up 
