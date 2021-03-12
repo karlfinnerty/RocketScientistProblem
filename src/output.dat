@@ -1,14 +1,33 @@
-2021-03-12T14:05:31.084028Z: Command centre initialising...
-2021-03-12T14:05:37.649298600Z: Mission 'MissionOne' to destination name: Mars
+2021-03-12T15:59:43.245504600Z: Command centre initialising...
+2021-03-12T15:59:54.302296Z: Mission 'Mission1' to destination name: Mars
 orbiting: Sol
 mass: 6.417099999999999E23
 distance: 2.492E8 azimuth: 0.0 polar angle: 0.0 created.
-2021-03-12T14:05:39.111619800Z: this is the content recieved by controller.
-2021-03-12T14:05:41.635157800Z: Mission still running!
-2021-03-12T14:05:43.119666200Z: this is the content recieved by controller.
-2021-03-12T14:05:45.636560700Z: Mission still running!
-2021-03-12T14:05:47.133640500Z: this is the content recieved by controller.
-2021-03-12T14:05:49.651682Z: Mission still running!
-2021-03-12T14:05:51.146694300Z: this is the content recieved by controller.
-2021-03-12T14:05:53.658718500Z: Mission still running!
-2021-03-12T14:05:55.155924200Z: this is the content recieved by controller.
+2021-03-12T15:59:55.301776600Z: this is the content recieved by controller.
+2021-03-12T15:59:58.295865500Z: Mission still running!
+2021-03-12T15:59:59.306517200Z: this is the content recieved by controller.
+2021-03-12T16:00:02.297960700Z: Mission still running!
+2021-03-12T16:00:03.309313700Z: this is the content recieved by controller.
+2021-03-12T16:00:06.307266300Z: Mission still running!
+2021-03-12T16:00:07.317701700Z: this is the content recieved by controller.
+2021-03-12T16:00:10.309920900Z: Mission still running!
+2021-03-12T16:00:11.323107900Z: this is the content recieved by controller.
+2021-03-12T16:00:14.328698300Z: Mission still running!
+2021-03-12T16:00:14.928219500Z: Mission 'Mission2' to destination name: Earth
+orbiting: Sol
+mass: 5.98E24
+distance: 1.496E8 azimuth: 0.0 polar angle: 0.0 created.
+2021-03-12T16:00:15.339257300Z: this is the content recieved by controller.
+2021-03-12T16:00:15.339257300Z: this is the content recieved by controller.
+2021-03-12T16:00:18.330495600Z: Mission still running!
+2021-03-12T16:00:18.929512900Z: Mission still running!
+2021-03-12T16:00:19.344236700Z: this is the content recieved by controller.
+2021-03-12T16:00:19.344236700Z: this is the content recieved by controller.
+2021-03-12T16:00:22.332680500Z: Mission still running!
+2021-03-12T16:00:22.931233100Z: Mission still running!
+2021-03-12T16:00:23.357215300Z: this is the content recieved by controller.
+2021-03-12T16:00:23.358228400Z: this is the content recieved by controller.
+2021-03-12T16:00:26.340650Z: Mission still running!
+2021-03-12T16:00:26.940702700Z: Mission still running!
+2021-03-12T16:00:27.371166300Z: this is the content recieved by controller.
+2021-03-12T16:00:27.372172600Z: this is the content recieved by controller.

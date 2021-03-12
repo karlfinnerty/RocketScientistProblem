@@ -2,12 +2,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.concurrent.LinkedBlockingQueue;
 
 
 class Controller extends Thread{
     ArrayList<Mission> missions;
     EventLog eventLog;
-    Queue<DataTransmission> inbox;
+    LinkedBlockingQueue<DataTransmission> inbox;
     StarSystem solarSystem;
     Clock clock;
     int nextId = 0;
@@ -15,7 +16,7 @@ class Controller extends Thread{
     Controller(EventLog eventLog, StarSystem starSystem){
         this.missions = new ArrayList<Mission>();
         this.eventLog = eventLog;
-        this.inbox = new LinkedList<DataTransmission>(); 
+        this.inbox = new LinkedBlockingQueue<DataTransmission>();
         this.solarSystem = starSystem;
         this.clock = new Clock("clock");
     }   

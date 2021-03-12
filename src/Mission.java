@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue; 
 
 public class Mission extends Thread{
     String id;                  // Unique mission ID assigned by controller
@@ -14,7 +15,8 @@ public class Mission extends Thread{
                                 // The stage mission is currently in e.g. prelaunch, boost, transit, landing, exploration
     String stages[] = {"prelaunch", "boost", "transit", "landing", "exploration"};          
     EventLog eventLog;
-    Queue<DataTransmission> inbox;
+    LinkedBlockingQueue<DataTransmission>  inbox;
+    
     
     
 
@@ -29,7 +31,7 @@ public class Mission extends Thread{
         this.currentStage = 0;
         this.startTime = startTime;
         this.eventLog = eventLog;
-        this.inbox = new LinkedList<DataTransmission>(); 
+        this.inbox = new LinkedBlockingQueue<DataTransmission>(); ; 
         this.network = new Network(controller, this);
     }
 
