@@ -1,0 +1,3 @@
+DataTransmission has reciever attribute which must be added when creating the DT. 
+For example, components create telemetry DT and add "mission.getController()" as the reciever
+Prevents needing annoying Abstract class that Controller and Mission share (since they can't be extended twice and already extend Thread).

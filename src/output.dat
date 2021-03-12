@@ -1,0 +1,14 @@
+2021-03-12T14:05:31.084028Z: Command centre initialising...
+2021-03-12T14:05:37.649298600Z: Mission 'MissionOne' to destination name: Mars
+orbiting: Sol
+mass: 6.417099999999999E23
+distance: 2.492E8 azimuth: 0.0 polar angle: 0.0 created.
+2021-03-12T14:05:39.111619800Z: this is the content recieved by controller.
+2021-03-12T14:05:41.635157800Z: Mission still running!
+2021-03-12T14:05:43.119666200Z: this is the content recieved by controller.
+2021-03-12T14:05:45.636560700Z: Mission still running!
+2021-03-12T14:05:47.133640500Z: this is the content recieved by controller.
+2021-03-12T14:05:49.651682Z: Mission still running!
+2021-03-12T14:05:51.146694300Z: this is the content recieved by controller.
+2021-03-12T14:05:53.658718500Z: Mission still running!
+2021-03-12T14:05:55.155924200Z: this is the content recieved by controller.

@@ -5,11 +5,15 @@ public class DataTransmission {
     String type;
     Mission mission;
     Integer bitSize;
+    String reciever;
 
     // Types are "report", "telemetry", "update"
     
-    DataTransmission(Mission mission, String type, String content) {
+    DataTransmission(Mission mission, String type, String content, String reciever) {
         this.content = content;
+        this.type = type;
+        this.mission = mission;
+        this.reciever = reciever;
         setBitSize(type);
     }
 
@@ -41,6 +45,10 @@ public class DataTransmission {
 
     public String getContent() {
         return this.content;
+    }
+
+    public String getReciever(){
+        return this.reciever;
     }
 
     private Integer getRandom(Integer min, Integer max){

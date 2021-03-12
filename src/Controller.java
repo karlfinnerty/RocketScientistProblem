@@ -25,12 +25,12 @@ class Controller extends Thread{
         while (true){
             // Check inbox
             for (DataTransmission dataTransmission : inbox) {
-                eventLog.writeFile(dataTransmission + " recieved by controller." );        // Need tostring for dataTransmission
+                eventLog.writeFile(dataTransmission.getContent() + " recieved by controller." );        // Need tostring for dataTransmission
                 switch(dataTransmission.getType()){
                     case "telemetry":
-                        this.checkTelemtry(dataTransmission);
+                        this.checkTelemetry(dataTransmission);
                         break; 
-                    case "SOS_Report":
+                    case "report":
                         Mission mission = dataTransmission.getMission();
                         this.createSoftwareUpdate(mission);
                         break; 
@@ -38,11 +38,13 @@ class Controller extends Thread{
                         // Check if stage is changing 
                         String content = dataTransmission.getContent();
                         int i = content.indexOf(' ');
-                        if (content.substring(0, 2).equals("Stage change required")){
+                        if (content.substring(0, i).equals("Stage")){
                             this.changeMissionStage(dataTransmission);
                         }
                         break;
                 }
+                // Pop item from queue
+                inbox.remove(dataTransmission);
 
             }
             try {
@@ -59,7 +61,12 @@ class Controller extends Thread{
     private void changeMissionStage(DataTransmission dataTransmission) {
     }
 
-    private void checkTelemtry(DataTransmission dataTransmission) {
+    private void checkTelemetry(DataTransmission dataTransmission) {
+    }
+
+    private void sendDataTransmission(Mission mission, DataTransmission dataTransmission) {
+        Network network = mission.getNetwork();
+        network.postFiles(dataTransmission);
     }
 
     public void getMissions(){
@@ -83,6 +90,7 @@ class Controller extends Thread{
         String destination = userInput.nextLine();
 
         Mission newMission = new Mission(
+            this, 
             generateId(name),
             name,
             this.solarSystem.getSystemObjects().get("Earth"), 
@@ -100,9 +108,13 @@ class Controller extends Thread{
     public DataTransmission createSoftwareUpdate(Mission mission){
         String content = mission.name + " software upgrade ";
         String type = "upgrade";
-        DataTransmission swUpdate = new DataTransmission(mission, type, content);
+        DataTransmission swUpdate = new DataTransmission(mission, type, content, "mission");
         //............building sw update..........
         // Create new thread to burn CPU time? New class?
         return swUpdate;
+    }
+
+    public void recieveFile(DataTransmission dataTransmission){
+        this.inbox.add(dataTransmission);
     }
 }

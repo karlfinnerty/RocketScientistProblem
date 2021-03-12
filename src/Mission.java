@@ -1,9 +1,12 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Mission extends Thread{
     String id;                  // Unique mission ID assigned by controller
     String name;                // Mission alias given by user
-    //Controller controller;      // Controller that created mission
+    Controller controller;      // Controller that created mission
     Spacecraft spacecraft;      // Spacecraft assigned to mission by controller
-    Network [] networks;        // Networks assigned to mission by controller
+    Network network;        
     Celestial source;           // Source location of mission
     Celestial destination;      // Destination location of mission
     int currentStage;
@@ -11,11 +14,14 @@ public class Mission extends Thread{
                                 // The stage mission is currently in e.g. prelaunch, boost, transit, landing, exploration
     String stages[] = {"prelaunch", "boost", "transit", "landing", "exploration"};          
     EventLog eventLog;
+    Queue<DataTransmission> inbox;
+    
+    
 
-    Mission(String id, String name, Celestial source, Celestial destination, long startTime, EventLog eventLog){
+    Mission(Controller controller, String id, String name, Celestial source, Celestial destination, long startTime, EventLog eventLog){
         this.id = id;
         this.name = name;
-        //this.controller = controller;
+        this.controller = controller;
         //this.spacecraft = spacecraft;
         //this.networks = networks;
         this.source = source;
@@ -23,11 +29,28 @@ public class Mission extends Thread{
         this.currentStage = 0;
         this.startTime = startTime;
         this.eventLog = eventLog;
+        this.inbox = new LinkedList<DataTransmission>(); 
+        this.network = new Network(controller, this);
     }
 
     public void run(){
         while (true){
             //System.out.println(destination);
+            // Check inbox
+            for (DataTransmission dataTransmission : inbox) {
+                eventLog.writeFile(dataTransmission + " recieved by controller." );        // Need tostring for dataTransmission
+                switch(dataTransmission.getType()){
+                    case "telemetry":
+                        this.checkTelemetry(dataTransmission);
+                        break; 
+                    case "swUpdate":
+                        this.implementSwUpdate(dataTransmission);
+                        break; 
+                }
+
+            }
+            DataTransmission report = new DataTransmission(this, "telemetry", "this is the content", "controller");
+            sendDataTransmission(report);
             try {
                 Thread.sleep(4000);
             } catch (InterruptedException e) {
@@ -36,6 +59,26 @@ public class Mission extends Thread{
             }
             eventLog.writeFile("Mission still running!");
         }
+    }
+
+    private void implementSwUpdate(DataTransmission dataTransmission) {
+    }
+
+    private void checkTelemetry(DataTransmission dataTransmission) {
+        // Read telemetry content
+        String content = dataTransmission.getContent();
+        int i = content.indexOf(' ');
+        String keyword = content.substring(0, i);
+
+        if (keyword.equals("Stage")){           // "Stage change request accepted"
+            this.changeMissionStage(dataTransmission);
+
+        if (keyword.equals("Component")){        // "Component <name of component> seems OK"
+        }
+        }
+    }
+
+    private void changeMissionStage(DataTransmission dataTransmission) {
     }
 
     public String toString(){
@@ -53,6 +96,21 @@ public class Mission extends Thread{
     public void progressStage(){
         this.currentStage ++;
     }
+
+    public Network getNetwork() {
+        return this.network;
+    }
+
+    private void sendDataTransmission(DataTransmission dataTransmission) {      // Mission always sends data transmissions back to controller, no need for extra parameter. 
+        Network network = this.getNetwork();
+        network.postFiles(dataTransmission);
+    }
+
+    public void recieveFile(DataTransmission dataTransmission){
+        this.inbox.add(dataTransmission);
+    }
+
+    
 
     // Vector calculateTrajectory(){
 
