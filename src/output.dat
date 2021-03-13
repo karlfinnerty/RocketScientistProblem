@@ -1,0 +1,45 @@
+2021-03-13T10:31:53.738878200Z: Command centre initialising...
+2021-03-13T10:32:02.834736Z: Mission 'MissionOne' to destination name: Mars
+orbiting: Sol
+mass: 6.417099999999999E23
+distance: 2.492E8 azimuth: 0.0 polar angle: 0.0 created.
+2021-03-13T10:32:05.786730Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:06.834729700Z: MissionOne is still running!
+2021-03-13T10:32:09.801733Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:10.543730800Z: Mission 'MissionTwo' to destination name: Earth
+orbiting: Sol
+mass: 5.98E24
+distance: 1.496E8 azimuth: 0.0 polar angle: 0.0 created.
+2021-03-13T10:32:10.847732500Z: MissionOne is still running!
+2021-03-13T10:32:13.812732600Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:13.813736500Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:14.548731700Z: MissionTwo is still running!
+2021-03-13T10:32:14.890734300Z: MissionOne is still running!
+2021-03-13T10:32:17.821033800Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:17.829034200Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:18.569036900Z: MissionTwo is still running!
+2021-03-13T10:32:18.905034Z: MissionOne is still running!
+2021-03-13T10:32:21.839760300Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:21.840759900Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:22.578104500Z: MissionTwo is still running!
+2021-03-13T10:32:22.922005200Z: MissionOne is still running!
+2021-03-13T10:32:25.844070700Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:25.845073800Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:26.608007400Z: MissionTwo is still running!
+2021-03-13T10:32:26.971104400Z: MissionOne is still running!
+2021-03-13T10:32:29.859382800Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:29.859382800Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:30.624689Z: MissionTwo is still running!
+2021-03-13T10:32:30.986476300Z: MissionOne is still running!
+2021-03-13T10:32:33.870225200Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:33.880333700Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:34.648487800Z: MissionTwo is still running!
+2021-03-13T10:32:34.993517900Z: MissionOne is still running!
+2021-03-13T10:32:37.906321300Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:37.906321300Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:38.654253100Z: MissionTwo is still running!
+2021-03-13T10:32:39.035683300Z: MissionOne is still running!
+2021-03-13T10:32:41.911626400Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:41.916628600Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-13T10:32:42.683652100Z: MissionTwo is still running!
+2021-03-13T10:32:43.060130200Z: MissionOne is still running!

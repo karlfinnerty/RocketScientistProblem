@@ -40,7 +40,7 @@ public class Mission extends Thread{
             //System.out.println(destination);
             // Check inbox
             for (DataTransmission dataTransmission : inbox) {
-                eventLog.writeFile(dataTransmission + " recieved by mission." );  
+                eventLog.writeFile(dataTransmission + " recieved by " + this.name );  
                 switch(dataTransmission.getType()){
                     case "telemetry":
                         this.checkTelemetry(dataTransmission);
@@ -61,7 +61,7 @@ public class Mission extends Thread{
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            eventLog.writeFile("Mission still running!");
+            eventLog.writeFile(this.name + " is still running!");
         }
     }
 
