@@ -5,7 +5,8 @@ public class Mission extends Thread{
     String name;                // Mission alias given by user
     Controller controller;      // Controller that created mission
     Spacecraft spacecraft;      // Spacecraft assigned to mission by controller
-    Network network;        
+    Network toMissionNetwork;
+    Network fromMissionNetwork;        
     Celestial source;           // Source location of mission
     Celestial destination;      // Destination location of mission
     int currentStage;
@@ -15,23 +16,23 @@ public class Mission extends Thread{
     EventLog eventLog;
     LinkedBlockingQueue<DataTransmission>  inbox;
     
-    
-    
 
     Mission(Controller controller, String id, String name, Celestial source, Celestial destination, long startTime, EventLog eventLog){
         this.id = id;
         this.name = name;
         this.controller = controller;
         //this.spacecraft = spacecraft;
-        //this.networks = networks;
         this.source = source;
         this.destination = destination;
         this.currentStage = 0;
         this.startTime = startTime;
         this.eventLog = eventLog;
         this.inbox = new LinkedBlockingQueue<DataTransmission>(); ; 
-        this.network = new Network(controller, this);
-        network.start();
+        //mission creates two networks, one for connections from M to C, the other fro connections from C to M 
+        this.toMissionNetwork = new Network(controller, this);
+        toMissionNetwork.start();
+        this.fromMissionNetwork = new Network(controller, this);
+        fromMissionNetwork.start();
     }
 
     public void run(){
@@ -75,9 +76,9 @@ public class Mission extends Thread{
 
         if (keyword.equals("Stage")){           // "Stage change request accepted"
             this.changeMissionStage(dataTransmission);
-
-        if (keyword.equals("Component")){        // "Component <name of component> seems OK"
         }
+        if (keyword.equals("Component")){        // "Component <name of component> seems OK"
+        
         }
     }
 
@@ -100,12 +101,12 @@ public class Mission extends Thread{
         this.currentStage ++;
     }
 
-    public Network getNetwork() {
-        return this.network;
+    public Network getToMissionNetwork() {
+        return this.toMissionNetwork;
     }
 
     private void sendDataTransmission(DataTransmission dataTransmission) {      // Mission always sends data transmissions back to controller, no need for extra parameter. 
-        Network network = this.getNetwork();
+        Network network = this.fromMissionNetwork;
         network.postFiles(dataTransmission);
     }
 

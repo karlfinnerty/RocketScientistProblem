@@ -66,7 +66,7 @@ class Controller extends Thread{
     }
 
     private void sendDataTransmission(Mission mission, DataTransmission dataTransmission) {
-        Network network = mission.getNetwork();
+        Network network = mission.getToMissionNetwork();
         network.postFiles(dataTransmission);
     }
 
