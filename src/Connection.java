@@ -13,7 +13,6 @@ public class Connection {
 
     public void sendFile(DataTransmission dataTransmission) {       //send file will also be parameterised by Connection once those are set up 
         String reciever = dataTransmission.getReciever();
-        Object eventLog;
         if (reciever.equals("mission")) {
             this.mission.recieveFile(dataTransmission);
         }

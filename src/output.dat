@@ -1,35 +1,21 @@
-2021-03-14T10:53:24.858967Z: Command centre initialising...
-2021-03-14T10:53:31.812385600Z: Sending telemetry across network Low Bandwidth
-2021-03-14T10:53:31.838177700Z: Mission 'MissionOne' to destination name: Mars
+2021-03-14T14:30:01.373351600Z: Command centre initialising...
+2021-03-14T14:30:12.073218Z: MissionOne moved onto boost stage!
+2021-03-14T14:30:12.076221200Z: Sending telemetry across network Low Bandwidth
+2021-03-14T14:30:12.084385500Z: Mission 'MissionOne' to destination name: Mars
 orbiting: Sol
 mass: 6.417099999999999E23
 distance: 2.492E8 azimuth: 0.0 polar angle: 0.0 created.
-2021-03-14T10:53:32.883742400Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
-2021-03-14T10:53:35.823492900Z: MissionOne is still running!
-2021-03-14T10:53:35.824664700Z: Sending telemetry across network Low Bandwidth
-2021-03-14T10:53:36.893447200Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
-2021-03-14T10:53:37.601449500Z: Sending telemetry across network Low Bandwidth
-2021-03-14T10:53:37.625454900Z: Mission 'MissionTwo' to destination name: Earth
-orbiting: Sol
-mass: 5.98E24
-distance: 1.496E8 azimuth: 0.0 polar angle: 0.0 created.
-2021-03-14T10:53:39.843854900Z: MissionOne is still running!
-2021-03-14T10:53:39.843854900Z: Sending telemetry across network Low Bandwidth
-2021-03-14T10:53:40.900102500Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
-2021-03-14T10:53:40.900102500Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
-2021-03-14T10:53:41.603993200Z: MissionTwo is still running!
-2021-03-14T10:53:41.603993200Z: Sending telemetry across network Low Bandwidth
-2021-03-14T10:53:43.854999900Z: MissionOne is still running!
-2021-03-14T10:53:43.854999900Z: Sending telemetry across network Low Bandwidth
-2021-03-14T10:53:44.928884500Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
-2021-03-14T10:53:44.930916800Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
-2021-03-14T10:53:45.622845Z: MissionTwo is still running!
-2021-03-14T10:53:45.623847100Z: Sending telemetry across network Low Bandwidth
-2021-03-14T10:53:47.872024200Z: MissionOne is still running!
-2021-03-14T10:53:47.872024200Z: Sending telemetry across network Low Bandwidth
-2021-03-14T10:53:48.944912800Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
-2021-03-14T10:53:48.944912800Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
-2021-03-14T10:53:49.641614100Z: MissionTwo is still running!
-2021-03-14T10:53:49.642612100Z: Sending telemetry across network Low Bandwidth
-2021-03-14T10:53:51.880463800Z: MissionOne is still running!
-2021-03-14T10:53:51.880463800Z: Sending telemetry across network Low Bandwidth
+2021-03-14T14:30:13.416846500Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-14T14:30:16.077180300Z: MissionOne moved onto transit stage!
+2021-03-14T14:30:16.077180300Z: Sending telemetry across network Low Bandwidth
+2021-03-14T14:30:17.427077Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-14T14:30:20.079086200Z: MissionOne moved onto landing stage!
+2021-03-14T14:30:20.079086200Z: Sending telemetry across network Low Bandwidth
+2021-03-14T14:30:21.437939400Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-14T14:30:24.091603400Z: MissionOne moved onto exploration stage!
+2021-03-14T14:30:24.091603400Z: Sending telemetry across network Low Bandwidth
+2021-03-14T14:30:25.439652800Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-14T14:30:28.108928600Z: MissionOne moved onto exploration stage!
+2021-03-14T14:30:28.108928600Z: Sending telemetry across network Low Bandwidth
+2021-03-14T14:30:29.454015100Z: DataTransmission of typetelemetry regarding this is the content recieved by controller.
+2021-03-14T14:30:32.119536400Z: MissionOne has completed!
