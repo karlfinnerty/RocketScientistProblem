@@ -1,4 +1,5 @@
 import java.util.concurrent.LinkedBlockingQueue; 
+import java.lang.Math;
 
 public class Mission extends Thread{
     String id;                  // Unique mission ID assigned by controller
@@ -10,11 +11,16 @@ public class Mission extends Thread{
     Celestial source;           // Source location of mission
     Celestial destination;      // Destination location of mission
     int currentStage;
-    long startTime;             // The value of Clock (number of ticks passed) when stage goes from preflight -> boost
+    long startTime;             // The value of Clock (number of ticks passed) when mission is created
                                 // The stage mission is currently in e.g. prelaunch, boost, transit, landing, exploration
     String stages[] = {"prelaunch", "boost", "transit", "landing", "exploration"};          
     EventLog eventLog;
     LinkedBlockingQueue<DataTransmission>  inbox;
+
+    double G = 6.673 * Math.pow(10, -11);
+    double tof;                 // Time of flight for transit stage of mission
+    double finalPhaseAngle;    // Angle needed between source and destination at time of launch
+    double launchWindow;        // Time of launch i.e. number of seconds from start until angle between source and destination = finalPhaseAngle
     
 
     Mission(Controller controller, String id, String name, Celestial source, Celestial destination, long startTime, EventLog eventLog){
@@ -114,9 +120,52 @@ public class Mission extends Thread{
         this.inbox.add(dataTransmission);
     }
 
-    
+    // Calculate optimal transit to destination
+    // frame = arbitrary frame of reference where we want target to be in relation to source in degrees
+    public void calculateHohmannTransfer(double frame){
+        // Need orbital radius of source R1 (likely earth) and target R2. Also G times mass of sun -> GM
+        double r1 = this.source.getOrbitalRadius();
+        double r2 = this.destination.getOrbitalRadius();
+        double gm = this.source.getPrimary().getMass() * G;
 
-    // Vector calculateTrajectory(){
+        // Get orbital period of source and target to seconds
+        double p1 = this.source.getOrbitalPeriod();
+        double p2 = this.destination.getOrbitalPeriod();
 
-    // }
+        // Calculate semi major axis (distance from centre of ellipse to most distant edge) of transfer orbit: a(transfer) = (R1 + R2 ) / 2
+        double a = (r1 + r2) / 2;
+        // Calculate period of transfer orbit using formula: P(transfer) =√(4π²·a³/GM )
+        double p = Math.sqrt(((4*Math.pow(Math.PI, 2))*Math.pow(a, 3)) / (gm));
+
+        // Calculate velocity of source and target orbit
+        double v1 = (Math.PI * 2 * r1) / p1;
+        double v2 = (Math.PI * 2 * r2) / p2;
+
+        // Find v of transfer orbit at closest and furtherst point to sun (perihelion & aphelion): vp = (2π x a(transfer) / P(transfer) ) x √( (2a(transfer) / R1) - 1)
+        double vp = ((Math.PI * 2 * a)/p) * Math.sqrt(((a * 2) / r1) - 1);
+        double va = ((Math.PI * 2 * a)/p) * Math.sqrt(((a * 2) / r2) - 1);
+
+        // Calculate amount of delta v (change in velocity) needed to enter and exit transfer orbit. This will be used to calculate amount of fuel required.
+        double dv1 = vp - v1;
+        double dv2 = v2 - va;
+        
+        // Calculate time of flight (half the period of transfer orbit)
+        double tof = p/2;
+        this.tof = tof;
+
+        // Arbitrary frame of reference where we want target to be in relation to source in degrees
+        // Angular distance travelled by target during tof
+        double leadAngle = this.destination.getAngularVelocty() * tof;
+        double initAngle = this.source.getPosition().getAzimuth() - this.destination.getPosition().getAzimuth();
+        double finalPhaseAngle = initAngle - leadAngle;
+        double launchWindow = (finalPhaseAngle - initAngle)/(v2 - v1);
+
+        // If tof is 100 days, when is target 100 days from aphelion?
+        // How do we find out position of spacecraft at aphelion
+    } 
+
+    public void calculateLaunchWindow(double tof, double finalPhaseAngle){
+
+        return 
+    }
 }

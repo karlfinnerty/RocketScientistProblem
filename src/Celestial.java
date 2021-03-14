@@ -12,7 +12,7 @@ public class Celestial{
     double period;                  // orbital period in seconds i.e. amount of time it takes to do one revolution around primary
     double periapsis;               // au
     double apoapsis;                // au
-    double azimuthIncrement;        // The number of degrees the azimuth increases per second
+    double angularVelocity;        // The number of degrees the azimuth increases per second
     double G = 6.673 * Math.pow(10, -11);
 
     public Celestial(String name, Celestial primary, Spherical position, double mass, double radius, double periapsis, double apoapsis){
@@ -31,12 +31,12 @@ public class Celestial{
             this.position = new Spherical(new double[]{0.0, 0.0, 0.0});
             this.positionCartesian = new Vector(new double[]{0.0, 0.0, 0.0});
             this.period = 0.0;
-            this.azimuthIncrement = 0.0;
+            this.angularVelocity = 0.0;
 
         } else {
             this.position = position;
             this.period = coOrbit();
-            this.azimuthIncrement = 360.0 / this.period;
+            this.angularVelocity = 360.0 / this.period;
             // this.positionCartesian = position.toCartesian();
         }
            
@@ -44,6 +44,10 @@ public class Celestial{
 
     public String getName(){
         return this.name;
+    }
+
+    public Celestial getPrimary(){
+        return this.primary;
     }
 
     public Spherical getPosition(){
@@ -58,16 +62,20 @@ public class Celestial{
         return this.mass;
     }
 
+    public double getOrbitalRadius(){
+        return this.orbitalRadius;
+    }
+
     public double getOrbitalPeriod(){
         return this.period;
     }
 
-    public double getAzimuthIncrement(){
-        return this.azimuthIncrement;
+    public double getAngularVelocity(){
+        return this.angularVelocity;
     }
 
     public String toString(){
-        return "name: " + this.name + "\norbiting: " + this.primary.getName() + "\nmass: " + this.mass + "\n" + this.position;
+        return "name: " + this.name + "\norbiting: " + this.primary.getName() + "\nmass: " + this.mass + "\norbit: " + this.period/86400 + "\n" +this.position;
     }
 
 
