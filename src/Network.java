@@ -1,4 +1,4 @@
-import java.util.concurrent.LinkedBlockingQueue; 
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Network extends Thread{
 	Controller controller;
@@ -7,11 +7,13 @@ public class Network extends Thread{
     Connection highBWConnection;
     Connection lowBWConnection;
     Connection midBWConnection;
+    EventLog eventLog;
 
-    Network(Controller controller, Mission mission){
+    Network(Controller controller, Mission mission, EventLog eventLog){
         this.controller = controller;
         this.mission = mission;
         this.buffer = new LinkedBlockingQueue<DataTransmission>(); ; 
+        this.eventLog = eventLog;
         // Set up connections 
         this.lowBWConnection = new Connection(0.999, 20, controller, mission); //20bits
         this.midBWConnection = new Connection(0.9, 16000 , controller, mission); //2kb
@@ -26,12 +28,27 @@ public class Network extends Thread{
         while (true){
             // Is this a potential concurrency issue? Fairness maybe. 
             for (DataTransmission dataTransmission : buffer) {
-                // getConnection() - Figure out what connection it needs to be sent across on 
-                // sendFile - realistically will be part of the Connection class/method
-                this.highBWConnection.sendFile(dataTransmission);
+                // figure out what connection is needed 
+                Connection choosenConnection = chooseConnection(dataTransmission);
+                eventLog.writeFile("Sending " + dataTransmission.getType() + " across network " + choosenConnection);
+                choosenConnection.sendFile(dataTransmission);
                 buffer.remove(dataTransmission);
             }
         }
+    }
+
+    private Connection chooseConnection(DataTransmission dataTransmission) {
+        if (dataTransmission.getType().equals("telemetry")){
+            return this.lowBWConnection;
+        }
+        if (dataTransmission.getType().equals("report")){
+            return this.midBWConnection;
+        }
+        if (dataTransmission.getType().equals("update")){
+            return this.highBWConnection;
+        }
+        // Default
+        return highBWConnection;
     }
 
     

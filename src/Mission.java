@@ -29,9 +29,9 @@ public class Mission extends Thread{
         this.eventLog = eventLog;
         this.inbox = new LinkedBlockingQueue<DataTransmission>(); ; 
         //mission creates two networks, one for connections from M to C, the other fro connections from C to M 
-        this.toMissionNetwork = new Network(controller, this);
+        this.toMissionNetwork = new Network(controller, this, eventLog);
         toMissionNetwork.start();
-        this.fromMissionNetwork = new Network(controller, this);
+        this.fromMissionNetwork = new Network(controller, this, eventLog);
         fromMissionNetwork.start();
     }
 

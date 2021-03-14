@@ -13,11 +13,25 @@ public class Connection {
 
     public void sendFile(DataTransmission dataTransmission) {       //send file will also be parameterised by Connection once those are set up 
         String reciever = dataTransmission.getReciever();
+        Object eventLog;
         if (reciever.equals("mission")) {
             this.mission.recieveFile(dataTransmission);
         }
         if (reciever.equals("controller")) {
             this.controller.recieveFile(dataTransmission);
         }
+    }
+
+    public String toString(){
+        if (this.bandwidth == 20){
+            return "Low Bandwidth";
+        }
+        if (this.bandwidth == 16000){
+            return "Low Bandwidth";
+        }
+        if (this.bandwidth == 16000000){
+            return "Low Bandwidth";
+        }
+        return "Unknown";
     }
 }
