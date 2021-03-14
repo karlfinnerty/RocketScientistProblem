@@ -4,7 +4,7 @@ public class Stage {
     Mission mission;
     String stages[] = {"prelaunch", "boost", "transit", "landing", "exploration"};
     Integer currentStage;
-    Integer duration[] = {1000, 1000, 1000, 1000, 1000,};
+    Integer duration[] = {10, 10, 10, 10, 10,};
     Instant stageStartTime;
 
     Stage(Mission mission){

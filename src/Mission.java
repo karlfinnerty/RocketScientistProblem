@@ -71,7 +71,7 @@ public class Mission extends Thread{
 
     private void checkStageDuration() {
         Instant now = Instant.now();
-        long s = Duration.between(stage.getStartTime(), now).toNanos();
+        long s = Duration.between(stage.getStartTime(), now).toSeconds();
         if (s > stage.getDuration()){
             stage.incrementStage();
             eventLog.writeFile(name + " moved onto " + stage.getStage() + " stage!");
