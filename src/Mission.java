@@ -1,3 +1,5 @@
+import java.time.Duration;
+import java.time.Instant;
 import java.util.concurrent.LinkedBlockingQueue; 
 import java.lang.Math;
 
@@ -12,8 +14,9 @@ public class Mission extends Thread{
     Celestial destination;      // Destination location of mission
     int currentStage;
     long startTime;             // The value of Clock (number of ticks passed) when mission is created
+    long startTime;             // The value of Clock (number of ticks passed) when stage goes from preflight -> boost
                                 // The stage mission is currently in e.g. prelaunch, boost, transit, landing, exploration
-    String stages[] = {"prelaunch", "boost", "transit", "landing", "exploration"};          
+    Stage stage;          
     EventLog eventLog;
     LinkedBlockingQueue<DataTransmission>  inbox;
 
@@ -21,6 +24,8 @@ public class Mission extends Thread{
     double tof;                 // Time of flight for transit stage of mission
     double finalPhaseAngle;    // Angle needed between source and destination at time of launch
     double launchWindow;        // Time of launch i.e. number of seconds from start until angle between source and destination = finalPhaseAngle
+
+    Boolean missionComplete;
     
 
     Mission(Controller controller, String id, String name, Celestial source, Celestial destination, long startTime, EventLog eventLog){
@@ -30,19 +35,22 @@ public class Mission extends Thread{
         //this.spacecraft = spacecraft;
         this.source = source;
         this.destination = destination;
-        this.currentStage = 0;
+        this.stage = new Stage(this);
         this.startTime = startTime;
         this.eventLog = eventLog;
         this.inbox = new LinkedBlockingQueue<DataTransmission>(); ; 
         //mission creates two networks, one for connections from M to C, the other fro connections from C to M 
-        this.toMissionNetwork = new Network(controller, this);
+        this.toMissionNetwork = new Network(controller, this, eventLog);
         toMissionNetwork.start();
-        this.fromMissionNetwork = new Network(controller, this);
+        this.fromMissionNetwork = new Network(controller, this, eventLog);
         fromMissionNetwork.start();
+        this.missionComplete = false;
     }
 
     public void run(){
-        while (true){
+        while (missionComplete==false){
+            // check stage duration
+            checkStageDuration();
             //System.out.println(destination);
             // Check inbox
             for (DataTransmission dataTransmission : inbox) {
@@ -56,18 +64,26 @@ public class Mission extends Thread{
                         break; 
                 }
                 inbox.remove(dataTransmission);
-
             }
+
             DataTransmission report = new DataTransmission(this, "telemetry", "this is the content", "controller");
             sendDataTransmission(report);
             
             try {
                 Thread.sleep(4000);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            eventLog.writeFile(this.name + " is still running!");
+        }
+        eventLog.writeFile(this.name + " has completed!");
+    }
+
+    private void checkStageDuration() {
+        Instant now = Instant.now();
+        long s = Duration.between(stage.getStartTime(), now).toSeconds();
+        if (s > stage.getDuration()){
+            stage.incrementStage();
+            eventLog.writeFile(name + " moved onto " + stage.getStage() + " stage!");
         }
     }
 
@@ -100,18 +116,14 @@ public class Mission extends Thread{
     }
 
     public String getStage(){
-        return this.stages[this.currentStage];
-    }
-
-    public void progressStage(){
-        this.currentStage ++;
+        return this.stage.getStage();
     }
 
     public Network getToMissionNetwork() {
         return this.toMissionNetwork;
     }
 
-    private void sendDataTransmission(DataTransmission dataTransmission) {      // Mission always sends data transmissions back to controller, no need for extra parameter. 
+    private void sendDataTransmission(DataTransmission dataTransmission) {    
         Network network = this.fromMissionNetwork;
         network.postFiles(dataTransmission);
     }
@@ -152,6 +164,10 @@ public class Mission extends Thread{
         // Calculate time of flight (half the period of transfer orbit)
         double tof = p/2;
         this.tof = tof;
+
+    public void completeMission(){
+        missionComplete = true;
+    }
 
         // Arbitrary frame of reference where we want target to be in relation to source in degrees
         // Angular distance travelled by target during tof

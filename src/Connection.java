@@ -20,4 +20,17 @@ public class Connection {
             this.controller.recieveFile(dataTransmission);
         }
     }
+
+    public String toString(){
+        if (this.bandwidth == 20){
+            return "Low Bandwidth";
+        }
+        if (this.bandwidth == 16000){
+            return "Low Bandwidth";
+        }
+        if (this.bandwidth == 16000000){
+            return "Low Bandwidth";
+        }
+        return "Unknown";
+    }
 }

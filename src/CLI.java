@@ -46,6 +46,7 @@ public class CLI {
                                 + "     -'list missions' \n"
                                 + "     -'print event log'"
             );
+            
             String instr = userInput.nextLine();
 
             switch(instr){

@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -27,35 +25,36 @@ class Controller extends Thread{
             // Check inbox
             for (DataTransmission dataTransmission : inbox) {
                 eventLog.writeFile(dataTransmission + " recieved by controller." );     
-                switch(dataTransmission.getType()){
-                    case "telemetry":
-                        this.checkTelemetry(dataTransmission);
-                        break; 
-                    case "report":
-                        Mission mission = dataTransmission.getMission();
-                        this.createSoftwareUpdate(mission);
-                        break; 
-                    case "spacecraftUpdate":
-                        // Check if stage is changing 
-                        String content = dataTransmission.getContent();
-                        int i = content.indexOf(' ');
-                        if (content.substring(0, i).equals("Stage")){
-                            this.changeMissionStage(dataTransmission);
-                        }
-                        break;
-                }
+                readInboxItem(dataTransmission);
                 // Pop item from queue
                 inbox.remove(dataTransmission);
-
             }
             try {
                 Thread.sleep(4000);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            
+        }
+    }
 
+    // Decide what to do with inbox item
+    private void readInboxItem(DataTransmission dataTransmission) {
+        switch(dataTransmission.getType()){
+            case "telemetry":
+                this.checkTelemetry(dataTransmission);
+                break; 
+            case "report":
+                Mission mission = dataTransmission.getMission();
+                this.createSoftwareUpdate(mission);
+                break; 
+            case "spacecraftUpdate":
+                // Check if stage is changing 
+                String content = dataTransmission.getContent();
+                int i = content.indexOf(' ');
+                if (content.substring(0, i).equals("Stage")){
+                    this.changeMissionStage(dataTransmission);
+                }
+                break;
         }
     }
 
