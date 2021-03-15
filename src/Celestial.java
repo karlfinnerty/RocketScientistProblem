@@ -42,6 +42,19 @@ public class Celestial{
            
     }
 
+    public Celestial getCopy(){
+        Celestial copy = new Celestial(
+            this.name, 
+            this.primary, 
+            this.position, 
+            this.mass, 
+            this.radius, 
+            this.periapsis, 
+            this.apoapsis);
+
+        return copy;
+    }
+
     public String getName(){
         return this.name;
     }

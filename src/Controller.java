@@ -93,15 +93,15 @@ class Controller extends Thread{
             this, 
             generateId(name),
             name,
-            this.solarSystem.getSystemObjects().get("Earth"), 
-            this.solarSystem.getSystemObjects().get(destination), 
+            this.solarSystem.getSystemObjects().get("earth"), 
+            this.solarSystem.getSystemObjects().get(destination),
             clock.getTicks(), 
             eventLog);
         // Add to active missions
         this.missions.add(newMission);
         // Start mission thread
         newMission.start();
-        System.out.println("\nNew mission to\n" + newMission.destination + "\nInitiation successful");
+        System.out.println("\nNew mission to\n" + newMission.destination + "\nFlight Parameters\n" + newMission.tof + "\nInitiation successful");
         eventLog.writeFile("Mission '" +  newMission.name + "' to destination " + newMission.destination + " created.");
     }
 

@@ -2,6 +2,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.concurrent.LinkedBlockingQueue; 
 import java.lang.Math;
+import java.util.Random;
+
 
 public class Mission extends Thread{
     String id;                  // Unique mission ID assigned by controller
@@ -20,10 +22,10 @@ public class Mission extends Thread{
     LinkedBlockingQueue<DataTransmission>  inbox;
 
     double G = 6.673 * Math.pow(10, -11);
-    double tof;                 // Time of flight for transit stage of mission
-    double finalPhaseAngle;    // Angle needed between source and destination at time of launch
-    double launchWindow;        // Time of launch i.e. number of seconds from start until angle between source and destination = finalPhaseAngle
+    static double DAY = 86400.0;
 
+    double distance;            // Distance of transit stage
+    double tof;                 // Time of flight for transit stage of mission
     Boolean missionComplete;
     
 
@@ -31,9 +33,13 @@ public class Mission extends Thread{
         this.id = id;
         this.name = name;
         this.controller = controller;
-        //this.spacecraft = spacecraft;
         this.source = source;
         this.destination = destination;
+        this.spacecraft = new Spacecraft();
+        buildSpacecraft(this.spacecraft);
+        double flightParams[] = brachistochroneTrajectory(this.source, this.destination, this.spacecraft);
+        this.tof = flightParams[0];
+        this.distance = flightParams[1];
         this.stage = new Stage(this);
         this.startTime = startTime;
         this.eventLog = eventLog;
@@ -44,9 +50,52 @@ public class Mission extends Thread{
         this.fromMissionNetwork = new Network(controller, this, eventLog);
         fromMissionNetwork.start();
         this.missionComplete = false;
+
     }
 
+    // Build spacecraft with a variable number of components based on mission details
+    public void buildSpacecraft(Spacecraft spacecraft){
+        Random rand = new Random();
+        int thruster;
+
+        // Add thrusters
+        if(this.source == this.destination.getPrimary()){   // If destination is orbiting source (is a moon) assign 1-2 thrusters
+            thruster = 1 + rand.nextInt(1);    
+
+        } else {                                            // If destination is further away assign 2-4 thrusters
+            thruster = 2 + rand.nextInt(2); 
+        }
+        spacecraft.setAcceleration(thruster * 10.0);        // calculate max acceleration of craft assuming each thruster produces ~1G 
+
+        int control = (2 + rand.nextInt(2)) * 3;    // emulate triple modular redundency 6-12
+        int instrument = 1 + rand.nextInt(5);       // arbitrary number of scientific instruments, 1-6
+        int power = 2 + rand.nextInt(3);            // 1 power plant for spacecraft, 1 for rover, and a random number of backup plants
+
+        for(int i = 0; i < thruster; i++){
+            spacecraft.addComponent(new Component("thruster", i, 0));
+        }
+
+        for(int i = 0; i < control; i++){
+            spacecraft.addComponent(new Component("control", i, 0));
+        }
+
+        for(int i = 0; i < instrument; i++){
+            spacecraft.addComponent(new Component("instrument", i, 0));
+        }
+
+        for(int i = 0; i < power; i++){
+            spacecraft.addComponent(new Component("power", i, 0));
+        }
+
+    }
+
+    public void assignFuel(Spacecraft spacecraft){
+
+    }
+
+    // Do the mission stuff
     public void run(){
+        
         while (missionComplete==false){
             // check stage duration
             checkStageDuration();
@@ -107,7 +156,7 @@ public class Mission extends Thread{
     }
 
     public String toString(){
-        return this.id + " "+ getStage();
+        return this.id + " "+ getStage()+ " " + getTof() + "seconds";
        }
        
     public String getMissionId(){
@@ -116,6 +165,14 @@ public class Mission extends Thread{
 
     public String getStage(){
         return this.stage.getStage();
+    }
+
+    public double getTof(){
+        return this.tof;
+    }
+
+    public double getDistance(){
+        return this.distance;
     }
 
     public Network getToMissionNetwork() {
@@ -131,53 +188,33 @@ public class Mission extends Thread{
         this.inbox.add(dataTransmission);
     }
 
-    // Calculate optimal transit to destination
-    // frame = arbitrary frame of reference where we want target to be in relation to source in degrees
-    public void calculateHohmannTransfer(double frame){
-        // Need orbital radius of source R1 (likely earth) and target R2. Also G times mass of sun -> GM
-        double r1 = this.source.getOrbitalRadius();
-        double r2 = this.destination.getOrbitalRadius();
-        double gm = this.source.getPrimary().getMass() * G;
+    // To simplify trajectory calculations, we will assume spacecraft use future technology that allows for constant acceleration, making the journey happen in as little time as possible
+    public double [] brachistochroneTrajectory(Celestial source, Celestial destination, Spacecraft spacecraft){
+        // calulate time of flight
+        double maxA = 20.0; //spacecraft.getAcceleration();
 
-        // Get orbital period of source and target to seconds
-        double p1 = this.source.getOrbitalPeriod();
-        double p2 = this.destination.getOrbitalPeriod();
-
-        // Calculate semi major axis (distance from centre of ellipse to most distant edge) of transfer orbit: a(transfer) = (R1 + R2 ) / 2
-        double a = (r1 + r2) / 2;
-        // Calculate period of transfer orbit using formula: P(transfer) =√(4π²·a³/GM )
-        double p = Math.sqrt(((4*Math.pow(Math.PI, 2))*Math.pow(a, 3)) / (gm));
-
-        // Calculate velocity of source and target orbit
-        double v1 = (Math.PI * 2 * r1) / p1;
-        double v2 = (Math.PI * 2 * r2) / p2;
-
-        // Find v of transfer orbit at closest and furtherst point to sun (perihelion & aphelion): vp = (2π x a(transfer) / P(transfer) ) x √( (2a(transfer) / R1) - 1)
-        double vp = ((Math.PI * 2 * a)/p) * Math.sqrt(((a * 2) / r1) - 1);
-        double va = ((Math.PI * 2 * a)/p) * Math.sqrt(((a * 2) / r2) - 1);
-
-        // Calculate amount of delta v (change in velocity) needed to enter and exit transfer orbit. This will be used to calculate amount of fuel required.
-        double dv1 = vp - v1;
-        double dv2 = v2 - va;
+        // Find optimal transit parameters (d = at^2/2)
+        Celestial sourceCopy = source.getCopy();
+        Celestial destCopy = destination.getCopy();
+        double d =0 ;
+        int t = 0;
+        int timeOut = 1000000;  // if transit stage of mission cannot be completed within this time, 
+        while(t < timeOut){
+            destCopy.incrementAz(destCopy.getAngularVelocity());
+            d = sourceCopy.slDistance(destCopy);
+            if(d <= (maxA*Math.pow(t, 2))){ // Since acceleration = deceleration, simplify equation to d = at^2/2
+                //System.out.println("Trajectory found...");
+                return new double[]{t, d};
+            }
+            t++;
+        }
+        //System.out.println("Trajectory not found...");
+        return new double[]{0, 0};
         
-        // Calculate time of flight (half the period of transfer orbit)
-        double tof = p/2;
-        this.tof = tof;
-
-        // Arbitrary frame of reference where we want target to be in relation to source in degrees
-        // Angular distance travelled by target during tof
-        double leadAngle = this.destination.getAngularVelocity() * tof;
-        double initAngle = this.source.getPosition().getAzimuth() - this.destination.getPosition().getAzimuth();
-        double finalPhaseAngle = initAngle - leadAngle;
-        double launchWindow = (finalPhaseAngle - initAngle)/(v2 - v1);
-
-        // If tof is 100 days, when is target 100 days from aphelion?
-        // How do we find out position of spacecraft at aphelion
-    
     }
 
     public void completeMission(){
-        missionComplete = true;
+        this.missionComplete = true;
     }
 
         
