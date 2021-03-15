@@ -11,6 +11,10 @@ public class CLI {
         this.solarSystem = starSystem;
     }
 
+    public boolean validDestination(String dest){
+        return this.solarSystem.getSystemObjects().containsKey(dest);
+    }
+
     public void run() {
 
         Scanner userInput = new Scanner(System.in);   
@@ -36,7 +40,21 @@ public class CLI {
                     break; 
                 case "nm":
                 case "new mission":
-                    theController.createMission(userInput);   
+                    System.out.println("\nEnter mission name:");
+                    String name = userInput.nextLine().toLowerCase();
+                    String destination = "none";
+                    while(!validDestination(destination) && !destination.equals("cancel")){
+                        System.out.println("\nEnter mission destination:");
+                        destination = userInput.nextLine().toLowerCase();
+                        if(validDestination(destination)){
+                            theController.createMission(name, destination);
+                        }else if(destination.equals("cancel")){
+                            System.out.println("Mission aborted.");
+                        }else {
+                            System.out.println("Invalid destination.");
+                            System.out.println("Choose from the following: mars, neptune, cancel");
+                        }
+                    }
                     break; 
                 case "ls":
                 case "list missions":

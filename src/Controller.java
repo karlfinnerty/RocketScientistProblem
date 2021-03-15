@@ -93,13 +93,8 @@ class Controller extends Thread{
         return name + "-" + nextId;
     }
 
-    public void createMission(Scanner userInput){
+    public void createMission(String name, String destination){
         // Get mission details from commander (user)
-        System.out.println("\nEnter mission name:");
-        String name = userInput.nextLine();  
-
-        System.out.println("\nEnter mission destination:");
-        String destination = userInput.nextLine();
 
         Mission newMission = new Mission(
             this, 

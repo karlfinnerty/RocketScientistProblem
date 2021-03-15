@@ -29,3 +29,47 @@ distance: 2.492E8 azimuth: 0.0 polar angle: 0.0 created.
 2021-03-15T12:39:03.719588100Z: MissionTwo moved onto boost stage!
 2021-03-15T12:39:06.567379200Z: Sending telemetry across network Low Bandwidth
 2021-03-15T12:39:07.729577Z: Sending telemetry across network Low Bandwidth
+2021-03-15T18:47:43.805570300Z: Command centre initialising...
+2021-03-15T18:47:50.274217400Z: Mission 'test' to destination name: mars
+orbiting: sol
+mass: 6.417099999999999E23
+orbit: 690.1945981405844
+distance: 2.27943824E8 azimuth: 91.29995149643781 polar angle: 0.0 created.
+2021-03-15T18:47:54.288898600Z: Sending telemetry across network Low Bandwidth
+2021-03-15T18:47:55.851061Z: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+2021-03-15T18:47:55.851061Z: Sending telemetry across network Low Bandwidth
+2021-03-15T18:47:55.851061Z: Stage change request from Thread-2 accepted
+2021-03-15T18:47:58.303578200Z: DataTransmission of typetelemetry regarding Stage change request accepted recieved by test
+2021-03-15T18:47:58.303578200Z: test moved onto boost stage!
+2021-03-15T18:48:02.311179100Z: Sending telemetry across network Low Bandwidth
+2021-03-15T18:48:03.873340700Z: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+2021-03-15T18:48:03.874400500Z: Stage change request from Thread-2 accepted
+2021-03-15T18:48:03.874832500Z: Sending telemetry across network Low Bandwidth
+2021-03-15T18:48:06.311758700Z: DataTransmission of typetelemetry regarding Stage change request accepted recieved by test
+2021-03-15T18:48:06.311758700Z: test moved onto transit stage!
+2021-03-15T18:55:56.438328700Z: Command centre initialising...
+2021-03-15T18:56:22.243753500Z: Mission 'test' to destination name: mars
+orbiting: sol
+mass: 6.417099999999999E23
+orbit: 690.1945981405844
+distance: 2.27943824E8 azimuth: 91.29995149643781 polar angle: 0.0 created.
+2021-03-15T18:56:30.027790700Z: Command centre initialising...
+2021-03-15T18:57:03.817956Z: Mission 'mars' to destination name: neptune
+orbiting: sol
+mass: 1.0240000000000001E26
+orbit: 60246.27364856528
+distance: 4.498396441E9 azimuth: 0.00105421457882136 polar angle: 0.0 created.
+2021-03-15T18:57:07.829621200Z: Sending telemetry across network Low Bandwidth
+2021-03-15T18:57:10.125987800Z: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+2021-03-15T18:57:10.125987800Z: Sending telemetry across network Low Bandwidth
+2021-03-15T18:57:10.125987800Z: Stage change request from Thread-2 accepted
+2021-03-15T18:57:11.838274900Z: DataTransmission of typetelemetry regarding Stage change request accepted recieved by mars
+2021-03-15T18:57:11.838274900Z: mars moved onto boost stage!
+2021-03-15T18:57:15.851247700Z: Sending telemetry across network Low Bandwidth
+2021-03-15T18:57:18.147592300Z: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+2021-03-15T18:57:18.148816300Z: Stage change request from Thread-2 accepted
+2021-03-15T18:57:18.149283900Z: Sending telemetry across network Low Bandwidth
+2021-03-15T18:57:19.852007900Z: DataTransmission of typetelemetry regarding Stage change request accepted recieved by mars
+2021-03-15T18:57:19.852007900Z: mars moved onto transit stage!
+2021-03-15T18:58:15.483459600Z: Command centre initialising...
+2021-03-15T19:00:08.035834300Z: Command centre initialising...
