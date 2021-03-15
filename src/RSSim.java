@@ -68,8 +68,8 @@ public class RSSim{
 		System.out.println();
 
 		for(int ticks=0; ticks<175; ticks++){
-			earth.incrementAz(earth.getAzimuthIncrement()*DAY);
-			mars.incrementAz(mars.getAzimuthIncrement()*DAY);
+			earth.incrementAz(earth.getAngularVelocity()*DAY);
+			mars.incrementAz(mars.getAngularVelocity()*DAY);
 		}
 
 		System.out.println("Earth stats at day 175: ");
