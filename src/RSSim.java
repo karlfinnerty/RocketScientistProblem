@@ -58,36 +58,36 @@ public class RSSim{
 
 		StarSystem solarSystem = new StarSystem(new Celestial[]{sol, earth, mars, neptune}, clock);
 
-		// Do tests
-		System.out.println("!!!!TEST START!!!!");
-		System.out.println(earth.slDistance(sol));
-		System.out.print("Earth speed(m/s): ");
-		System.out.println(earth.coVelocity());
-		System.out.print("Earth orbital period(days): ");
-		System.out.println(earth.getOrbitalPeriod()/DAY);
-		System.out.println();
-		System.out.println("Satellite test: ");
-		System.out.println(satellite.coVelocity());
-		System.out.println(satellite.coOrbit());
-		System.out.println();
-		System.out.println("Earth stats at day 1: ");
-		System.out.println(earth);
-		System.out.println("Mars stats at day 1: ");
-		System.out.println(mars);
-		System.out.println();
+		// // Do tests
+		// System.out.println("!!!!TEST START!!!!");
+		// System.out.println(earth.slDistance(sol));
+		// System.out.print("Earth speed(m/s): ");
+		// System.out.println(earth.coVelocity());
+		// System.out.print("Earth orbital period(days): ");
+		// System.out.println(earth.getOrbitalPeriod()/DAY);
+		// System.out.println();
+		// System.out.println("Satellite test: ");
+		// System.out.println(satellite.coVelocity());
+		// System.out.println(satellite.coOrbit());
+		// System.out.println();
+		// System.out.println("Earth stats at day 1: ");
+		// System.out.println(earth);
+		// System.out.println("Mars stats at day 1: ");
+		// System.out.println(mars);
+		// System.out.println();
 
-		for(int ticks=0; ticks<175; ticks++){
-			earth.incrementAz(earth.getAngularVelocity()*DAY);
-			//mars.incrementAz(mars.getAngularVelocity()*DAY);
-		}
-		mars.incrementAz(mars.getAngularVelocity()*DAY*175);
+		// for(int ticks=0; ticks<175; ticks++){
+		// 	earth.incrementAz(earth.getAngularVelocity()*DAY);
+		// 	//mars.incrementAz(mars.getAngularVelocity()*DAY);
+		// }
+		// mars.incrementAz(mars.getAngularVelocity()*DAY*175);
 
-		System.out.println("Earth stats at day 175: ");
-		System.out.println(earth);
-		System.out.println("Mars stats at day 175: ");
-		System.out.println(mars);
-		System.out.println("!!!!TEST FINISH!!!!");
-		System.out.println();
+		// System.out.println("Earth stats at day 175: ");
+		// System.out.println(earth);
+		// System.out.println("Mars stats at day 175: ");
+		// System.out.println(mars);
+		// System.out.println("!!!!TEST FINISH!!!!");
+		// System.out.println();
 
 		// Initialise CLI
 		EventLog eventLog = new EventLog();

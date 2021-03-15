@@ -99,7 +99,7 @@ class Controller extends Thread{
             name,
             this.solarSystem.getSystemObjects().get("earth"), 
             this.solarSystem.getSystemObjects().get(destination),
-            clock.getTicks(), 
+            clock, 
             eventLog);
         // Add to active missions
         this.missions.add(newMission);

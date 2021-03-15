@@ -14,6 +14,7 @@ public class Mission extends Thread{
     Network fromMissionNetwork;        
     Celestial source;           // Source location of mission
     Celestial destination;      // Destination location of mission
+    Clock clock;                // 
     long startTime;             // The value of Clock (number of ticks passed) when mission is created
                                 // The stage mission is currently in e.g. prelaunch, boost, transit, landing, exploration
     Stage stage;          
@@ -28,19 +29,20 @@ public class Mission extends Thread{
     Boolean missionComplete;
     
 
-    Mission(Controller controller, String id, String name, Celestial source, Celestial destination, long startTime, EventLog eventLog){
+    Mission(Controller controller, String id, String name, Celestial source, Celestial destination, Clock clock, EventLog eventLog){
         this.id = id;
         this.name = name;
         this.controller = controller;
         this.source = source;
         this.destination = destination;
+        this.clock = clock;
         this.spacecraft = new Spacecraft();
         buildSpacecraft(this.spacecraft);
         double flightParams[] = brachistochroneTrajectory(this.source, this.destination, this.spacecraft);
         this.tof = flightParams[0];
         this.distance = flightParams[1];
         this.stage = new Stage(this);
-        this.startTime = startTime;
+        this.startTime = clock.getTicks();
         this.eventLog = eventLog;
         this.inbox = new LinkedBlockingQueue<DataTransmission>(); ; 
         //mission creates two networks, one for connections from M to C, the other fro connections from C to M 
@@ -114,18 +116,18 @@ public class Mission extends Thread{
 
             // check stage duration
             checkStageDuration();     
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            // try {
+            //     Thread.sleep(4000);
+            // } catch (InterruptedException e) {
+            //     e.printStackTrace();
+            // }
         }
         eventLog.writeFile(this.name + " has completed!");
     }
 
     private void checkStageDuration() {
-        Instant now = Instant.now();
-        long s = Duration.between(stage.getStartTime(), now).toSeconds();
+        long now = this.clock.getTicks();
+        long s = now - stage.getStartTime();
         if (s > stage.getDuration()){
             // request stage change 
             DataTransmission report = new DataTransmission(this, "telemetry", "Stage change request", "controller");
@@ -156,7 +158,7 @@ public class Mission extends Thread{
     }
 
     public String toString(){
-        return this.id + " "+ getStage()+ " " + getTof() + "seconds";
+        return this.id + " "+ getStage()+ " " +  "elapsed:" + (this.clock.getTicks() - this.startTime);
        }
        
     public String getMissionId(){
