@@ -14,7 +14,6 @@ public class Mission extends Thread{
     Celestial destination;      // Destination location of mission
     int currentStage;
     long startTime;             // The value of Clock (number of ticks passed) when mission is created
-    long startTime;             // The value of Clock (number of ticks passed) when stage goes from preflight -> boost
                                 // The stage mission is currently in e.g. prelaunch, boost, transit, landing, exploration
     Stage stage;          
     EventLog eventLog;
@@ -165,23 +164,26 @@ public class Mission extends Thread{
         double tof = p/2;
         this.tof = tof;
 
-    public void completeMission(){
-        missionComplete = true;
-    }
-
         // Arbitrary frame of reference where we want target to be in relation to source in degrees
         // Angular distance travelled by target during tof
-        double leadAngle = this.destination.getAngularVelocty() * tof;
+        double leadAngle = this.destination.getAngularVelocity() * tof;
         double initAngle = this.source.getPosition().getAzimuth() - this.destination.getPosition().getAzimuth();
         double finalPhaseAngle = initAngle - leadAngle;
         double launchWindow = (finalPhaseAngle - initAngle)/(v2 - v1);
 
         // If tof is 100 days, when is target 100 days from aphelion?
         // How do we find out position of spacecraft at aphelion
-    } 
-
-    public void calculateLaunchWindow(double tof, double finalPhaseAngle){
-
-        return 
+    
     }
+
+    public void completeMission(){
+        missionComplete = true;
+    }
+
+        
+
+    // public void calculateLaunchWindow(double tof, double finalPhaseAngle){
+
+    //     return 
+    // }
 }
