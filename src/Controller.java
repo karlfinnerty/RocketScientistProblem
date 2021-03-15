@@ -11,12 +11,12 @@ class Controller extends Thread{
     Clock clock;
     int nextId = 0;
 
-    Controller(EventLog eventLog, StarSystem starSystem){
+    Controller(EventLog eventLog, StarSystem starSystem, Clock clock){
         this.missions = new ArrayList<Mission>();
         this.eventLog = eventLog;
         this.inbox = new LinkedBlockingQueue<DataTransmission>();
         this.solarSystem = starSystem;
-        this.clock = new Clock("clock");
+        this.clock = clock;
     }   
 
     public void run(){
@@ -29,11 +29,8 @@ class Controller extends Thread{
                 // Pop item from queue
                 inbox.remove(dataTransmission);
             }
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            clock.increment();
+            this.solarSystem.updatePositions();
         }
     }
 

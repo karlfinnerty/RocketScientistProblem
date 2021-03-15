@@ -35,8 +35,8 @@ public class CLI {
 
             switch(instr){
                 case "t":
-                case "test":
-                    System.out.println("TEST");
+                case "time":
+                    System.out.println(this.theController.clock);
                     break; 
                 case "nm":
                 case "new mission":

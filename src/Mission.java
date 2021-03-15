@@ -14,7 +14,6 @@ public class Mission extends Thread{
     Network fromMissionNetwork;        
     Celestial source;           // Source location of mission
     Celestial destination;      // Destination location of mission
-    int currentStage;
     long startTime;             // The value of Clock (number of ticks passed) when mission is created
                                 // The stage mission is currently in e.g. prelaunch, boost, transit, landing, exploration
     Stage stage;          

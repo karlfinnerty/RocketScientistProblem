@@ -134,4 +134,8 @@ public class Celestial{
     public void incrementAz(double value){
         this.position.setAzimuth((this.position.getAzimuth() + value) % 360);
     }
+
+    public void updatePosition(long seconds){
+        incrementAz(this.angularVelocity*seconds);
+    }
 }

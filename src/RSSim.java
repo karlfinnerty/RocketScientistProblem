@@ -17,7 +17,7 @@ public class RSSim{
 	static double DAY = 86400.0;
 
 	public static void main(String[] args) {
-		Clock clock = new Clock("universe");
+		Clock clock = new Clock("simulation");
 		Celestial sol = new Celestial(
 			"sol", 
 			null, 
@@ -56,7 +56,7 @@ public class RSSim{
 			4498396441.0, 
 			4498396441.0);
 
-		StarSystem solarSystem = new StarSystem(new Celestial[]{sol, earth, mars, neptune});
+		StarSystem solarSystem = new StarSystem(new Celestial[]{sol, earth, mars, neptune}, clock);
 
 		// Do tests
 		System.out.println("!!!!TEST START!!!!");
@@ -78,8 +78,9 @@ public class RSSim{
 
 		for(int ticks=0; ticks<175; ticks++){
 			earth.incrementAz(earth.getAngularVelocity()*DAY);
-			mars.incrementAz(mars.getAngularVelocity()*DAY);
+			//mars.incrementAz(mars.getAngularVelocity()*DAY);
 		}
+		mars.incrementAz(mars.getAngularVelocity()*DAY*175);
 
 		System.out.println("Earth stats at day 175: ");
 		System.out.println(earth);
@@ -90,7 +91,7 @@ public class RSSim{
 
 		// Initialise CLI
 		EventLog eventLog = new EventLog();
-    	Controller theController = new Controller(eventLog, solarSystem);
+    	Controller theController = new Controller(eventLog, solarSystem, clock);
 		CLI simUI = new CLI(theController, eventLog, solarSystem);
 		simUI.run();
 	}

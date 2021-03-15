@@ -8,6 +8,10 @@ public class Clock{
 		this.ticks = 0;
 	}
 
+	public String toString(){
+        return this.ticks + " tu passed";
+       }
+
 	public String getId(){
 		return this.id;
 	}
