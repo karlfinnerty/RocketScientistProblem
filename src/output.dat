@@ -1,0 +1,31 @@
+2021-03-15T12:38:33.838845400Z: Command centre initialising...
+2021-03-15T12:38:46.495936400Z: Mission 'MissionOne' to destination name: Earth
+orbiting: Sol
+mass: 5.98E24
+orbit: 367.84544425366164
+distance: 1.496E8 azimuth: 0.0 polar angle: 0.0 created.
+2021-03-15T12:38:50.471654900Z: Sending telemetry across network Low Bandwidth
+2021-03-15T12:38:53.902204500Z: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+2021-03-15T12:38:53.905940300Z: Sending telemetry across network Low Bandwidth
+2021-03-15T12:38:53.909941900Z: Stage change request from Thread-2 accepted
+2021-03-15T12:38:54.486774700Z: DataTransmission of typetelemetry regarding Stage change request accepted recieved by MissionOne
+2021-03-15T12:38:54.488773200Z: MissionOne moved onto boost stage!
+2021-03-15T12:38:55.671777Z: Mission 'MissionTwo' to destination name: Mars
+orbiting: Sol
+mass: 6.417099999999999E23
+orbit: 788.6469248106724
+distance: 2.492E8 azimuth: 0.0 polar angle: 0.0 created.
+2021-03-15T12:38:58.507744500Z: Sending telemetry across network Low Bandwidth
+2021-03-15T12:38:59.683199500Z: Sending telemetry across network Low Bandwidth
+2021-03-15T12:39:01.956901100Z: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+2021-03-15T12:39:01.974899300Z: Stage change request from Thread-2 accepted
+2021-03-15T12:39:01.974899300Z: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+2021-03-15T12:39:01.975904200Z: Sending telemetry across network Low Bandwidth
+2021-03-15T12:39:01.989899400Z: Stage change request from Thread-5 accepted
+2021-03-15T12:39:01.994895300Z: Sending telemetry across network Low Bandwidth
+2021-03-15T12:39:02.520139200Z: DataTransmission of typetelemetry regarding Stage change request accepted recieved by MissionOne
+2021-03-15T12:39:02.523138400Z: MissionOne moved onto transit stage!
+2021-03-15T12:39:03.710584600Z: DataTransmission of typetelemetry regarding Stage change request accepted recieved by MissionTwo
+2021-03-15T12:39:03.719588100Z: MissionTwo moved onto boost stage!
+2021-03-15T12:39:06.567379200Z: Sending telemetry across network Low Bandwidth
+2021-03-15T12:39:07.729577Z: Sending telemetry across network Low Bandwidth
