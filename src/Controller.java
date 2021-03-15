@@ -62,6 +62,18 @@ class Controller extends Thread{
     }
 
     private void checkTelemetry(DataTransmission dataTransmission) {
+        // Read telemetry content
+        String content = dataTransmission.getContent();
+        int i = content.indexOf(' ');
+        String keyword = content.substring(0, i);
+        Mission mission = dataTransmission.getMission();
+        System.out.println(mission.getName());
+
+        if (keyword.equals("Stage")){           // "Stage change request accepted"
+            DataTransmission report = new DataTransmission(mission, "telemetry", "Stage change request accepted", "mission");
+            sendDataTransmission(mission, report);
+            eventLog.writeFile("Stage change request from " + mission.getName() + " accepted");
+        }
     }
 
     private void sendDataTransmission(Mission mission, DataTransmission dataTransmission) {

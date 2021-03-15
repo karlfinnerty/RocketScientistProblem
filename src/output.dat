@@ -1,0 +1,40 @@
+2021-03-14T15:51:28.249146300Z: Command centre initialising...
+2021-03-14T15:51:35.121795300Z: Mission 'MissionOne' to destination name: Mars
+orbiting: Sol
+mass: 6.417099999999999E23
+distance: 2.492E8 azimuth: 0.0 polar angle: 0.0 created.
+2021-03-14T15:51:39.089201900Z: Sending telemetry across network Low Bandwidth
+2021-03-14T15:51:40.286208Z: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+2021-03-14T15:51:40.288208800Z: Sending telemetry across network Low Bandwidth
+2021-03-14T15:51:40.289208800Z: Stage change request from Thread-2 accepted
+2021-03-14T15:51:43.095725800Z: DataTransmission of typetelemetry regarding Stage change request accepted recieved by MissionOne
+2021-03-14T15:51:43.095725800Z: MissionOne moved onto boost stage!
+2021-03-14T15:51:47.100280600Z: Sending telemetry across network Low Bandwidth
+2021-03-14T15:51:48.316282300Z: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+2021-03-14T15:51:48.318286300Z: Stage change request from Thread-2 accepted
+2021-03-14T15:51:48.319287300Z: Sending telemetry across network Low Bandwidth
+2021-03-14T15:51:51.127285600Z: DataTransmission of typetelemetry regarding Stage change request accepted recieved by MissionOne
+2021-03-14T15:51:51.128288800Z: MissionOne moved onto transit stage!
+2021-03-14T15:52:03.160284200Z: Sending telemetry across network Low Bandwidth
+2021-03-14T15:52:04.331281500Z: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+2021-03-14T15:52:04.332284600Z: Stage change request from Thread-2 accepted
+2021-03-14T15:52:04.333285900Z: Sending telemetry across network Low Bandwidth
+2021-03-14T15:52:07.168285800Z: DataTransmission of typetelemetry regarding Stage change request accepted recieved by MissionOne
+2021-03-14T15:52:07.169287700Z: MissionOne moved onto landing stage!
+2021-03-14T15:52:11.172281900Z: Sending telemetry across network Low Bandwidth
+2021-03-14T15:52:12.355290100Z: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+2021-03-14T15:52:12.356285600Z: Sending telemetry across network Low Bandwidth
+2021-03-14T15:52:12.357286900Z: Stage change request from Thread-2 accepted
+2021-03-14T15:52:15.192555600Z: DataTransmission of typetelemetry regarding Stage change request accepted recieved by MissionOne
+2021-03-14T15:52:15.193554400Z: MissionOne moved onto exploration stage!
+2021-03-14T15:52:27.212548200Z: Sending telemetry across network Low Bandwidth
+2021-03-14T15:52:28.380547500Z: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+2021-03-14T15:52:28.381551200Z: Sending telemetry across network Low Bandwidth
+2021-03-14T15:52:28.382553200Z: Stage change request from Thread-2 accepted
+2021-03-14T15:52:31.224549600Z: DataTransmission of typetelemetry regarding Stage change request accepted recieved by MissionOne
+2021-03-14T15:52:32.068552500Z: MissionOne moved onto exploration stage!
+2021-03-14T15:52:32.068552500Z: Sending telemetry across network Low Bandwidth
+2021-03-14T15:52:32.396546400Z: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+2021-03-14T15:52:32.397551100Z: Sending telemetry across network Low Bandwidth
+2021-03-14T15:52:32.398552900Z: Stage change request from Thread-2 accepted
+2021-03-14T15:52:36.083546600Z: MissionOne has completed!
