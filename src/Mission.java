@@ -97,8 +97,7 @@ public class Mission extends Thread{
     public void run(){
         
         while (missionComplete==false){
-            // check stage duration
-            checkStageDuration();
+            
             //System.out.println(destination);
             // Check inbox
             for (DataTransmission dataTransmission : inbox) {
@@ -114,9 +113,8 @@ public class Mission extends Thread{
                 inbox.remove(dataTransmission);
             }
 
-            DataTransmission report = new DataTransmission(this, "telemetry", "this is the content", "controller");
-            sendDataTransmission(report);
-            
+            // check stage duration
+            checkStageDuration();     
             try {
                 Thread.sleep(4000);
             } catch (InterruptedException e) {
@@ -130,8 +128,9 @@ public class Mission extends Thread{
         Instant now = Instant.now();
         long s = Duration.between(stage.getStartTime(), now).toSeconds();
         if (s > stage.getDuration()){
-            stage.incrementStage();
-            eventLog.writeFile(name + " moved onto " + stage.getStage() + " stage!");
+            // request stage change 
+            DataTransmission report = new DataTransmission(this, "telemetry", "Stage change request", "controller");
+            sendDataTransmission(report);
         }
     }
 
@@ -145,14 +144,16 @@ public class Mission extends Thread{
         String keyword = content.substring(0, i);
 
         if (keyword.equals("Stage")){           // "Stage change request accepted"
-            this.changeMissionStage(dataTransmission);
+            changeMissionStage();
         }
         if (keyword.equals("Component")){        // "Component <name of component> seems OK"
         
         }
     }
 
-    private void changeMissionStage(DataTransmission dataTransmission) {
+    private void changeMissionStage() {
+        stage.incrementStage();
+            eventLog.writeFile(name + " moved onto " + stage.getStage() + " stage!");
     }
 
     public String toString(){
