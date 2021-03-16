@@ -38,7 +38,7 @@ class Controller extends Thread{
             try{
                 Thread.sleep(clock.getDelay());
             } catch(InterruptedException e){
-                System.out.println(e);
+                e.printStackTrace();
             }
         }   
     }

@@ -96,31 +96,31 @@ public class Mission extends Thread{
 
     // Do the mission stuff
     public void run(){
-        
         while (missionComplete==false){
-            
-            //System.out.println(destination);
-            // Check inbox
-            for (DataTransmission dataTransmission : inbox) {
-                eventLog.writeFile(dataTransmission + " recieved by " + this.name );  
-                switch(dataTransmission.getType()){
-                    case "telemetry":
-                        this.checkTelemetry(dataTransmission);
-                        break; 
-                    case "swUpdate":
-                        this.implementSwUpdate(dataTransmission);
-                        break; 
+            if(!this.clock.isPaused()){
+                //System.out.println(destination);
+                // Check inbox
+                for (DataTransmission dataTransmission : inbox) {
+                    eventLog.writeFile(dataTransmission + " recieved by " + this.name );  
+                    switch(dataTransmission.getType()){
+                        case "telemetry":
+                            this.checkTelemetry(dataTransmission);
+                            break; 
+                        case "swUpdate":
+                            this.implementSwUpdate(dataTransmission);
+                            break; 
+                    }
+                    inbox.remove(dataTransmission);
                 }
-                inbox.remove(dataTransmission);
-            }
 
-            // check stage duration
-            checkStageDuration();     
-            // try {
-            //     Thread.sleep(4000);
-            // } catch (InterruptedException e) {
-            //     e.printStackTrace();
-            // }
+                // check stage duration
+                checkStageDuration();
+            }
+            try {
+                Thread.sleep(clock.getDelay());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         eventLog.writeFile(this.name + " has completed!");
     }
