@@ -17,21 +17,30 @@ class Controller extends Thread{
         this.inbox = new LinkedBlockingQueue<DataTransmission>();
         this.solarSystem = starSystem;
         this.clock = clock;
+
     }   
 
     public void run(){
         eventLog.writeFile("Command centre initialising...");
         while (true){
-            // Check inbox
-            for (DataTransmission dataTransmission : inbox) {
-                eventLog.writeFile(dataTransmission + " recieved by controller." );     
-                readInboxItem(dataTransmission);
-                // Pop item from queue
-                inbox.remove(dataTransmission);
+            if(!this.clock.isPaused()){
+                    // Check inbox CRITICAL SECTION
+                for (DataTransmission dataTransmission : inbox) {
+                    eventLog.writeFile(dataTransmission + " recieved by controller." );     
+                    readInboxItem(dataTransmission);
+                    // Pop item from queue
+                    inbox.remove(dataTransmission);
+                }
+                clock.increment();
+                this.solarSystem.updatePositions();
             }
-            clock.increment();
-            this.solarSystem.updatePositions();
-        }
+            
+            try{
+                Thread.sleep(clock.getDelay());
+            } catch(InterruptedException e){
+                System.out.println(e);
+            }
+        }   
     }
 
     // Decide what to do with inbox item

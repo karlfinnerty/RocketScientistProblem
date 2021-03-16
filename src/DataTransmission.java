@@ -6,6 +6,7 @@ public class DataTransmission {
     Mission mission;
     Integer bitSize;
     String reciever;
+    boolean requiresAck;
 
     // Types are "report", "telemetry", "update"
     

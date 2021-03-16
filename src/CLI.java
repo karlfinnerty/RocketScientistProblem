@@ -26,6 +26,10 @@ public class CLI {
         while (exec) { 
             System.out.println("\nGreetings Commander, \n" 
                                 + "Type an instruction (shortened): \n"
+                                + "     time (t) - Get number of sim seconds passed.\n"
+                                + "     pause (p) - Pause sim.\n"
+                                + "     unpause (up) - Unpause sim. \n"
+                                + "     delay (d) - Set artificial time delay. Enter value in milliseconds.\n"
                                 + "     new mission (nm) \n"
                                 + "     list missions (ls) \n"
                                 + "     print event log (log)"
@@ -37,7 +41,24 @@ public class CLI {
                 case "t":
                 case "time":
                     System.out.println(this.theController.clock);
-                    break; 
+                    break;
+                case "p":
+                case "pause":
+                    this.theController.clock.pause();
+                    System.out.println("Simulation Paused");
+                    break;
+                case "up":
+                case "unpause":
+                    this.theController.clock.unpause();
+                    System.out.println("Simulation Unpaused");
+                    break;
+                case "d":
+                case "delay":
+                    System.out.println("\nEnter delay (1000 = 1 second):");
+                    String din = userInput.nextLine().toLowerCase();
+                    long delay = Long.parseLong(din);
+                    this.theController.clock.setDelay(delay);
+                    break;
                 case "nm":
                 case "new mission":
                     System.out.println("\nEnter mission name:");
