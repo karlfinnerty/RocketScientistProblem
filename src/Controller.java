@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import physics.Clock;
+import physics.StarSystem;
 
 class Controller extends Thread{
     ArrayList<Mission> missions;
@@ -108,8 +110,8 @@ class Controller extends Thread{
             name,
             this.solarSystem.getSystemObjects().get("earth"), 
             this.solarSystem.getSystemObjects().get(destination),
-            clock, 
-            eventLog);
+            this.clock, 
+            this.eventLog);
         // Add to active missions
         this.missions.add(newMission);
         // Start mission thread

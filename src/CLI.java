@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import physics.StarSystem;
+
 public class CLI {
     StarSystem solarSystem;
     Controller theController;

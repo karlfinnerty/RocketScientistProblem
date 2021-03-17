@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.time.Instant;
 
+import physics.Clock;
+
 public class EventLog extends Thread{
   Clock clock;
 

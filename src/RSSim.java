@@ -1,15 +1,20 @@
-// Round 1 Simplification: DONE
-// All bodies are stationary (no temporal dimension) 
-// No orbital inclination
+/*
+##########################################################################
+This file is part of the CA4006 - Rocket Scientist Problem
+Created by Paul Treanor and Karl Finnerty
+Subject to standard MIT License
 
-// Round 2 Simplification: DONE
-// Basic orbital physics
-// Bodies follow circular orbits (velocity is constant)
-// No orbital inclination
+description:
+	This class is at the top level of the class hierarchy and instantiates 
+	all classes required to run simulation.
 
-// Round 3 Final: DO IF LOADS OF TIME AT THE END (MAYBE SHOULDN'T DO THIS)
-// Elliptical orbits
-// Orbital inclination
+##########################################################################
+*/
+import physics.StarSystem;
+import physics.Clock;
+import physics.Celestial;
+import physics.Spherical;
+import physics.Satellite;
 
 public class RSSim{
 	// Initialise solar system

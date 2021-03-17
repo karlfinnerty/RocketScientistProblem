@@ -4,6 +4,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.lang.Math;
 import java.util.Random;
 
+import physics.Celestial;
+import physics.Clock;
+
 
 public class Mission extends Thread{
     String id;                  // Unique mission ID assigned by controller
