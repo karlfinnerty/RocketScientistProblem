@@ -1,41 +1,30 @@
 0: Command centre initialising...
-1021: Mission 'missionone' to destination name: mars
+0: Mission 'missionone' to destination name: mars
 orbiting: sol
 mass: 6.417099999999999E23
 orbit: 690.1945981405844
-distance: 2.27943824E8 azimuth: 0.01812290818709854 polar angle: 0.0 created.
-1282: Sending telemetry across network Low Bandwidth
-1282: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
-1282: Stage change request from Thread-2 accepted
-1650: Sending telemetry across network Low Bandwidth
-1698: DataTransmission of typetelemetry regarding Stage change request accepted recieved by missionone
-1698: missionone moved onto boost stage!
-2337: Sending telemetry across network Low Bandwidth
-2390: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
-2390: Stage change request from Thread-2 accepted
-2658: Sending telemetry across network Low Bandwidth
-2660: DataTransmission of typetelemetry regarding Stage change request accepted recieved by missionone
-2660: missionone moved onto transit stage!
-4972: Sending telemetry across network Low Bandwidth
-5010: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
-5010: Stage change request from Thread-2 accepted
-5325: Sending telemetry across network Low Bandwidth
-5355: DataTransmission of typetelemetry regarding Stage change request accepted recieved by missionone
-5356: missionone moved onto landing stage!
-6343: Sending telemetry across network Low Bandwidth
-6349: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
-6349: Stage change request from Thread-2 accepted
-6703: Sending telemetry across network Low Bandwidth
-6761: DataTransmission of typetelemetry regarding Stage change request accepted recieved by missionone
-6761: missionone moved onto exploration stage!
-20487: Sending telemetry across network Low Bandwidth
-20616: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
-20616: Stage change request from Thread-2 accepted
-20944: Sending telemetry across network Low Bandwidth
-20972: DataTransmission of typetelemetry regarding Stage change request accepted recieved by missionone
-20972: missionone moved onto exploration stage!
-20974: missionone has completed!
-21598: Sending telemetry across network Low Bandwidth
-21811: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
-21811: Stage change request from Thread-2 accepted
-22221: Sending telemetry across network Low Bandwidth
+distance: 2.27943824E8 azimuth: 0.011959187581159849 polar angle: 0.0 created.
+264: Sending telemetry across network Low Bandwidth
+264: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+264: Stage change request from Thread-2 accepted
+526: Sending telemetry across network Low Bandwidth
+526: DataTransmission of typetelemetry regarding Stage change request accepted recieved by missionone
+526: ***********missionone moved onto boost stage! ***********
+1544: Sending telemetry across network Low Bandwidth
+1544: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+1544: Stage change request from Thread-2 accepted
+1807: Sending telemetry across network Low Bandwidth
+1808: DataTransmission of typetelemetry regarding Stage change request accepted recieved by missionone
+1808: ***********missionone moved onto transit stage! ***********
+4053: Sending telemetry across network Low Bandwidth
+4054: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+4054: Stage change request from Thread-2 accepted
+4316: Sending telemetry across network Low Bandwidth
+4318: DataTransmission of typetelemetry regarding Stage change request accepted recieved by missionone
+4318: ***********missionone moved onto landing stage! ***********
+7605: Sending telemetry across network Low Bandwidth
+7605: DataTransmission of typetelemetry regarding Stage change request recieved by controller.
+7605: Stage change request from Thread-2 accepted
+7867: Sending telemetry across network Low Bandwidth
+7868: DataTransmission of typetelemetry regarding Stage change request accepted recieved by missionone
+7868: ***********missionone moved onto exploration stage! ***********

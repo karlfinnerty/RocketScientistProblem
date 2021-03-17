@@ -159,7 +159,7 @@ public class Mission extends Thread{
     private void changeMissionStage() {
         stage.incrementStage();
         stageChangeRequest = false;
-        eventLog.writeFile(name + " moved onto " + stage.getStage() + " stage!");
+        eventLog.writeFile("***********" + name + " moved onto " + stage.getStage() + " stage! ***********");
     }
 
     public String toString(){
