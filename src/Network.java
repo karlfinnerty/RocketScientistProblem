@@ -45,7 +45,6 @@ public class Network extends Thread{
                     choosenConnection.sendFile(dataTransmission);
                     buffer.remove(dataTransmission);
                 }
-                
             }
         }
     }

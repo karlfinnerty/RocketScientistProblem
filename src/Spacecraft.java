@@ -1,4 +1,5 @@
-import java.util.HashMap; 
+import java.util.HashMap;
+import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue; 
 
 
@@ -47,7 +48,7 @@ public class Spacecraft{
 					checkTelemetry(dataTransmission);
 					break; 
 				case "swUpdate":
-					implementSwUpdate(dataTransmission);
+					//implementSwUpdate();
 					break; 
 			}
 			this.inbox.remove(dataTransmission);
@@ -78,7 +79,20 @@ public class Spacecraft{
         }
     }
 
-	private void implementSwUpdate(DataTransmission dataTransmission) {
+	public void requestSoftwareUpdate(DataTransmission dataTransmission){
 
+	}
+
+	public Boolean implementSwUpdate() {
+		double chance = 1.0;
+        // Decide if component will fail given a chance. 0.5 = 50% chance of failure, 0.1 = 10% chance
+		Random rand = new Random();
+		double failRandomNumber = rand.nextDouble();
+		if(failRandomNumber <= chance){
+			eventLog.writeFile("Software Update Succeeded");
+			return true;
+		}
+        eventLog.writeFile("Software Update Failed");
+        return false;
     }
 }

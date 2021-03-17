@@ -28,9 +28,13 @@ public class Stage {
 
     public void incrementStage(){
         if (currentStage < 4){
-            Boolean notFailed = changeStageAttempt();
-            if (notFailed != true) {
-                this.mission.missionFailed = true;
+            Boolean stageOk = changeStageAttempt();
+            if (stageOk == false) {
+                // The stage has failed. Attempt recovery by software update
+                boolean recovered = this.mission.spacecraft.implementSwUpdate();
+                if(!recovered){
+                    this.mission.missionFailed = true;
+                }
             }
             currentStage++;
             // reset stage time counter 
@@ -52,6 +56,8 @@ public class Stage {
         System.out.println(this.mission.getMissionId() + " has failed! at " + this.mission.clock.getTicks());
         return false;
     }
+
+    // private 
 
     private void completeMission() {
         mission.missionComplete = true;
