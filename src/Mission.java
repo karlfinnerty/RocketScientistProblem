@@ -3,6 +3,8 @@ import java.time.Instant;
 import java.lang.Math;
 import java.util.Random;
 
+import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
+
 import physics.Celestial;
 import physics.Clock;
 
@@ -121,6 +123,10 @@ public class Mission extends Thread{
             this.spacecraft.createStageChangeRequest();
             stageChangeRequest = true;
         }
+    }
+
+    public double getTransitPercent(){
+        return 0.0;
     }
 
     public void changeMissionStage() {

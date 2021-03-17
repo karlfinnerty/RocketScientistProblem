@@ -13,10 +13,10 @@ public class Connection {
 
     public void sendFile(DataTransmission dataTransmission) {       //send file will also be parameterised by Connection once those are set up              
         String reciever = dataTransmission.getReciever();
-        if (reciever.equals("mission")) {
+        if (reciever.equals(this.mission.spacecraft.getSpacecraftId())) {
             this.mission.spacecraft.recieveFile(dataTransmission);
         }
-        if (reciever.equals("controller")) {
+        if (reciever.equals(this.mission.controller.getControllerId())) {
             this.controller.recieveFile(dataTransmission);
         }
     }

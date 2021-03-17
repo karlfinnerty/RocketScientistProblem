@@ -3,6 +3,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 
 public class Spacecraft{
+	String id;
 	Mission mission;
 	EventLog eventLog;
 	HashMap<String, Component> components = new HashMap<String, Component>();
@@ -14,10 +15,15 @@ public class Spacecraft{
 	public Spacecraft(Mission mission, EventLog eventLog){
 		this.mission = mission;
 		this.eventLog = eventLog;
+		this.id = "LE" + "-" + this.mission.getMissionId();
 	}
 
 	public double getAcceleration(){
 		return this.maxAcceleration;
+	}
+
+	public String getSpacecraftId(){
+		return this.id;
 	}
 
 	public void setAcceleration(double acceleration){
@@ -29,7 +35,7 @@ public class Spacecraft{
 	}
 
 	public void createStageChangeRequest(){
-		DataTransmission report = new DataTransmission(this.mission, "report", "Stage change request", "controller");
+		DataTransmission report = new DataTransmission(this.mission, "report", "Stage change request", this.mission.controller.getControllerId(), getSpacecraftId());
         sendDataTransmission(report);
 	}
 
@@ -49,6 +55,7 @@ public class Spacecraft{
 	}
 
 	public void sendDataTransmission(DataTransmission dataTransmission) {    
+		eventLog.writeFile(dataTransmission.toString());  
         Network network = this.mission.getSpacecraftToControllerNet();
         network.postFiles(dataTransmission);
     }

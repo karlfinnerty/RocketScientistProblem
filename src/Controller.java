@@ -5,6 +5,7 @@ import physics.Clock;
 import physics.StarSystem;
 
 class Controller extends Thread{
+    String controllerId;
     ArrayList<Mission> missions;
     EventLog eventLog;
     LinkedBlockingQueue<DataTransmission> inbox;
@@ -18,6 +19,7 @@ class Controller extends Thread{
         this.inbox = new LinkedBlockingQueue<DataTransmission>();
         this.solarSystem = starSystem;
         this.clock = clock;
+        this.controllerId = "ground_control";
     }   
 
     public void run(){
@@ -73,10 +75,9 @@ class Controller extends Thread{
         int i = content.indexOf(' ');
         String keyword = content.substring(0, i);
         Mission mission = dataTransmission.getMission();
-
     
         if (keyword.equals("Stage")){           // "Stage change request accepted"
-            DataTransmission report = new DataTransmission(mission, "telemetry", "Stage change request accepted", "mission");
+            DataTransmission report = new DataTransmission(mission, "telemetry", "Stage change request accepted", mission.spacecraft.getSpacecraftId(), this.getControllerId());
             sendDataTransmission(mission, report);
             eventLog.writeFile("Stage change request from " + mission.getMissionId() + " accepted");
         }
@@ -85,6 +86,10 @@ class Controller extends Thread{
     private void sendDataTransmission(Mission mission, DataTransmission dataTransmission) {
         Network network = mission.getSpacecraftToControllerNet();
         network.postFiles(dataTransmission);
+    }
+
+    public String getControllerId(){
+        return this.controllerId;
     }
 
     public void getMissions(){
@@ -121,13 +126,14 @@ class Controller extends Thread{
     public DataTransmission createSoftwareUpdate(Mission mission){
         String content = mission.name + " software upgrade ";
         String type = "upgrade";
-        DataTransmission swUpdate = new DataTransmission(mission, type, content, "mission");
+        DataTransmission swUpdate = new DataTransmission(mission, type, content, mission.spacecraft.getSpacecraftId(), this.getControllerId());
         //............building sw update..........
         // Create new thread to burn CPU time? New class?
         return swUpdate;
     }
 
     public void recieveFile(DataTransmission dataTransmission){
+        System.out.println("HAPPYPATTYSDAY");
         this.inbox.add(dataTransmission);
     }
 }
