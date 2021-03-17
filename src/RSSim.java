@@ -10,6 +10,8 @@ description:
 
 ##########################################################################
 */
+import java.io.File;
+
 import physics.StarSystem;
 import physics.Clock;
 import physics.Celestial;
@@ -95,6 +97,11 @@ public class RSSim{
 		// System.out.println();
 
 		// Initialise CLI
+		try{
+			new File("output.dat").delete();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		EventLog eventLog = new EventLog(clock);
     	Controller theController = new Controller(eventLog, solarSystem, clock);
 		CLI simUI = new CLI(theController, eventLog, solarSystem);
