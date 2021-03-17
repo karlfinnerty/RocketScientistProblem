@@ -90,7 +90,7 @@ public class RSSim{
 		// System.out.println();
 
 		// Initialise CLI
-		EventLog eventLog = new EventLog();
+		EventLog eventLog = new EventLog(clock);
     	Controller theController = new Controller(eventLog, solarSystem, clock);
 		CLI simUI = new CLI(theController, eventLog, solarSystem);
 		simUI.run();

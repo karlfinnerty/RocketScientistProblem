@@ -3,6 +3,7 @@ public class Connection {
     Integer bandwidth; //in bits 
     Controller controller;
     Mission mission;
+    Integer transmissionTime = 200;
 
     Connection(double d, Integer bandwidth, Controller controller, Mission mission) {
         this.availability = d;
@@ -11,7 +12,7 @@ public class Connection {
         this.mission = mission;
     }
 
-    public void sendFile(DataTransmission dataTransmission) {       //send file will also be parameterised by Connection once those are set up 
+    public void sendFile(DataTransmission dataTransmission) {       //send file will also be parameterised by Connection once those are set up              
         String reciever = dataTransmission.getReciever();
         if (reciever.equals("mission")) {
             this.mission.recieveFile(dataTransmission);

@@ -6,18 +6,21 @@ import java.util.Scanner;
 import java.time.Instant;
 
 public class EventLog extends Thread{
-    EventLog(){
-        try {
-            File output = new File("output.dat");
-            if (output.createNewFile()) {
-              System.out.println("Output file created: " + output.getName());
-            } else {
-              System.out.println("Delete output.dat and start again to avoid overlapping missions");
-            }
-          } catch (IOException e) {
-            System.out.println("File error occurred.");
-            e.printStackTrace();
+  Clock clock;
+
+    EventLog(Clock clock){
+      this.clock = clock;
+      try {
+          File output = new File("output.dat");
+          if (output.createNewFile()) {
+            System.out.println("Output file created: " + output.getName());
+          } else {
+            System.out.println("Delete output.dat and start again to avoid overlapping missions");
           }
+        } catch (IOException e) {
+          System.out.println("File error occurred.");
+          e.printStackTrace();
+        }
     }
 
     // Synchronised to prevent interleaving theads read and writing to file
@@ -26,7 +29,8 @@ public class EventLog extends Thread{
             FileWriter output = new FileWriter("output.dat", true);
             // Time will probably be replaced with our own version 
 
-            Instant time = Instant.now();
+            //Instant time = Instant.now();
+            long time = clock.getTicks();
             output.write(time + ": " + str + "\n");
             output.close();
           } catch (IOException e) {

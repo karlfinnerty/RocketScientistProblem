@@ -7,6 +7,7 @@ public class DataTransmission {
     Integer bitSize;
     String reciever;
     boolean requiresAck;
+    long arrivalTime;
 
     // Types are "report", "telemetry", "update"
     
@@ -16,6 +17,7 @@ public class DataTransmission {
         this.mission = mission;
         this.reciever = reciever;
         setBitSize(type);
+        this.arrivalTime = this.mission.clock.getTicks() + 100;
     }
 
     private void setBitSize(String dTransmissionType) {

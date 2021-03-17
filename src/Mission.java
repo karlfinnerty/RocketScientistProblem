@@ -27,6 +27,7 @@ public class Mission extends Thread{
     double distance;            // Distance of transit stage
     double tof;                 // Time of flight for transit stage of mission
     Boolean missionComplete;
+    Boolean stageChangeRequest = false;
     
 
     Mission(Controller controller, String id, String name, Celestial source, Celestial destination, Clock clock, EventLog eventLog){
@@ -128,11 +129,14 @@ public class Mission extends Thread{
     private void checkStageDuration() {
         long now = this.clock.getTicks();
         long s = now - stage.getStartTime();
-        if (s > stage.getDuration()){
+        if (s > stage.getDuration() && stageChangeRequest == false ){
             // request stage change 
             DataTransmission report = new DataTransmission(this, "telemetry", "Stage change request", "controller");
             sendDataTransmission(report);
+            stageChangeRequest = true;
+
         }
+        
     }
 
     private void implementSwUpdate(DataTransmission dataTransmission) {
@@ -154,7 +158,8 @@ public class Mission extends Thread{
 
     private void changeMissionStage() {
         stage.incrementStage();
-            eventLog.writeFile(name + " moved onto " + stage.getStage() + " stage!");
+        stageChangeRequest = false;
+        eventLog.writeFile(name + " moved onto " + stage.getStage() + " stage!");
     }
 
     public String toString(){
@@ -216,6 +221,7 @@ public class Mission extends Thread{
     }
 
     public void completeMission(){
+        System.out.println("hello!");
         this.missionComplete = true;
     }
 

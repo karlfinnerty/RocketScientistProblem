@@ -30,9 +30,13 @@ public class Network extends Thread{
             for (DataTransmission dataTransmission : buffer) {
                 // figure out what connection is needed 
                 Connection choosenConnection = chooseConnection(dataTransmission);
-                eventLog.writeFile("Sending " + dataTransmission.getType() + " across network " + choosenConnection);
-                choosenConnection.sendFile(dataTransmission);
-                buffer.remove(dataTransmission);
+                
+                if (dataTransmission.arrivalTime < this.mission.clock.getTicks()){
+                    eventLog.writeFile("Sending " + dataTransmission.getType() + " across network " + choosenConnection);
+                    choosenConnection.sendFile(dataTransmission);
+                    buffer.remove(dataTransmission);
+                }
+                
             }
         }
     }

@@ -9,7 +9,7 @@ public class Clock{
 		this.id = id;
 		this.ticks = 0;
 		this.paused = true;
-		this.delay = 0;
+		this.delay = 10;
 	}
 
 	public String toString(){

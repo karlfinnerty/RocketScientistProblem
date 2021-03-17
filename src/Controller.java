@@ -73,8 +73,8 @@ class Controller extends Thread{
         int i = content.indexOf(' ');
         String keyword = content.substring(0, i);
         Mission mission = dataTransmission.getMission();
-        System.out.println(mission.getName());
 
+    
         if (keyword.equals("Stage")){           // "Stage change request accepted"
             DataTransmission report = new DataTransmission(mission, "telemetry", "Stage change request accepted", "mission");
             sendDataTransmission(mission, report);
