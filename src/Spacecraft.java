@@ -28,8 +28,12 @@ public class Spacecraft{
 		this.components.put(component.getId(), component);
 	}
 
+	public void createStageChangeRequest(){
+		DataTransmission report = new DataTransmission(this.mission, "telemetry", "Stage change request", "controller");
+        sendDataTransmission(report);
+	}
+
 	public void checkInbox(){
-		//System.out.println("TEEEEEEST");
 		for (DataTransmission dataTransmission : this.inbox) {
 			eventLog.writeFile(dataTransmission + " recieved by " + this.mission.getMissionId());  
 			switch(dataTransmission.getType()){
@@ -43,6 +47,15 @@ public class Spacecraft{
 			this.inbox.remove(dataTransmission);
 		}
 	}
+
+	public void sendDataTransmission(DataTransmission dataTransmission) {    
+        Network network = this.mission.getSpacecraftToControllerNet();
+        network.postFiles(dataTransmission);
+    }
+
+	public void recieveFile(DataTransmission dataTransmission){
+        this.inbox.add(dataTransmission);
+    }
 
 	private void checkTelemetry(DataTransmission dataTransmission) {
         // Read telemetry content

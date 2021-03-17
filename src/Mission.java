@@ -118,8 +118,7 @@ public class Mission extends Thread{
         long s = now - stage.getStartTime();
         if (s > stage.getDuration() && stageChangeRequest == false ){
             // request stage change 
-            DataTransmission report = new DataTransmission(this, "telemetry", "Stage change request", "controller");
-            sendDataTransmission(report);
+            this.spacecraft.createStageChangeRequest();
             stageChangeRequest = true;
         }
     }
@@ -156,15 +155,6 @@ public class Mission extends Thread{
 
     public Network getSpacecraftToControllerNet() {
         return this.spacecraftToControllerNet;
-    }
-
-    private void sendDataTransmission(DataTransmission dataTransmission) {    
-        Network network = this.spacecraftToControllerNet;
-        network.postFiles(dataTransmission);
-    }
-
-    public void recieveFile(DataTransmission dataTransmission){
-        spacecraft.inbox.add(dataTransmission);
     }
 
     // To simplify trajectory calculations, we will assume spacecraft use future technology that allows for constant acceleration, making the journey happen in as little time as possible
