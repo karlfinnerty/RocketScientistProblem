@@ -67,7 +67,7 @@ public class Network extends Thread{
         if (dataTransmission.getBitSize() < 8400){
             return this.lowBWConnection;
         }
-        if (dataTransmission.getType().equals("report") || dataTransmission.getType().equals("temelemtry") || dataTransmission.getType().equals("stageChange")){
+        if (dataTransmission.getType().equals("report") || dataTransmission.getType().equals("telemetry") || dataTransmission.getType().equals("stageChange")){
             return this.midBWConnection;
         }
         if (dataTransmission.getType().equals("update")){
