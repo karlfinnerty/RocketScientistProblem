@@ -30,8 +30,12 @@ public class Network extends Thread{
             for (DataTransmission dataTransmission : buffer) {
                 // figure out what connection is needed 
                 Connection choosenConnection = chooseConnection(dataTransmission);
+                // calculate arrivalTime of dataTransmission
+                //dataTransmission.calculateArrivalTime(choosenConnection.bandwidth);
+
                 
                 if (dataTransmission.arrivalTime < this.mission.clock.getTicks()){
+
                     eventLog.writeFile("Sending " + dataTransmission.getType() + " across network " + choosenConnection);
                     choosenConnection.sendFile(dataTransmission);
                     buffer.remove(dataTransmission);
@@ -42,10 +46,11 @@ public class Network extends Thread{
     }
 
     private Connection chooseConnection(DataTransmission dataTransmission) {
-        if (dataTransmission.getType().equals("telemetry")){
+        // Small essential or small telemtries are sent across most reliable network
+        if (dataTransmission.getBitSize() < 8400){
             return this.lowBWConnection;
         }
-        if (dataTransmission.getType().equals("report")){
+        if (dataTransmission.getType().equals("report") || dataTransmission.getType().equals("temelemtry") ){
             return this.midBWConnection;
         }
         if (dataTransmission.getType().equals("update")){

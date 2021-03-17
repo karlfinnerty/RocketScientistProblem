@@ -183,7 +183,6 @@ public class Mission extends Thread{
     }
 
     public void completeMission(){
-        System.out.println("hello!");
         this.missionComplete = true;
     }
 

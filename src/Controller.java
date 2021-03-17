@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import physics.Clock;
@@ -19,7 +18,6 @@ class Controller extends Thread{
         this.inbox = new LinkedBlockingQueue<DataTransmission>();
         this.solarSystem = starSystem;
         this.clock = clock;
-
     }   
 
     public void run(){
