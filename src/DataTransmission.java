@@ -8,6 +8,7 @@ public class DataTransmission {
     String reciever;
     boolean requiresAck;
     long arrivalTime;
+    Float lightSpeed = (float) 299792.458;
 
     // Types are "report", "telemetry", "update"
     
@@ -17,7 +18,7 @@ public class DataTransmission {
         this.mission = mission;
         this.reciever = reciever;
         setBitSize(type);
-        this.arrivalTime = this.mission.clock.getTicks() + 100;
+        calculateArrivalTime();
     }
 
     private void setBitSize(String dTransmissionType) {
@@ -63,6 +64,15 @@ public class DataTransmission {
         Integer range = max - min + 1;
         Integer randomNum =  ran.nextInt(range) + min;
         return randomNum;
+    }
+
+    private void calculateArrivalTime(){
+        long currentTime = this.mission.clock.getTicks();
+        //Integer bandwidth;
+        var latency = this.mission.destination.slDistance(this.mission.source);
+        latency = latency/lightSpeed;
+        // arrivalTime of data is current time + (distance/lightspeed) + (dataSize/bandwidth)
+        this.arrivalTime = (long) (currentTime + latency); //+ bandwidth;
     }
 
    
