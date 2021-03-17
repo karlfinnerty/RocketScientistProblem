@@ -11,7 +11,7 @@ public class Clock{
 		this.id = id;
 		this.ticks = 0;
 		this.paused = true;
-		this.delay = 1;
+		this.delay = 0;
 	}
 
 	public String toString(){

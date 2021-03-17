@@ -11,7 +11,7 @@ public class DataTransmission {
     long arrivalTime = 0;
     Float lightSpeed = (float) 299792.458;
 
-    // Types are "report", "telemetry", "update"
+    // Types are "report", "telemetry", "update" "changeStage"
     
     DataTransmission(Mission mission, String type, String content, String reciever, String sender) {
         this.content = content;
@@ -25,7 +25,7 @@ public class DataTransmission {
 
     private void setBitSize(String dTransmissionType) {
         Integer byteSize = 0;
-        if (dTransmissionType.equals("telemetry")){
+        if (dTransmissionType.equals("telemetry") || dTransmissionType.equals("stageChange")){
             byteSize = getRandom(100, 10000);
         }
         if (dTransmissionType.equals("report")){
@@ -70,7 +70,7 @@ public class DataTransmission {
 
     private long calculateDataTransitTime(){
         if(this.mission.stage.getStage().equals("prelaunch") || this.mission.stage.getStage().equals("boost")){
-            return 0;
+            return 1;
         } else if(this.mission.stage.getStage().equals("landing") || this.mission.stage.getStage().equals("exploration")){
             return (long) this.mission.destination.slDistance(this.mission.source);
         }
@@ -82,13 +82,13 @@ public class DataTransmission {
 
     public long calculateArrivalTime(Integer bandwidth){
         long currentTime = this.mission.clock.getTicks();
-        Integer burstTime = 0;//bitSize/bandwidth;        
+        Integer burstTime = bitSize/bandwidth;        
 
         //System.out.println(bitSize + " " + burstTime);
         long transitTime = calculateDataTransitTime();
         transitTime = (long) (transitTime/lightSpeed);
         // arrivalTime of data is current time + (distance/lightspeed) + (dataSize/bandwidth)
-        return (long) (currentTime + transitTime + burstTime); //+ (dataSize/bandwidth);
+        return (long) (currentTime + transitTime + burstTime); 
     }
 
    

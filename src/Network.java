@@ -35,8 +35,8 @@ public class Network extends Thread{
 
                 
                 if (dataTransmission.arrivalTime < this.mission.clock.getTicks()){
-
                     eventLog.writeFile("Sending " + dataTransmission.getType() + " across network " + choosenConnection);
+                
                     choosenConnection.sendFile(dataTransmission);
                     buffer.remove(dataTransmission);
                 }
@@ -50,7 +50,7 @@ public class Network extends Thread{
         if (dataTransmission.getBitSize() < 8400){
             return this.lowBWConnection;
         }
-        if (dataTransmission.getType().equals("report") || dataTransmission.getType().equals("temelemtry") ){
+        if (dataTransmission.getType().equals("report") || dataTransmission.getType().equals("temelemtry") || dataTransmission.getType().equals("stageChange")){
             return this.midBWConnection;
         }
         if (dataTransmission.getType().equals("update")){

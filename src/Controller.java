@@ -48,6 +48,7 @@ class Controller extends Thread{
     // Decide what to do with inbox item
     private void readInboxItem(DataTransmission dataTransmission) {
         switch(dataTransmission.getType()){
+            case "stageChange":
             case "telemetry":
                 this.checkTelemetry(dataTransmission);
                 break; 
@@ -133,7 +134,6 @@ class Controller extends Thread{
     }
 
     public void recieveFile(DataTransmission dataTransmission){
-        System.out.println("HAPPYPATTYSDAY");
         this.inbox.add(dataTransmission);
     }
 }

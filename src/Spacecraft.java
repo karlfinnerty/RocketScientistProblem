@@ -35,7 +35,7 @@ public class Spacecraft{
 	}
 
 	public void createStageChangeRequest(){
-		DataTransmission report = new DataTransmission(this.mission, "report", "Stage change request", this.mission.controller.getControllerId(), getSpacecraftId());
+		DataTransmission report = new DataTransmission(this.mission, "stageChange", "Stage change request", this.mission.controller.getControllerId(), getSpacecraftId());
         sendDataTransmission(report);
 	}
 
