@@ -11,8 +11,8 @@ public class Mission extends Thread{
     String name;                // Mission alias given by user
     Controller controller;      // Controller that created mission
     Spacecraft spacecraft;      // Spacecraft assigned to mission by controller
-    Network toMissionNetwork;
-    Network fromMissionNetwork;        
+    Network controllerToSpacecraftNet;
+    Network spacecraftToControllerNet;        
     Celestial source;           // Source location of mission
     Celestial destination;      // Destination location of mission
     Clock clock;                // 
@@ -46,10 +46,10 @@ public class Mission extends Thread{
         this.startTime = clock.getTicks();
         this.eventLog = eventLog;
         //mission creates two networks, one for connections from M to C, the other fro connections from C to M 
-        this.toMissionNetwork = new Network(controller, this, eventLog);
-        toMissionNetwork.start();
-        this.fromMissionNetwork = new Network(controller, this, eventLog);
-        fromMissionNetwork.start();
+        this.controllerToSpacecraftNet = new Network(controller, this, eventLog);
+        controllerToSpacecraftNet.start();
+        this.spacecraftToControllerNet = new Network(controller, this, eventLog);
+        spacecraftToControllerNet.start();
         this.missionComplete = false;
 
     }
@@ -150,12 +150,16 @@ public class Mission extends Thread{
         return this.distance;
     }
 
-    public Network getToMissionNetwork() {
-        return this.toMissionNetwork;
+    public Network getControllerToSpacecraftNet() {
+        return this.controllerToSpacecraftNet;
+    }
+
+    public Network getSpacecraftToControllerNet() {
+        return this.spacecraftToControllerNet;
     }
 
     private void sendDataTransmission(DataTransmission dataTransmission) {    
-        Network network = this.fromMissionNetwork;
+        Network network = this.spacecraftToControllerNet;
         network.postFiles(dataTransmission);
     }
 
