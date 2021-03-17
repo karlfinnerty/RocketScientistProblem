@@ -1,12 +1,10 @@
 import java.time.Duration;
 import java.time.Instant;
-import java.util.concurrent.LinkedBlockingQueue; 
 import java.lang.Math;
 import java.util.Random;
 
 import physics.Celestial;
 import physics.Clock;
-
 
 public class Mission extends Thread{
     String id;                  // Unique mission ID assigned by controller
@@ -22,7 +20,6 @@ public class Mission extends Thread{
                                 // The stage mission is currently in e.g. prelaunch, boost, transit, landing, exploration
     Stage stage;          
     EventLog eventLog;
-    LinkedBlockingQueue<DataTransmission>  inbox;
 
     double G = 6.673 * Math.pow(10, -11);
     static double DAY = 86400.0;
@@ -48,7 +45,6 @@ public class Mission extends Thread{
         this.stage = new Stage(this);
         this.startTime = clock.getTicks();
         this.eventLog = eventLog;
-        this.inbox = new LinkedBlockingQueue<DataTransmission>(); ; 
         //mission creates two networks, one for connections from M to C, the other fro connections from C to M 
         this.toMissionNetwork = new Network(controller, this, eventLog);
         toMissionNetwork.start();
@@ -104,7 +100,7 @@ public class Mission extends Thread{
             if(!this.clock.isPaused()){
                 //System.out.println(destination);
                 // Check inbox
-                for (DataTransmission dataTransmission : inbox) {
+                for (DataTransmission dataTransmission : spacecraft.inbox) {
                     eventLog.writeFile(dataTransmission + " recieved by " + this.name );  
                     switch(dataTransmission.getType()){
                         case "telemetry":
@@ -114,7 +110,7 @@ public class Mission extends Thread{
                             this.implementSwUpdate(dataTransmission);
                             break; 
                     }
-                    inbox.remove(dataTransmission);
+                    spacecraft.inbox.remove(dataTransmission);
                 }
 
                 // check stage duration
@@ -137,9 +133,7 @@ public class Mission extends Thread{
             DataTransmission report = new DataTransmission(this, "telemetry", "Stage change request", "controller");
             sendDataTransmission(report);
             stageChangeRequest = true;
-
         }
-        
     }
 
     private void implementSwUpdate(DataTransmission dataTransmission) {
@@ -195,7 +189,7 @@ public class Mission extends Thread{
     }
 
     public void recieveFile(DataTransmission dataTransmission){
-        this.inbox.add(dataTransmission);
+        spacecraft.inbox.add(dataTransmission);
     }
 
     // To simplify trajectory calculations, we will assume spacecraft use future technology that allows for constant acceleration, making the journey happen in as little time as possible

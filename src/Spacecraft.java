@@ -1,7 +1,10 @@
 import java.util.HashMap; 
+import java.util.concurrent.LinkedBlockingQueue; 
+
 
 public class Spacecraft{
 	HashMap<String, Component> components = new HashMap<String, Component>();
+	LinkedBlockingQueue<DataTransmission> inbox = new LinkedBlockingQueue<DataTransmission>();
 	double distance;
 	double maxAcceleration;
 	//tranmsitQueue
