@@ -30,6 +30,7 @@ public class Mission extends Thread{
     double tof;                 // Time of flight for transit stage of mission
     Boolean missionComplete;
     Boolean stageChangeRequest = false;
+    Boolean missionFailed;
     
 
     Mission(Controller controller, String id, String name, Celestial source, Celestial destination, Clock clock, EventLog eventLog){
@@ -53,6 +54,7 @@ public class Mission extends Thread{
         this.spacecraftToControllerNet = new Network(controller, this, eventLog);
         spacecraftToControllerNet.start();
         this.missionComplete = false;
+        this.missionFailed = false;
 
     }
 
@@ -98,7 +100,7 @@ public class Mission extends Thread{
 
     // Do the mission stuff
     public void run(){
-        while (missionComplete==false){
+        while (missionComplete==false && missionFailed==false){
             if(!this.clock.isPaused()){
                 //System.out.println(destination);
                 // Check inbox
@@ -112,7 +114,7 @@ public class Mission extends Thread{
                 e.printStackTrace();
             }
         }
-        eventLog.writeFile(this.name + " has completed!");
+        eventLog.writeFile(this.name + " has completed :) or failed :(");
     }
 
     private void checkStageDuration() {

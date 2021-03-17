@@ -28,6 +28,10 @@ public class Stage {
 
     public void incrementStage(){
         if (currentStage < 4){
+            Boolean notFailed = changeStageAttempt();
+            if (notFailed != true) {
+                this.mission.missionFailed = true;
+            }
             currentStage++;
             // reset stage time counter 
             stageStartTime = this.mission.clock.getTicks();
@@ -35,6 +39,18 @@ public class Stage {
         else{
             completeMission();
         }
+    }
+
+    private Boolean changeStageAttempt() {
+        // 10% chance of failing per stage 
+        double chance = 0.1;
+		Random rand = new Random();
+		double failRandomNumber = rand.nextDouble();
+		if(failRandomNumber >= chance){
+			return true;
+		}
+        System.out.println(this.mission.getMissionId() + " has failed! at " + this.mission.clock.getTicks());
+        return false;
     }
 
     private void completeMission() {
