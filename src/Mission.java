@@ -177,7 +177,7 @@ public class Mission extends Thread{
             }
             t++;
         }
-        //System.out.println("Trajectory not found...");
+        System.out.println("Trajectory not found...");
         return new double[]{0, 0};
         
     }

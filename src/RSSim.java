@@ -38,7 +38,7 @@ public class RSSim{
 			"earth", 
 			sol, 
 			new Spherical(new double[]{149598262.0, 0.0, 0.0}), 
-			5.98 * Math.pow(10, 24), 
+			5.972 * Math.pow(10, 24), 
 			6371.0, 
 			149598262.0, 
 			149598262.0);
@@ -54,6 +54,15 @@ public class RSSim{
 			227943824.0, 
 			227943824.0);
 
+		Celestial venus = new Celestial(
+			"venus", 
+			sol, 
+			new Spherical(new double[]{108209475.0, 0.0, 0.0}), 
+			4.867 * Math.pow(10, 24), 
+			6051.0, 
+			108209475.0, 
+			108209475.0);
+
 		Celestial neptune = new Celestial(
 			"neptune", 
 			sol, 
@@ -63,7 +72,7 @@ public class RSSim{
 			4498396441.0, 
 			4498396441.0);
 
-		StarSystem solarSystem = new StarSystem(new Celestial[]{sol, earth, mars, neptune}, clock);
+		StarSystem solarSystem = new StarSystem(new Celestial[]{sol, earth, mars, venus, neptune}, clock);
 
 		// // Do tests
 		// System.out.println("!!!!TEST START!!!!");
