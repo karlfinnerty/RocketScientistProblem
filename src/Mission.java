@@ -37,7 +37,7 @@ public class Mission extends Thread{
         this.source = source;
         this.destination = destination;
         this.clock = clock;
-        this.spacecraft = new Spacecraft();
+        this.spacecraft = new Spacecraft(this, eventLog);
         buildSpacecraft(this.spacecraft);
         double flightParams[] = brachistochroneTrajectory(this.source, this.destination, this.spacecraft);
         this.tof = flightParams[0];
@@ -100,19 +100,7 @@ public class Mission extends Thread{
             if(!this.clock.isPaused()){
                 //System.out.println(destination);
                 // Check inbox
-                for (DataTransmission dataTransmission : spacecraft.inbox) {
-                    eventLog.writeFile(dataTransmission + " recieved by " + this.name );  
-                    switch(dataTransmission.getType()){
-                        case "telemetry":
-                            this.checkTelemetry(dataTransmission);
-                            break; 
-                        case "swUpdate":
-                            this.implementSwUpdate(dataTransmission);
-                            break; 
-                    }
-                    spacecraft.inbox.remove(dataTransmission);
-                }
-
+                this.spacecraft.checkInbox();
                 // check stage duration
                 checkStageDuration();
             }
@@ -136,24 +124,7 @@ public class Mission extends Thread{
         }
     }
 
-    private void implementSwUpdate(DataTransmission dataTransmission) {
-    }
-
-    private void checkTelemetry(DataTransmission dataTransmission) {
-        // Read telemetry content
-        String content = dataTransmission.getContent();
-        int i = content.indexOf(' ');
-        String keyword = content.substring(0, i);
-
-        if (keyword.equals("Stage")){           // "Stage change request accepted"
-            changeMissionStage();
-        }
-        if (keyword.equals("Component")){        // "Component <name of component> seems OK"
-        
-        }
-    }
-
-    private void changeMissionStage() {
+    public void changeMissionStage() {
         stage.incrementStage();
         stageChangeRequest = false;
         eventLog.writeFile("***********" + name + " moved onto " + stage.getStage() + " stage! ***********");

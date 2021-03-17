@@ -80,7 +80,7 @@ class Controller extends Thread{
         if (keyword.equals("Stage")){           // "Stage change request accepted"
             DataTransmission report = new DataTransmission(mission, "telemetry", "Stage change request accepted", "mission");
             sendDataTransmission(mission, report);
-            eventLog.writeFile("Stage change request from " + mission.getName() + " accepted");
+            eventLog.writeFile("Stage change request from " + mission.getMissionId() + " accepted");
         }
     }
 
