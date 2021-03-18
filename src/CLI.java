@@ -97,7 +97,10 @@ public class CLI {
                     this.eventLog.readFile();
                     break;
                 case "exit":
+                    System.out.println("Ground Control Shutting Down...");
                     exec = false;
+                    theController.closeController();
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Not a valid instruction sir!");

@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class Network extends Thread{
+public class Network implements Runnable{
 	Controller controller;
     Mission mission;
     LinkedBlockingQueue<DataTransmission> buffer;

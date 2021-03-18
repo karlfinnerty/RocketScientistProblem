@@ -14,6 +14,7 @@ class Controller extends Thread{
     StarSystem solarSystem;
     Clock clock;
     int nextId = 0;
+    boolean exec = true;
     ThreadPoolExecutor missionExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(12);
 
     Controller(EventLog eventLog, StarSystem starSystem, Clock clock){
@@ -27,7 +28,7 @@ class Controller extends Thread{
 
     public void run(){
         eventLog.writeFile("Command centre initialising...");
-        while (true){
+        while (exec){
             if(!this.clock.isPaused()){
                     // Check inbox CRITICAL SECTION
                 for (DataTransmission dataTransmission : inbox) {
@@ -45,7 +46,8 @@ class Controller extends Thread{
             } catch(InterruptedException e){
                 e.printStackTrace();
             }
-        }   
+        }
+        missionExecutor.shutdown();   
     }
 
     // Decide what to do with inbox item
@@ -81,8 +83,12 @@ class Controller extends Thread{
     }
 
     private void sendDataTransmission(Mission mission, DataTransmission dataTransmission) {
-        Network network = mission.getSpacecraftToControllerNet();
+        Network network = mission.getControllerToSpacecraftNet();
         network.postFiles(dataTransmission);
+    }
+
+    public void closeController(){
+        this.exec = false;
     }
 
     public String getControllerId(){
