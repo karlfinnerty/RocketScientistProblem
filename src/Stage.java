@@ -41,7 +41,7 @@ public class Stage {
                 didSWUpdateWork = false;
                 // The stage has failed. Attempt recovery by software update
                 
-                boolean recovered = this.mission.spacecraft.requestSoftwareUpdate();
+                boolean recovered = this.mission.spacecraft.implementSwUpdate();
                 if (!recovered) {
                     this.mission.setMissionFailed(true);
                 } else{

@@ -109,11 +109,11 @@ public class Spacecraft{
 				}		
 			}
 		}
-		return implementSwUpdate(update);
+		return implementSwUpdate();
 	}
 
 	// All software updates are sent, only some pass 
-	public Boolean implementSwUpdate(DataTransmission dataTransmission) {
+	public Boolean implementSwUpdate() {
 		// check type 
 		double chance = 0.25;
         // Decide if component will fail given a chance. 0.5 = 50% chance of failure, 0.1 = 10% chance
