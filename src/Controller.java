@@ -59,18 +59,7 @@ class Controller extends Thread{
                 Mission mission = dataTransmission.getMission();
                 this.createSoftwareUpdate(mission);
                 break; 
-            case "spacecraftUpdate":
-                // Check if stage is changing 
-                String content = dataTransmission.getContent();
-                int i = content.indexOf(' ');
-                if (content.substring(0, i).equals("Stage")){
-                    this.changeMissionStage(dataTransmission);
-                }
-                break;
         }
-    }
-
-    private void changeMissionStage(DataTransmission dataTransmission) {
     }
 
     private void checkTelemetry(DataTransmission dataTransmission) {
@@ -134,8 +123,6 @@ class Controller extends Thread{
     public void createSoftwareUpdate(Mission mission){
         String content = mission.getMissionId() + " software update ";
         DataTransmission swUpdate = new DataTransmission(mission, "swUpdate", content, mission.spacecraft.getSpacecraftId(), this.getControllerId());
-        //............building sw update..........
-        // Create new thread to burn CPU time? New class?
         sendDataTransmission(mission, swUpdate);
     }
 

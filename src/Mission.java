@@ -17,7 +17,7 @@ public class Mission implements Runnable{
     Celestial destination;      // Destination location of mission
     Clock clock;                // 
     long startTime;             // The value of Clock (number of ticks passed) when mission is created
-                                // The stage mission is currently in e.g. prelaunch, boost, transit, landing, exploration
+                                // The stage mission is currently in e.g. boost, transit, landing, exploration
     Stage stage;          
     EventLog eventLog;
 

@@ -72,7 +72,7 @@ public class DataTransmission {
     }
 
     private long calculateDataTransitTime(){
-        if(this.mission.stage.getStage().equals("prelaunch") || this.mission.stage.getStage().equals("boost")){
+        if(this.mission.stage.getStage().equals("boost")){
             return 1;
         } else if(this.mission.stage.getStage().equals("landing") || this.mission.stage.getStage().equals("exploration")){
             return (long) this.mission.destination.slDistance(this.mission.source);

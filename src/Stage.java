@@ -4,7 +4,7 @@ import java.util.Random;
 public class Stage {
     Mission mission;
     EventLog eventLog;
-    String stages[] = {"prelaunch", "boost", "transit", "landing", "exploration"};
+    String stages[] = {"boost", "transit", "landing", "exploration"};
     Integer currentStage;
     double duration[];
     long stageStartTime;
@@ -26,13 +26,13 @@ public class Stage {
         double landing = 300 + rand.nextInt(3600);                     // Landing probably requires more time, slower descent, possbile delays due to atmospheric factors
         double exploration = 157 + rand.nextInt(15768);        // Exploration ranges from 6 months to 5 years
 
-        return new double[]{prelaunch, boost, transit, landing, exploration};
+        return new double[]{boost, transit, landing, exploration};
     }
 
     public void incrementStage(){
-        if (currentStage < 4){
+        if (currentStage < 3){
             Boolean stageOk = changeStageAttempt();
-            if (stageOk == true || this.getStage().equals("prelaunch")) {
+            if (stageOk) {
                 currentStage++;
                 // Reset stage time counter
                 stageStartTime = this.mission.clock.getTicks();
