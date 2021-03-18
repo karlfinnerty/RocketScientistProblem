@@ -78,6 +78,13 @@ public class CLI {
                             System.out.println("Choose from the following: mars, neptune, cancel");
                         }
                     }
+                    break;
+                case "bm":
+                case "batch missions":
+                    theController.createMission("test", "mars");
+                    theController.createMission("test", "venus");
+                    theController.createMission("test", "mars");
+                    theController.createMission("test", "venus");
                     break; 
                 case "ls":
                 case "list missions":

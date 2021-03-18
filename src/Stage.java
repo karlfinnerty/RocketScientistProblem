@@ -3,14 +3,16 @@ import java.util.Random;
 
 public class Stage {
     Mission mission;
+    EventLog eventLog;
     String stages[] = {"prelaunch", "boost", "transit", "landing", "exploration"};
     Integer currentStage;
     double duration[];
     long stageStartTime;
     Boolean didSWUpdateWork = true;
 
-    Stage(Mission mission){
+    Stage(Mission mission, EventLog eventLog){
         this.mission = mission;
+        this.eventLog = eventLog;
         this.currentStage = 0;
         this.stageStartTime = this.mission.clock.getTicks();
         this.duration = initDuration();
@@ -38,6 +40,7 @@ public class Stage {
             else {
                 didSWUpdateWork = false;
                 // The stage has failed. Attempt recovery by software update
+                
                 boolean recovered = this.mission.spacecraft.requestSoftwareUpdate();
                 if (!recovered) {
                     this.mission.missionFailed = true;
@@ -59,6 +62,7 @@ public class Stage {
 			return true;
 		}
         System.out.println(this.mission.getMissionId() + " has failed! at " + this.mission.clock.getTicks());
+        eventLog.writeFile(this.mission.getMissionId() + " stage " + getStage() + "failed." + " Requesting Software Update...");
         return false;
     }
 

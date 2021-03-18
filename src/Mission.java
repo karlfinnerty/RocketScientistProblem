@@ -43,9 +43,9 @@ public class Mission extends Thread{
         double flightParams[] = brachistochroneTrajectory(this.source, this.destination, this.spacecraft);
         this.tof = flightParams[0];
         this.distance = flightParams[1];
-        this.stage = new Stage(this);
         this.startTime = clock.getTicks();
         this.eventLog = eventLog;
+        this.stage = new Stage(this, eventLog);
         //mission creates two networks, one for connections from M to C, the other fro connections from C to M 
         this.controllerToSpacecraftNet = new Network(controller, this, eventLog);
         controllerToSpacecraftNet.start();
@@ -112,7 +112,12 @@ public class Mission extends Thread{
                 e.printStackTrace();
             }
         }
-        eventLog.writeFile(this.name + " has completed :) or failed :(");
+        if(missionComplete){
+            eventLog.writeFile(this.id + " has completed :)");
+        }else{
+            eventLog.writeFile(this.id + " has failed :(");
+        }
+        
     }
 
     private void checkStageDuration() {
@@ -132,7 +137,7 @@ public class Mission extends Thread{
     public void changeMissionStage() {
         stage.incrementStage();
         stageChangeRequest = false;
-        eventLog.writeFile("***********" + name + " moved onto " + stage.getStage() + " stage! ***********");
+        eventLog.writeFile("***********" + this.id + " moved onto " + stage.getStage() + " stage! ***********");
     }
 
     public String toString(){

@@ -79,6 +79,7 @@ public class Spacecraft{
     }
 
 	public Boolean requestSoftwareUpdate(){
+		
 		// make request
 		DataTransmission swUpdateRequest = new DataTransmission(mission, "telemetry", "SOS - SW update needed", this.mission.controller.getControllerId(), this.id);
 		// send request 
