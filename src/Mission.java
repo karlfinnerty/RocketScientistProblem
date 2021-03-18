@@ -43,6 +43,7 @@ public class Mission extends Thread{
         double flightParams[] = brachistochroneTrajectory(this.source, this.destination, this.spacecraft);
         this.tof = flightParams[0];
         this.distance = flightParams[1];
+        assignFuel(spacecraft, tof);
         this.startTime = clock.getTicks();
         this.eventLog = eventLog;
         this.stage = new Stage(this, eventLog);
@@ -91,8 +92,10 @@ public class Mission extends Thread{
 
     }
 
-    public void assignFuel(Spacecraft spacecraft){
-
+    // Make the assumption that amount of fuel required is 1 per G of acceleration per second
+    public void assignFuel(Spacecraft spacecraft, double tof){
+        double fuel = tof*spacecraft.getAcceleration();
+        spacecraft.addComponent(new Component("fuel", 0, fuel));
     }
 
     // Do the mission stuff

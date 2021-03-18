@@ -5,9 +5,9 @@ public class Component{
 	String type;					// Type of component i.e. Fuel, Thrusters, Instruments, Control Systems, Power Plants
 	boolean status;					// Indicate if component is working or broken
 	Spacecraft spacecraft; 			// Spacecraft components are located on
-	int quantity;					// quantity of contents of component where applicable e.g. fuel
+	double quantity;					// quantity of contents of component where applicable e.g. fuel
 
-	public Component(String type, int id, int quantity){
+	public Component(String type, int id, double quantity){
 		this.type = type;
 		this.id = this.type + "-" + id;
 		this.status = true;
@@ -33,10 +33,10 @@ public class Component{
 	}
 
 	// Send report to queue on spacecraft.
-	public void report(){
+	public void report() throws InterruptedException{
 		String reportString;
-		reportString = this.spacecraft + "-" + this.type + "-" + this.status;
-		// this.spacecraft.enqueueTransmit("report", reportString);
+		reportString = this.spacecraft.getSpacecraftId() + "-" + this.type + "-" + this.status;
+		this.spacecraft.enqueueTransmit("report", reportString);
 	}
 
 }

@@ -8,6 +8,7 @@ public class Spacecraft{
 	EventLog eventLog;
 	HashMap<String, Component> components = new HashMap<String, Component>();
 	LinkedBlockingQueue<DataTransmission> inbox = new LinkedBlockingQueue<DataTransmission>();
+	LinkedBlockingQueue<DataTransmission> outbox = new LinkedBlockingQueue<DataTransmission>();
 	double distance;
 	double maxAcceleration;
 	//tranmsitQueue
@@ -18,12 +19,12 @@ public class Spacecraft{
 		this.id = "LE" + "-" + this.mission.getMissionId();
 	}
 
-	public double getAcceleration(){
-		return this.maxAcceleration;
-	}
-
 	public String getSpacecraftId(){
 		return this.id;
+	}
+
+	public double getAcceleration(){
+		return this.maxAcceleration;
 	}
 
 	public void setAcceleration(double acceleration){
@@ -52,6 +53,17 @@ public class Spacecraft{
 			}
 			this.inbox.remove(dataTransmission);
 		}
+	}
+
+	public void enqueueTransmit(String transmissionType, String content) throws InterruptedException{
+		DataTransmission tx = new DataTransmission(
+			this.mission, 
+			transmissionType, 
+			content, 
+			this.mission.controller.getControllerId(), 
+			getSpacecraftId());
+
+		this.outbox.put(tx);
 	}
 
 	public void sendDataTransmission(DataTransmission dataTransmission) {    
