@@ -85,6 +85,8 @@ public class CLI {
                     theController.createMission("test", "venus");
                     theController.createMission("test", "mars");
                     theController.createMission("test", "venus");
+                    theController.createMission("test", "mars");
+                    theController.createMission("test", "venus");
                     break; 
                 case "ls":
                 case "list missions":

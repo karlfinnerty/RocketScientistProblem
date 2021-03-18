@@ -43,8 +43,11 @@ public class Stage {
                 
                 boolean recovered = this.mission.spacecraft.requestSoftwareUpdate();
                 if (!recovered) {
-                    this.mission.missionFailed = true;
+                    this.mission.setMissionFailed(true);
+                } else{
+                    didSWUpdateWork = true;
                 }
+                
                 
             }
         }

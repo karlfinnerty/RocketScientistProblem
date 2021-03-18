@@ -69,11 +69,11 @@ public class Network extends Thread{
         if (dataTransmission.getType().equals("report") || dataTransmission.getType().equals("telemetry") || dataTransmission.getType().equals("stageChange")){
             return this.midBWConnection;
         }
-        if (dataTransmission.getType().equals("update")){
+        if (dataTransmission.getType().equals("swUpdate")){
             return this.highBWConnection;
         }
         // Default
-        return highBWConnection;
+        return this.highBWConnection;
     }
 
     

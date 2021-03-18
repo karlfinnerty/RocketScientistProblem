@@ -100,7 +100,7 @@ class Controller extends Thread{
     public void getMissions(){
         System.out.println("...gathering missions data...");
         for (Mission mission : missions) { 		      
-            System.out.println(mission); 		
+            System.out.println(mission.toString()); 		
        }
     }
 
@@ -129,8 +129,8 @@ class Controller extends Thread{
     }
 
     public void createSoftwareUpdate(Mission mission){
-        String content = mission.getId() + " software upgrade ";
-        DataTransmission swUpdate = new DataTransmission(mission, "swUpgrade", content, mission.spacecraft.getSpacecraftId(), this.getControllerId());
+        String content = mission.getId() + " software update ";
+        DataTransmission swUpdate = new DataTransmission(mission, "swUpdate", content, mission.spacecraft.getSpacecraftId(), this.getControllerId());
         //............building sw update..........
         // Create new thread to burn CPU time? New class?
         sendDataTransmission(mission, swUpdate);

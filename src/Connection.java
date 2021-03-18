@@ -26,10 +26,10 @@ public class Connection {
             return "Low Bandwidth";
         }
         if (this.bandwidth == 16000){
-            return "Low Bandwidth";
+            return "Med Bandwidth";
         }
         if (this.bandwidth == 16000000){
-            return "Low Bandwidth";
+            return "High Bandwidth";
         }
         return "Unknown";
     }

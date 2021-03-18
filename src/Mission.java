@@ -97,7 +97,6 @@ public class Mission extends Thread{
 
     // Do the mission stuff
     public void run(){
-        System.out.println("this is working!");
         while (missionComplete==false && missionFailed==false){
             if(!this.clock.isPaused()){
                 //System.out.println(destination);
@@ -141,6 +140,12 @@ public class Mission extends Thread{
     }
 
     public String toString(){
+        if(this.missionFailed){
+            return this.id + " " + "failed " +  "elapsed:" + (this.clock.getTicks() - this.startTime);
+        }
+        if(this.missionComplete){
+            return this.id + " " + "complete " +  "elapsed:" + (this.clock.getTicks() - this.startTime);
+        }
         return this.id + " "+ getStage()+ " " +  "elapsed:" + (this.clock.getTicks() - this.startTime);
        }
        
@@ -154,6 +159,10 @@ public class Mission extends Thread{
 
     public double getTof(){
         return this.tof;
+    }
+
+    public void setMissionFailed(boolean value){
+        this.missionFailed = value;
     }
 
     public double getDistance(){
