@@ -92,7 +92,7 @@ class Controller extends Thread{
     }
 
     private void sendDataTransmission(Mission mission, DataTransmission dataTransmission) {
-        Network network = mission.getSpacecraftToControllerNet();
+        Network network = mission.getControllerToSpacecraftNet();
         
         network.postFiles(dataTransmission);
         mission.networkExecutor.execute(network);
