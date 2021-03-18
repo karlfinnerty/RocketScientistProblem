@@ -1,5 +1,3 @@
-import java.time.Duration;
-import java.time.Instant;
 import java.lang.Math;
 import java.util.Random;
 
@@ -208,11 +206,4 @@ public class Mission implements Runnable{
     public void completeMission(){
         this.missionComplete = true;
     }
-
-        
-
-    // public void calculateLaunchWindow(double tof, double finalPhaseAngle){
-
-    //     return 
-    // }
 }

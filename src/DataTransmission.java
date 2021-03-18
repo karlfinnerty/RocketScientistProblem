@@ -61,7 +61,7 @@ public class DataTransmission {
     }
 
     public String toString(){
-        return "from: " + this.sender + "- to: " + this.reciever + "- arrival: " + this.arrivalTime + " - type: " + this.type + "- content: " + this.content;
+        return "from: " + this.sender + "- to: " + this.reciever  + " - type: " + this.type + "- content: " + this.content;
        }
 
     private Integer getRandom(Integer min, Integer max){

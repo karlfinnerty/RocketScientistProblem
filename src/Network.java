@@ -1,14 +1,13 @@
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
-
 public class Network extends Thread{
 	Controller controller;
     Mission mission;
     LinkedBlockingQueue<DataTransmission> buffer;
-    Connection highBWConnection;
     Connection lowBWConnection;
     Connection midBWConnection;
+    Connection highBWConnection;
     EventLog eventLog;
 
     Network(Controller controller, Mission mission, EventLog eventLog){
