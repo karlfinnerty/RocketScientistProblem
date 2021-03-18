@@ -26,6 +26,12 @@ public class Network implements Runnable{
     }
 
     public void run() {
+        try {
+            Thread.sleep(100000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         while (true){
             // Is this a potential concurrency issue? Fairness maybe. 
             for (DataTransmission dataTransmission : buffer) {

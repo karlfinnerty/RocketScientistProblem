@@ -67,9 +67,10 @@ public class Spacecraft{
 	}
 
 	public void sendDataTransmission(DataTransmission dataTransmission) {    
-		eventLog.writeFile(dataTransmission.toString());  
-        Network network = this.mission.getSpacecraftToControllerNet();
-        network.postFiles(dataTransmission);
+		eventLog.writeFile(dataTransmission.toString());
+		this.mission.controller.recieveFile(dataTransmission);
+        // Network network = this.mission.getSpacecraftToControllerNet();
+        // network.postFiles(dataTransmission);
     }
 
 	public void recieveFile(DataTransmission dataTransmission){

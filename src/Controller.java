@@ -15,7 +15,8 @@ class Controller extends Thread{
     Clock clock;
     int nextId = 0;
     boolean exec = true;
-    ThreadPoolExecutor missionExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(12);
+    // System.out.println(Runtime.getRuntime().availableProcessors()); // Amount of cores varies depending on intel architeure... 
+    ThreadPoolExecutor missionExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
 
     Controller(EventLog eventLog, StarSystem starSystem, Clock clock){
         this.missions = new ArrayList<Mission>();
@@ -24,6 +25,7 @@ class Controller extends Thread{
         this.solarSystem = starSystem;
         this.clock = clock;
         this.controllerId = "ground_control";
+        
     }   
 
     public void run(){
@@ -83,8 +85,9 @@ class Controller extends Thread{
     }
 
     private void sendDataTransmission(Mission mission, DataTransmission dataTransmission) {
-        Network network = mission.getControllerToSpacecraftNet();
-        network.postFiles(dataTransmission);
+        // Network network = mission.getControllerToSpacecraftNet();
+        // network.postFiles(dataTransmission);
+        mission.spacecraft.recieveFile(dataTransmission);
     }
 
     public void closeController(){
