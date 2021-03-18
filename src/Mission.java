@@ -52,7 +52,7 @@ public class Mission implements Runnable{
         this.stage = new Stage(this, eventLog);
         //mission creates two networks, one for connections from M to C, the other fro connections from C to M 
         this.controllerToSpacecraftNet = new Network(controller, this, eventLog);
-        networkExecutor.execute(controllerToSpacecraftNet);
+        
         this.spacecraftToControllerNet = new Network(controller, this, eventLog);
         networkExecutor.execute(spacecraftToControllerNet);
         this.missionComplete = false;
@@ -94,6 +94,7 @@ public class Mission implements Runnable{
         }
 
     }
+
 
     // Make the assumption that amount of fuel required is 1 per G of acceleration per second
     public void assignFuel(Spacecraft spacecraft, double tof){

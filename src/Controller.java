@@ -93,7 +93,9 @@ class Controller extends Thread{
 
     private void sendDataTransmission(Mission mission, DataTransmission dataTransmission) {
         Network network = mission.getSpacecraftToControllerNet();
+        
         network.postFiles(dataTransmission);
+        mission.networkExecutor.execute(network);
     }
 
     public String getControllerId(){

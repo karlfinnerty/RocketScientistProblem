@@ -27,26 +27,27 @@ public class Network implements Runnable{
     }
 
     public void run() {
-        while (true){
-            // Is this a potential concurrency issue? Fairness maybe. 
-            for (DataTransmission dataTransmission : buffer) {
-                // figure out what connection is needed 
-                Connection choosenConnection = chooseConnection(dataTransmission);
-                // calculate arrivalTime of dataTransmission
-                //dataTransmission.calculateArrivalTime(choosenConnection.bandwidth);
+        eventLog.writeFile("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        // Is this a potential concurrency issue? Fairness maybe. 
+        System.out.println(buffer);
+        for (DataTransmission dataTransmission : buffer) {
+            // figure out what connection is needed 
+            Connection choosenConnection = chooseConnection(dataTransmission);
+            // calculate arrivalTime of dataTransmission
+            //dataTransmission.calculateArrivalTime(choosenConnection.bandwidth);
 
-                
-                if (dataTransmission.arrivalTime < this.mission.clock.getTicks()){
-                    eventLog.writeFile("Sending " + dataTransmission.getType() + " across network " + choosenConnection);
-                    Boolean connected = false;
-                    while(!connected){
-                        connected = transmitAttempt(dataTransmission, choosenConnection);
-                    } 
-                    choosenConnection.sendFile(dataTransmission);
-                    buffer.remove(dataTransmission);
-                }
+            
+            if (dataTransmission.arrivalTime < this.mission.clock.getTicks()){
+                eventLog.writeFile("Sending " + dataTransmission.getType() + " across network " + choosenConnection);
+                Boolean connected = false;
+                while(!connected){
+                    connected = transmitAttempt(dataTransmission, choosenConnection);
+                } 
+                choosenConnection.sendFile(dataTransmission);
+                buffer.remove(dataTransmission);
             }
         }
+        
     }
 
     private Boolean transmitAttempt(DataTransmission dataTransmission, Connection connection) {
