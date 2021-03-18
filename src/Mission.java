@@ -2,6 +2,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.lang.Math;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import physics.Celestial;
 import physics.Clock;
@@ -29,6 +31,7 @@ public class Mission implements Runnable{
     Boolean missionComplete;
     Boolean stageChangeRequest = false;
     Boolean missionFailed;
+    ThreadPoolExecutor networkExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(12);
     
 
     Mission(Controller controller, String id, String name, Celestial source, Celestial destination, Clock clock, EventLog eventLog){
@@ -49,9 +52,9 @@ public class Mission implements Runnable{
         this.stage = new Stage(this, eventLog);
         //mission creates two networks, one for connections from M to C, the other fro connections from C to M 
         this.controllerToSpacecraftNet = new Network(controller, this, eventLog);
-        controllerToSpacecraftNet.start();
+        networkExecutor.execute(controllerToSpacecraftNet);
         this.spacecraftToControllerNet = new Network(controller, this, eventLog);
-        spacecraftToControllerNet.start();
+        networkExecutor.execute(spacecraftToControllerNet);
         this.missionComplete = false;
         this.missionFailed = false;
     }

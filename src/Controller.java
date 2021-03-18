@@ -126,6 +126,7 @@ class Controller extends Thread{
         // Add to active missions
         this.missions.add(newMission);
         // Start mission thread
+        
         missionExecutor.execute(newMission);
         System.out.println("\nNew mission to\n" + newMission.destination + "\nFlight Parameters\n" + newMission.tof + "\nInitiation successful");
         eventLog.writeFile("Mission '" +  newMission.name + "' to destination " + newMission.destination + " created.");
