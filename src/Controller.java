@@ -82,6 +82,9 @@ class Controller extends Thread{
             sendDataTransmission(mission, report);
             eventLog.writeFile("Stage change request from " + mission.getMissionId() + " accepted");
         }
+        if (keyword.equals("SOS")){
+            createSoftwareUpdate(mission);
+        }
     }
 
     private void sendDataTransmission(Mission mission, DataTransmission dataTransmission) {
@@ -125,9 +128,8 @@ class Controller extends Thread{
     }
 
     public DataTransmission createSoftwareUpdate(Mission mission){
-        String content = mission.name + " software upgrade ";
-        String type = "upgrade";
-        DataTransmission swUpdate = new DataTransmission(mission, type, content, mission.spacecraft.getSpacecraftId(), this.getControllerId());
+        String content = mission.getId() + " software upgrade ";
+        DataTransmission swUpdate = new DataTransmission(mission, "swUpgrade", content, mission.spacecraft.getSpacecraftId(), this.getControllerId());
         //............building sw update..........
         // Create new thread to burn CPU time? New class?
         return swUpdate;
