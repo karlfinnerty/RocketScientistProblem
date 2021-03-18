@@ -6,7 +6,7 @@ import java.util.Random;
 import physics.Celestial;
 import physics.Clock;
 
-public class Mission extends Thread{
+public class Mission implements Runnable{
     String id;                  // Unique mission ID assigned by controller
     String name;                // Mission alias given by user
     Controller controller;      // Controller that created mission

@@ -28,7 +28,7 @@ public class Component{
 		double failRng = rand.nextDouble();
 		if(failRng < chance){
 			this.status = false;
-			report();
+			//report();
 		}
 	}
 

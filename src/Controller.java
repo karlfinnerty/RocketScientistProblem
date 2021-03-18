@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import physics.Clock;
 import physics.StarSystem;
@@ -12,6 +14,7 @@ class Controller extends Thread{
     StarSystem solarSystem;
     Clock clock;
     int nextId = 0;
+    ThreadPoolExecutor missionExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(12);
 
     Controller(EventLog eventLog, StarSystem starSystem, Clock clock){
         this.missions = new ArrayList<Mission>();
@@ -123,13 +126,13 @@ class Controller extends Thread{
         // Add to active missions
         this.missions.add(newMission);
         // Start mission thread
-        newMission.start();
+        missionExecutor.execute(newMission);
         System.out.println("\nNew mission to\n" + newMission.destination + "\nFlight Parameters\n" + newMission.tof + "\nInitiation successful");
         eventLog.writeFile("Mission '" +  newMission.name + "' to destination " + newMission.destination + " created.");
     }
 
     public void createSoftwareUpdate(Mission mission){
-        String content = mission.getId() + " software update ";
+        String content = mission.getMissionId() + " software update ";
         DataTransmission swUpdate = new DataTransmission(mission, "swUpdate", content, mission.spacecraft.getSpacecraftId(), this.getControllerId());
         //............building sw update..........
         // Create new thread to burn CPU time? New class?
