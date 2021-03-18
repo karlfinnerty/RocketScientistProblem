@@ -76,13 +76,14 @@ class Controller extends Thread{
         int i = content.indexOf(' ');
         String keyword = content.substring(0, i);
         Mission mission = dataTransmission.getMission();
-    
+        
         if (keyword.equals("Stage")){           // "Stage change request accepted"
             DataTransmission report = new DataTransmission(mission, "telemetry", "Stage change request accepted", mission.spacecraft.getSpacecraftId(), this.getControllerId());
             sendDataTransmission(mission, report);
             eventLog.writeFile("Stage change request from " + mission.getMissionId() + " accepted");
         }
         if (keyword.equals("SOS")){
+            eventLog.writeFile("SOS request from " + mission.getMissionId() + " recieved");
             createSoftwareUpdate(mission);
         }
     }
@@ -127,12 +128,12 @@ class Controller extends Thread{
         eventLog.writeFile("Mission '" +  newMission.name + "' to destination " + newMission.destination + " created.");
     }
 
-    public DataTransmission createSoftwareUpdate(Mission mission){
+    public void createSoftwareUpdate(Mission mission){
         String content = mission.getId() + " software upgrade ";
         DataTransmission swUpdate = new DataTransmission(mission, "swUpgrade", content, mission.spacecraft.getSpacecraftId(), this.getControllerId());
         //............building sw update..........
         // Create new thread to burn CPU time? New class?
-        return swUpdate;
+        sendDataTransmission(mission, swUpdate);
     }
 
     public void recieveFile(DataTransmission dataTransmission){

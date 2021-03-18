@@ -90,6 +90,7 @@ public class Spacecraft{
 		while(!response){
 			for (DataTransmission dataTransmission : this.inbox) {
 				if (dataTransmission.getType().equals("swUpdate")) {
+					System.out.println("SWUPDATE RETURNED!");
 					response = true;
 					update = dataTransmission;
 					this.inbox.remove(dataTransmission);

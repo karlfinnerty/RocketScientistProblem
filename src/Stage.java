@@ -32,7 +32,7 @@ public class Stage {
     public void incrementStage(){
         if (currentStage < 4){
             Boolean stageOk = changeStageAttempt();
-            if (stageOk == true) {
+            if (stageOk == true || this.getStage().equals("prelaunch")) {
                 currentStage++;
                 // Reset stage time counter
                 stageStartTime = this.mission.clock.getTicks();

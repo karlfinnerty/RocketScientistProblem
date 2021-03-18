@@ -53,7 +53,6 @@ public class Mission extends Thread{
         spacecraftToControllerNet.start();
         this.missionComplete = false;
         this.missionFailed = false;
-
     }
 
     // Build spacecraft with a variable number of components based on mission details
@@ -98,6 +97,7 @@ public class Mission extends Thread{
 
     // Do the mission stuff
     public void run(){
+        System.out.println("this is working!");
         while (missionComplete==false && missionFailed==false){
             if(!this.clock.isPaused()){
                 //System.out.println(destination);
