@@ -11,7 +11,7 @@ public class DataTransmission {
     long arrivalTime = 0;
     Float lightSpeed = (float) 299792.458;
 
-    // Types are "report", "telemetry", "update" "changeStage"
+    // Types are "report", "telemetry", "swUpdate" "changeStage"
     
     DataTransmission(Mission mission, String type, String content, String reciever, String sender) {
         this.content = content;
@@ -31,7 +31,7 @@ public class DataTransmission {
         if (dTransmissionType.equals("report")){
             byteSize = getRandom(100000, 100000000);
         }
-        if (dTransmissionType.equals("update")){
+        if (dTransmissionType.equals("swUpdate")){
             byteSize = getRandom(1000000, 1000000000);
         }
         this.bitSize = byteSize*8;

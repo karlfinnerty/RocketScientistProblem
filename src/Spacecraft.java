@@ -1,6 +1,8 @@
 import java.util.HashMap;
 import java.util.Random;
-import java.util.concurrent.LinkedBlockingQueue; 
+import java.util.concurrent.LinkedBlockingQueue;
+
+import javax.smartcardio.ResponseAPDU; 
 
 
 public class Spacecraft{
@@ -79,17 +81,36 @@ public class Spacecraft{
         }
     }
 
-	public void requestSoftwareUpdate(DataTransmission dataTransmission){
-
+	public Boolean requestSoftwareUpdate(){
+		// make request
+		DataTransmission swUpdateRequest = new DataTransmission(mission, "telemetry", "SOS - SW update needed", this.mission.controller.getControllerId(), this.id);
+		// send request 
+		sendDataTransmission(swUpdateRequest);
+		// check inbox for swupdate (pause mission)
+		Boolean response = false;
+		DataTransmission update = new DataTransmission(mission, null, null, null, null);
+		while(!response){
+			for (DataTransmission dataTransmission : this.inbox) {
+				if (dataTransmission.getType().equals("swUpdate")) {
+					response = true;
+					update = dataTransmission;
+					this.inbox.remove(dataTransmission);
+				}		
+			}
+		}
+		return implementSwUpdate(update);
 	}
 
-	public Boolean implementSwUpdate() {
-		double chance = 1.0;
+	// All software updates are sent, only some pass 
+	public Boolean implementSwUpdate(DataTransmission dataTransmission) {
+		// check type 
+		double chance = 0.25;
         // Decide if component will fail given a chance. 0.5 = 50% chance of failure, 0.1 = 10% chance
 		Random rand = new Random();
 		double failRandomNumber = rand.nextDouble();
 		if(failRandomNumber <= chance){
 			eventLog.writeFile("Software Update Succeeded");
+			// fail the mission
 			return true;
 		}
         eventLog.writeFile("Software Update Failed");

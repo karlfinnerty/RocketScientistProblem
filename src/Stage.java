@@ -7,6 +7,7 @@ public class Stage {
     Integer currentStage;
     double duration[];
     long stageStartTime;
+    Boolean didSWUpdateWork = true;
 
     Stage(Mission mission){
         this.mission = mission;
@@ -29,16 +30,20 @@ public class Stage {
     public void incrementStage(){
         if (currentStage < 4){
             Boolean stageOk = changeStageAttempt();
-            if (stageOk == false) {
+            if (stageOk == true) {
+                currentStage++;
+                // Reset stage time counter
+                stageStartTime = this.mission.clock.getTicks();
+            }
+            else {
+                didSWUpdateWork = false;
                 // The stage has failed. Attempt recovery by software update
-                boolean recovered = this.mission.spacecraft.implementSwUpdate();
-                if(!recovered){
+                boolean recovered = this.mission.spacecraft.requestSoftwareUpdate();
+                if (!recovered) {
                     this.mission.missionFailed = true;
                 }
+                
             }
-            currentStage++;
-            // reset stage time counter 
-            stageStartTime = this.mission.clock.getTicks();
         }
         else{
             completeMission();
