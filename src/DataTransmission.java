@@ -19,11 +19,11 @@ public class DataTransmission {
         this.mission = mission;
         this.reciever = reciever;
         this.sender = sender;
-        setBitSize(type);
+        setBitSize(type, this);
         this.arrivalTime = calculateArrivalTime(20);
     }
 
-    private void setBitSize(String dTransmissionType) {
+    private void setBitSize(String dTransmissionType, DataTransmission dataTransmission) {
         Integer byteSize = 0;
         if (dTransmissionType.equals("telemetry") || dTransmissionType.equals("stageChange")){
             byteSize = getRandom(100, 10000);
@@ -33,6 +33,9 @@ public class DataTransmission {
         }
         if (dTransmissionType.equals("swUpdate")){
             byteSize = getRandom(1000000, 1000000000);
+        }
+        if (dTransmissionType == ""){
+            byteSize = 1;
         }
         this.bitSize = byteSize*8;
     }

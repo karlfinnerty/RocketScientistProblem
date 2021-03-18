@@ -2,9 +2,6 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import javax.smartcardio.ResponseAPDU; 
-
-
 public class Spacecraft{
 	String id;
 	Mission mission;
@@ -88,7 +85,7 @@ public class Spacecraft{
 		sendDataTransmission(swUpdateRequest);
 		// check inbox for swupdate (pause mission)
 		Boolean response = false;
-		DataTransmission update = new DataTransmission(mission, null, null, null, null);
+		DataTransmission update = new DataTransmission(mission, "", "", "", "");
 		while(!response){
 			for (DataTransmission dataTransmission : this.inbox) {
 				if (dataTransmission.getType().equals("swUpdate")) {
