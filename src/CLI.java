@@ -37,13 +37,16 @@ public class CLI {
         while (exec) { 
             System.out.println("\nGreetings Commander, \n" 
                                 + "Type an instruction (shortened): \n"
-                                + "     time (t) - Get number of sim seconds passed.\n"
-                                + "     pause (p) - Pause sim.\n"
-                                + "     unpause (up) - Unpause sim. \n"
-                                + "     delay (d) - Set artificial time delay. Enter value in milliseconds.\n"
-                                + "     new mission (nm) \n"
-                                + "     list missions (ls) \n"
-                                + "     print event log (log)"
+                                + "     time (t)            - Get number of sim seconds passed.\n"
+                                + "     pause (p)           - Pause sim.\n"
+                                + "     unpause (up)        - Unpause sim. \n"
+                                + "     delay (d)           - Set artificial time delay. Enter value in milliseconds.\n"
+                                + "     new mission (nm)    - Create a new mission\n"
+                                + "     batch missions (bm) - Create predefined batch of missions\n"
+                                + "     list missions (ls)  - List missions and statuses\n"
+                                + "     print log (log)     - Print the event log to console\n"
+                                + "     exit                - Exit the simulation"
+
             );
             
             String instr = userInput.nextLine().toLowerCase();
@@ -102,7 +105,7 @@ public class CLI {
                     theController.getMissions();
                     break; 
                 case "log":
-                case "print event log":
+                case "print log":
                     this.eventLog.readFile();
                     break;
                 case "exit":

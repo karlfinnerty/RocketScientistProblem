@@ -183,7 +183,7 @@ public class Mission implements Runnable{
     // To simplify trajectory calculations, we will assume spacecraft use future technology that allows for constant acceleration, making the journey happen in as little time as possible
     public double [] brachistochroneTrajectory(Celestial source, Celestial destination, Spacecraft spacecraft){
         // calulate time of flight
-        double maxA = 20.0; //spacecraft.getAcceleration();
+        double maxA = spacecraft.getAcceleration();
 
         // Find optimal transit parameters (d = at^2/2)
         Celestial sourceCopy = source.getCopy();
