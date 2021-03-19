@@ -63,6 +63,7 @@ class Controller extends Thread{
         switch(dataTransmission.getType()){
             case "stageChange":
                 changeStage(dataTransmission);
+                break;
             case "telemetry":
                 this.checkTelemetry(dataTransmission);
                 break; 
@@ -86,18 +87,15 @@ class Controller extends Thread{
         DataTransmission report = new DataTransmission(mission, "telemetry", "Stage change request accepted", mission.spacecraft.getSpacecraftId(), this.getControllerId());
         sendDataTransmission(mission, report);
         eventLog.writeFile("Stage change request from " + mission.getMissionId() + " accepted");
-
     }
 
-
     private void checkTelemetry(DataTransmission dataTransmission) {
-        // Read telemetry content
         String content = dataTransmission.getContent();
         int i = content.indexOf(' ');
         String keyword = content.substring(0, i);
         Mission mission = dataTransmission.getMission();
         
-        
+        // Read content of telemetry to know what to do with it
         if (keyword.equals("SOS")){
             eventLog.writeFile("SOS request from " + mission.getMissionId() + " recieved");
             createSoftwareUpdate(mission);
@@ -105,8 +103,6 @@ class Controller extends Thread{
     }
 
     private void sendDataTransmission(Mission mission, DataTransmission dataTransmission) {
-        // Network network = mission.getControllerToSpacecraftNet();
-        // network.postFiles(dataTransmission);
         outbox.add(dataTransmission);   
         mission.spacecraft.recieveFile(dataTransmission);
     }
