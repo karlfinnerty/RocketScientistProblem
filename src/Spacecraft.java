@@ -1,3 +1,14 @@
+/*
+##########################################################################
+CA4006 - Rocket Scientist Problem
+Created by Paul Treanor and Karl Finnerty
+
+Description:
+	Contains components. Responsible for handling DataTransmissions
+	in a mission.
+
+##########################################################################
+*/
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;

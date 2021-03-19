@@ -1,5 +1,14 @@
-import java.util.Scanner;
+/*
+##########################################################################
+CA4006 - Rocket Scientist Problem
+Created by Paul Treanor and Karl Finnerty
 
+Description:
+	Allows user to interface with project via command line
+
+##########################################################################
+*/
+import java.util.Scanner;
 import physics.StarSystem;
 
 public class CLI {

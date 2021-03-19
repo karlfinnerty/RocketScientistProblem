@@ -1,3 +1,13 @@
+/*
+##########################################################################
+CA4006 - Rocket Scientist Problem
+Created by Paul Treanor and Karl Finnerty
+
+Description:
+	Class for instatiating bodies in solar system
+
+##########################################################################
+*/
 package physics;
 import java.lang.Math;
 // Cestial class is used to instiate any celestial body e.g. Earth, the Moon or Sol

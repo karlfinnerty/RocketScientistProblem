@@ -1,3 +1,13 @@
+/*
+##########################################################################
+CA4006 - Rocket Scientist Problem
+Created by Paul Treanor and Karl Finnerty
+
+Description:
+	Is a part of Spacecraft.
+
+##########################################################################
+*/
 import java.util.Random;
 
 public class Component{

@@ -1,3 +1,13 @@
+/*
+##########################################################################
+CA4006 - Rocket Scientist Problem
+Created by Paul Treanor and Karl Finnerty
+
+Description:
+	Manages resources for a mission.
+
+##########################################################################
+*/
 import java.lang.Math;
 import java.util.Random;
 import java.util.concurrent.Executors;

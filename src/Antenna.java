@@ -1,3 +1,13 @@
+/*
+##########################################################################
+CA4006 - Rocket Scientist Problem
+Created by Paul Treanor and Karl Finnerty
+
+Description:
+	Routes DataTranmission through appropriate connection
+
+##########################################################################
+*/
 import java.util.Random;
 
 public class Antenna{

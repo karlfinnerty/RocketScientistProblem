@@ -1,3 +1,13 @@
+/*
+##########################################################################
+CA4006 - Rocket Scientist Problem
+Created by Paul Treanor and Karl Finnerty
+
+Description:
+	Keeps track of all celestial bodies in system.
+
+##########################################################################
+*/
 package physics;
 
 import java.util.HashMap; 

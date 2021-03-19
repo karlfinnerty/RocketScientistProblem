@@ -1,3 +1,14 @@
+/*
+##########################################################################
+CA4006 - Rocket Scientist Problem
+Created by Paul Treanor and Karl Finnerty
+
+Description:
+	Extends vector for keeping track of celestial body positions.
+
+##########################################################################
+*/
+
 package physics;
 
 import java.lang.Math;
@@ -45,11 +56,4 @@ public class Spherical extends Vector{
 		double x4 = Math.cos(theta)*Math.cos(thetaPrime); 
 		return Math.sqrt(x1 - x2 * (x3 + x4));
 	}
-
-	
-	// Convert to cartesian co-ordinates vector
-	// x = r(sin(phi)cos(theta))
-	// y = r(sin(phi)sin(theta))
-	// z = r(cos(phi))
-
 }

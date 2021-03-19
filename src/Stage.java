@@ -1,4 +1,13 @@
-import java.time.Instant;
+/*
+##########################################################################
+CA4006 - Rocket Scientist Problem
+Created by Paul Treanor and Karl Finnerty
+
+Description:
+	Contains information on mission stages. Controls mission progress.
+
+##########################################################################
+*/
 import java.util.Random;
 
 public class Stage {
@@ -20,10 +29,9 @@ public class Stage {
 
     public double[] initDuration(){
         Random rand = new Random();
-        double prelaunch = 0;
-        double boost = 180 + rand.nextInt(1200);                       // Launch takes as little as 3 minutes and up to 23 minutes (random factors could be earths rotation, fragile payload etc)
-        double transit = this.mission.getTof();                        // Transit time is calculated at mission start by finding shortest possible travel time given the planetary positions and spacecraft acceleration 
-        double landing = 300 + rand.nextInt(3600);                     // Landing probably requires more time, slower descent, possbile delays due to atmospheric factors
+        double boost = 180 + rand.nextInt(1200);               // Launch takes as little as 3 minutes and up to 23 minutes (random factors could be earths rotation, fragile payload etc)
+        double transit = this.mission.getTof();                // Transit time is calculated at mission start by finding shortest possible travel time given the planetary positions and spacecraft acceleration 
+        double landing = 300 + rand.nextInt(3600);             // Landing probably requires more time, slower descent, possbile delays due to atmospheric factors
         double exploration = 157 + rand.nextInt(15768);        // Exploration ranges from 6 months to 5 years
 
         return new double[]{boost, transit, landing, exploration};
@@ -47,8 +55,6 @@ public class Stage {
                 } else{
                     didSWUpdateWork = true;
                 }
-                
-                
             }
         }
         else{

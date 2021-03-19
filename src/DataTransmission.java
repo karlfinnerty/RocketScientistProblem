@@ -1,3 +1,14 @@
+/*
+##########################################################################
+CA4006 - Rocket Scientist Problem
+Created by Paul Treanor and Karl Finnerty
+
+Description:
+	Encapsulates reports, telemetries and software updates that travel
+    through network.
+
+##########################################################################
+*/
 import java.util.Random;
 
 public class DataTransmission {

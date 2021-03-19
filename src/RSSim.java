@@ -1,10 +1,9 @@
 /*
 ##########################################################################
-This file is part of the CA4006 - Rocket Scientist Problem
+CA4006 - Rocket Scientist Problem
 Created by Paul Treanor and Karl Finnerty
-Subject to standard MIT License
 
-description:
+Description:
 	This class is at the top level of the class hierarchy and instantiates 
 	all classes required to run simulation.
 
@@ -16,7 +15,6 @@ import physics.StarSystem;
 import physics.Clock;
 import physics.Celestial;
 import physics.Spherical;
-import physics.Satellite;
 
 public class RSSim{
 	// Initialise solar system
@@ -43,7 +41,6 @@ public class RSSim{
 			149598262.0, 
 			149598262.0);
 
-		Satellite satellite = new Satellite(earth, 100, 100);
 		//Celestial luna = new Celestial(earth, new Vector(new double[]{1.002569, 0.0, 0.0}), 0.002569, 0.002569);
 		Celestial mars = new Celestial(
 			"mars", 

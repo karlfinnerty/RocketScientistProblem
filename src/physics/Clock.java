@@ -1,4 +1,13 @@
-// It's a clock - it keeps track of time
+/*
+##########################################################################
+CA4006 - Rocket Scientist Problem
+Created by Paul Treanor and Karl Finnerty
+
+Description:
+	Clock class for tracking simulation time
+
+##########################################################################
+*/
 package physics;
 
 public class Clock{

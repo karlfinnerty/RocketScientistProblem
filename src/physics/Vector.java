@@ -1,3 +1,13 @@
+/*
+##########################################################################
+CA4006 - Rocket Scientist Problem
+Created by Paul Treanor and Karl Finnerty
+
+Description:
+	Generic vector class.
+
+##########################################################################
+*/
 package physics;
 
 import java.lang.Math;

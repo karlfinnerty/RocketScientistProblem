@@ -1,3 +1,13 @@
+/*
+##########################################################################
+CA4006 - Rocket Scientist Problem
+Created by Paul Treanor and Karl Finnerty
+
+Description:
+	Puts DataTransmission in receiver's inbox.
+
+##########################################################################
+*/
 public class Connection {
     double availability;
     Integer bandwidth; //in bits 
