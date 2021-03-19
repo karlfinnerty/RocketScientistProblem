@@ -69,14 +69,14 @@ public class Spacecraft{
             // figure out what connection is needed 
             Connection choosenConnection = chooseConnection(dataTransmission);//this.highBWConnection;
             // calculate arrivalTime of dataTransmission
-            //dataTransmission.calculateArrivalTime(choosenConnection.bandwidth);
+            dataTransmission.calculateArrivalTime(choosenConnection.bandwidth);
             
             if (dataTransmission.arrivalTime < this.mission.clock.getTicks()){
                 eventLog.writeFile("Sending " + dataTransmission.getType() + " across network " + choosenConnection);
-                // Boolean connected = false;
-                // while(!connected){
-                //     connected = transmitAttempt(dataTransmission, choosenConnection);
-                // } 
+                Boolean connected = false;
+                while(!connected){
+                    connected = transmitAttempt(dataTransmission, choosenConnection);
+                } 
                 choosenConnection.sendFile(dataTransmission);
                 outbox.remove(dataTransmission);
             }
@@ -96,6 +96,18 @@ public class Spacecraft{
         }
         // Default
         return this.highBWConnection;
+    }
+
+	private Boolean transmitAttempt(DataTransmission dataTransmission, Connection connection) {
+        double chance = connection.availability;
+        // Decide if component will fail given a chance. 0.5 = 50% chance of failure, 0.1 = 10% chance
+		Random rand = new Random();
+		double failRandomNumber = rand.nextDouble();
+		if(failRandomNumber <= chance){
+			return true;
+		}
+        eventLog.writeFile(dataTransmission.toString() + " failed to send across network!");
+        return false;
     }
 
 	public void enqueueTransmit(String transmissionType, String content) throws InterruptedException{

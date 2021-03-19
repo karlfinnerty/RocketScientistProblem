@@ -10,9 +10,7 @@ public class Mission implements Runnable{
     String id;                  // Unique mission ID assigned by controller
     String name;                // Mission alias given by user
     Controller controller;      // Controller that created mission
-    Spacecraft spacecraft;      // Spacecraft assigned to mission by controller
-    Network controllerToSpacecraftNet;
-    Network spacecraftToControllerNet;        
+    Spacecraft spacecraft;      // Spacecraft assigned to mission by controller     
     Celestial source;           // Source location of mission
     Celestial destination;      // Destination location of mission
     Clock clock;                // 
@@ -170,14 +168,6 @@ public class Mission implements Runnable{
 
     public double getDistance(){
         return this.distance;
-    }
-
-    public Network getControllerToSpacecraftNet() {
-        return this.controllerToSpacecraftNet;
-    }
-
-    public Network getSpacecraftToControllerNet() {
-        return this.spacecraftToControllerNet;
     }
 
     // To simplify trajectory calculations, we will assume spacecraft use future technology that allows for constant acceleration, making the journey happen in as little time as possible
