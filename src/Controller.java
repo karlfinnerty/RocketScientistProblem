@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -20,9 +19,8 @@ class Controller extends Thread{
     // System.out.println(Runtime.getRuntime().availableProcessors()); // Amount of cores varies depending on intel architeure... 
     ThreadPoolExecutor missionExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
     Connection controllerConnection = new Connection(1.0, 16000000, this);
-    Connection lowBWConnection; 
-	Connection midBWConnection; 
-	Connection highBWConnection; 
+    
+    Antenna antenna;
 
     Controller(EventLog eventLog, StarSystem starSystem, Clock clock){
         this.missions = new ArrayList<Mission>();
@@ -32,10 +30,8 @@ class Controller extends Thread{
         this.solarSystem = starSystem;
         this.clock = clock;
         this.controllerId = "ground_control";
-        this.lowBWConnection = new Connection(0.999, 20, this); //20bits
-        this.midBWConnection = new Connection(0.9, 16000 , this); //2kb
-        this.highBWConnection = new Connection(0.8, 16000000 , this); //2mb
         
+        this.antenna = new Antenna(this, eventLog); 
     }   
 
     public void run(){
@@ -83,47 +79,9 @@ class Controller extends Thread{
     private void processOutboxItems(){
         for (DataTransmission dataTransmission : outbox) {
             // figure out what connection is needed 
-            Connection choosenConnection = chooseConnection(dataTransmission);
-            // calculate arrivalTime of dataTransmission
-            dataTransmission.calculateArrivalTime(choosenConnection.bandwidth);
-            
-            if (dataTransmission.arrivalTime < this.clock.getTicks()){
-                eventLog.writeFile("Sending " + dataTransmission.getType() + " across network " + choosenConnection);
-                Boolean connected = false;
-                while(!connected){
-                    connected = transmitAttempt(dataTransmission, choosenConnection);
-                } 
-                choosenConnection.sendFile(dataTransmission);
-                outbox.remove(dataTransmission);
-            }
+            antenna.runner(dataTransmission);
+            this.outbox.remove(dataTransmission);
         }
-    }
-
-    private Boolean transmitAttempt(DataTransmission dataTransmission, Connection connection) {
-        double chance = connection.availability;
-        // Decide if component will fail given a chance. 0.5 = 50% chance of failure, 0.1 = 10% chance
-		Random rand = new Random();
-		double failRandomNumber = rand.nextDouble();
-		if(failRandomNumber <= chance){
-			return true;
-		}
-        eventLog.writeFile(dataTransmission.toString() + " failed to send across network!");
-        return false;
-    }
-
-    private Connection chooseConnection(DataTransmission dataTransmission) {
-        // Small essential or small telemtries are sent across most reliable network
-        if (dataTransmission.getBitSize() < 8400){
-            return this.lowBWConnection;
-        }
-        if (dataTransmission.getType().equals("report") || dataTransmission.getType().equals("telemetry") || dataTransmission.getType().equals("stageChange")){
-            return this.midBWConnection;
-        }
-        if (dataTransmission.getType().equals("swUpdate")){
-            return this.highBWConnection;
-        }
-        // Default
-        return this.highBWConnection;
     }
 
 
