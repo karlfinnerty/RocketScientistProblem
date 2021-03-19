@@ -12,11 +12,13 @@ public class Connection {
     double availability;
     Integer bandwidth; //in bits 
     Controller controller;
+    String name;
 
     Connection(double d, Integer bandwidth, Controller controller) {
         this.availability = d;
         this.bandwidth = bandwidth;
         this.controller = controller;
+        this.name = getName();
     }
 
     public void sendFile(DataTransmission dataTransmission){
@@ -31,6 +33,10 @@ public class Connection {
     }
 
     public String toString(){
+        return this.name;
+    }
+
+    private String getName(){
         if (this.bandwidth == 20){
             return "Low Bandwidth";
         }

@@ -17,7 +17,7 @@ public class Antenna{
 	Connection highBWConnection;
     Controller controller;
 
-    Antenna(Controller controller, EventLog eventLog){
+    public Antenna(Controller controller, EventLog eventLog){
         this.controller = controller;
         this.eventLog = eventLog;
         this.lowBWConnection = new Connection(0.999, 20, controller); //20bits
@@ -27,11 +27,11 @@ public class Antenna{
 
     public void runner(DataTransmission dataTransmission){
         Connection choosenConnection = chooseConnection(dataTransmission);
-            // calculate arrivalTime of dataTransmission
+            // Calculate arrivalTime of dataTransmission
             dataTransmission.calculateArrivalTime(choosenConnection.bandwidth);
             
             if (dataTransmission.arrivalTime < controller.clock.getTicks()){
-                eventLog.writeFile("Sending " + dataTransmission.getType() + " across network " + choosenConnection);
+                eventLog.writeFile("Sending " + dataTransmission.getType() + " to " + dataTransmission.reciever +  "across network " + choosenConnection);
                 Boolean connected = false;
                 while(!connected){
                     connected = transmitAttempt(dataTransmission, choosenConnection);
@@ -42,7 +42,7 @@ public class Antenna{
 
     private Boolean transmitAttempt(DataTransmission dataTransmission, Connection connection) {
         double chance = connection.availability;
-        // Decide if component will fail given a chance. 0.5 = 50% chance of failure, 0.1 = 10% chance
+        // Decide if component will fail given a chance based off connection availability
 		Random rand = new Random();
 		double failRandomNumber = rand.nextDouble();
 		if(failRandomNumber <= chance){
@@ -53,14 +53,16 @@ public class Antenna{
     }
 
     private Connection chooseConnection(DataTransmission dataTransmission) {
-        // Small essential or small telemtries are sent across most reliable network
+        // Small telemtries are sent across most reliable network
+        String dataType = dataTransmission.getType();
         if (dataTransmission.getBitSize() < 8400){
             return this.lowBWConnection;
         }
-        if (dataTransmission.getType().equals("report") || dataTransmission.getType().equals("telemetry") || dataTransmission.getType().equals("stageChange")){
+        
+        if (dataType.equals("report") || dataType.equals("telemetry") || dataType.equals("stageChange")){
             return this.midBWConnection;
         }
-        if (dataTransmission.getType().equals("swUpdate")){
+        if (dataType.equals("swUpdate")){
             return this.highBWConnection;
         }
         // Default

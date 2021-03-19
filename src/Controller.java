@@ -17,9 +17,7 @@ class Controller extends Thread{
     int nextId = 0;
     boolean exec = true;
     // System.out.println(Runtime.getRuntime().availableProcessors()); // Amount of cores varies depending on intel architeure... 
-    ThreadPoolExecutor missionExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
-    Connection controllerConnection = new Connection(1.0, 16000000, this);
-    
+    ThreadPoolExecutor missionExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);    
     Antenna antenna;
 
     Controller(EventLog eventLog, StarSystem starSystem, Clock clock){
@@ -30,7 +28,6 @@ class Controller extends Thread{
         this.solarSystem = starSystem;
         this.clock = clock;
         this.controllerId = "ground_control";
-        
         this.antenna = new Antenna(this, eventLog); 
     }   
 
@@ -52,7 +49,6 @@ class Controller extends Thread{
                 clock.increment();
                 this.solarSystem.updatePositions();
             }
-            
             try{
                 Thread.sleep(clock.getDelay());
             } catch(InterruptedException e){
@@ -62,10 +58,12 @@ class Controller extends Thread{
         missionExecutor.shutdown();   
     }
 
-    // Decide what to do with inbox item
+    // Process inbox item
     private void readInboxItem(DataTransmission dataTransmission) {
         switch(dataTransmission.getType()){
             case "stageChange":
+                changeStage(dataTransmission);
+                break;
             case "telemetry":
                 this.checkTelemetry(dataTransmission);
                 break; 
@@ -84,19 +82,20 @@ class Controller extends Thread{
         }
     }
 
+    private void changeStage(DataTransmission dataTransmission){
+        Mission mission = dataTransmission.getMission();
+        DataTransmission report = new DataTransmission(mission, "telemetry", "Stage change request accepted", mission.spacecraft.getSpacecraftId(), this.getControllerId());
+        sendDataTransmission(mission, report);
+        eventLog.writeFile("Stage change request from " + mission.getMissionId() + " accepted");
+    }
 
     private void checkTelemetry(DataTransmission dataTransmission) {
-        // Read telemetry content
         String content = dataTransmission.getContent();
         int i = content.indexOf(' ');
         String keyword = content.substring(0, i);
         Mission mission = dataTransmission.getMission();
         
-        if (keyword.equals("Stage")){           // "Stage change request accepted"
-            DataTransmission report = new DataTransmission(mission, "telemetry", "Stage change request accepted", mission.spacecraft.getSpacecraftId(), this.getControllerId());
-            sendDataTransmission(mission, report);
-            eventLog.writeFile("Stage change request from " + mission.getMissionId() + " accepted");
-        }
+        // Read content of telemetry to know what to do with it
         if (keyword.equals("SOS")){
             eventLog.writeFile("SOS request from " + mission.getMissionId() + " recieved");
             createSoftwareUpdate(mission);
@@ -104,8 +103,6 @@ class Controller extends Thread{
     }
 
     private void sendDataTransmission(Mission mission, DataTransmission dataTransmission) {
-        // Network network = mission.getControllerToSpacecraftNet();
-        // network.postFiles(dataTransmission);
         outbox.add(dataTransmission);   
         mission.spacecraft.recieveFile(dataTransmission);
     }
