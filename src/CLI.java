@@ -23,6 +23,9 @@ public class CLI {
     }
 
     public boolean validDestination(String dest){
+        if(dest.equals("sol")){
+            return false;
+        }
         return this.solarSystem.getSystemObjects().containsKey(dest);
     }
 
@@ -81,7 +84,9 @@ public class CLI {
                     while(!validDestination(destination) && !destination.equals("cancel")){
                         System.out.print("Available destinations: ");
                         for(String planet : solarSystem.getSystemObjects().keySet()){
-                            System.out.print(planet + " ");
+                            if(!planet.equals("sol")){
+                                System.out.print(planet + " ");
+                            }
                         }
                         System.out.println("");
                         System.out.println("\nEnter mission destination:");
@@ -98,12 +103,13 @@ public class CLI {
                     break;
                 case "bm":
                 case "batch missions":
-                    theController.createMission("test", "mars");
-                    theController.createMission("test", "venus");
-                    theController.createMission("test", "mars");
-                    theController.createMission("test", "venus");
-                    theController.createMission("test", "mars");
-                    theController.createMission("test", "venus");
+                    theController.createMission("mission-mercury", "mercury");
+                    theController.createMission("mission-mars", "mars");
+                    theController.createMission("mission-venus", "venus");
+                    theController.createMission("mission-jupiter", "jupiter");
+                    theController.createMission("mission-saturn", "saturn");
+                    theController.createMission("mission-uranus", "uranus");
+                    theController.createMission("mission-neptune", "neptune");
                     break; 
                 case "ls":
                 case "list missions":
