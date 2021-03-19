@@ -2,22 +2,21 @@ public class Connection {
     double availability;
     Integer bandwidth; //in bits 
     Controller controller;
-    Mission mission;
 
-    Connection(double d, Integer bandwidth, Controller controller, Mission mission) {
+    Connection(double d, Integer bandwidth, Controller controller) {
         this.availability = d;
         this.bandwidth = bandwidth;
         this.controller = controller;
-        this.mission = mission;
     }
 
-    public void sendFile(DataTransmission dataTransmission) {       //send file will also be parameterised by Connection once those are set up              
+    public void sendFile(DataTransmission dataTransmission){
         String reciever = dataTransmission.getReciever();
-        if (reciever.equals(this.mission.spacecraft.getSpacecraftId())) {
-            this.mission.spacecraft.recieveFile(dataTransmission);
-        }
-        if (reciever.equals(this.mission.controller.getControllerId())) {
-            this.controller.recieveFile(dataTransmission);
+        String controllerId = this.controller.getControllerId();
+        if(reciever.equals(controllerId)){
+            // It is being sent to controller
+            this.controller.recieveFile(dataTransmission); 
+        } else {
+            dataTransmission.mission.spacecraft.recieveFile(dataTransmission);
         }
     }
 

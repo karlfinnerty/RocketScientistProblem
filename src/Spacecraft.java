@@ -11,12 +11,14 @@ public class Spacecraft{
 	LinkedBlockingQueue<DataTransmission> outbox = new LinkedBlockingQueue<DataTransmission>();
 	double distance;
 	double maxAcceleration;
+	Connection spacecraftConnection; 
 	//tranmsitQueue
 
 	public Spacecraft(Mission mission, EventLog eventLog){
 		this.mission = mission;
 		this.eventLog = eventLog;
 		this.id = "LE" + "-" + this.mission.getMissionId();
+		this.spacecraftConnection = new Connection(1.0, 16000000, mission.controller);
 	}
 
 	public String getSpacecraftId(){
@@ -55,6 +57,25 @@ public class Spacecraft{
 		}
 	}
 
+	public void processOutboxItems(){
+        for (DataTransmission dataTransmission : outbox) {
+            // figure out what connection is needed 
+            Connection choosenConnection = this.spacecraftConnection;
+            // calculate arrivalTime of dataTransmission
+            //dataTransmission.calculateArrivalTime(choosenConnection.bandwidth);
+            
+            if (dataTransmission.arrivalTime < this.mission.clock.getTicks()){
+                eventLog.writeFile("Sending " + dataTransmission.getType() + " across network " + choosenConnection);
+                // Boolean connected = false;
+                // while(!connected){
+                //     connected = transmitAttempt(dataTransmission, choosenConnection);
+                // } 
+                choosenConnection.sendFile(dataTransmission);
+                outbox.remove(dataTransmission);
+            }
+        }
+    }
+
 	public void enqueueTransmit(String transmissionType, String content) throws InterruptedException{
 		DataTransmission tx = new DataTransmission(
 			this.mission, 
@@ -68,6 +89,7 @@ public class Spacecraft{
 
 	public void sendDataTransmission(DataTransmission dataTransmission) {    
 		eventLog.writeFile(dataTransmission.toString());
+		outbox.add(dataTransmission);  
 		this.mission.controller.recieveFile(dataTransmission);
         // Network network = this.mission.getSpacecraftToControllerNet();
         // network.postFiles(dataTransmission);

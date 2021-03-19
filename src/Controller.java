@@ -11,20 +11,24 @@ class Controller extends Thread{
     ArrayList<Mission> missions;
     EventLog eventLog;
     LinkedBlockingQueue<DataTransmission> inbox;
+    LinkedBlockingQueue<DataTransmission> outbox;
     StarSystem solarSystem;
     Clock clock;
     int nextId = 0;
     boolean exec = true;
     // System.out.println(Runtime.getRuntime().availableProcessors()); // Amount of cores varies depending on intel architeure... 
     ThreadPoolExecutor missionExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
+    Connection controllerConnection = new Connection(1.0, 16000000, this);
 
     Controller(EventLog eventLog, StarSystem starSystem, Clock clock){
         this.missions = new ArrayList<Mission>();
         this.eventLog = eventLog;
         this.inbox = new LinkedBlockingQueue<DataTransmission>();
+        this.outbox = new LinkedBlockingQueue<DataTransmission>();
         this.solarSystem = starSystem;
         this.clock = clock;
         this.controllerId = "ground_control";
+
         
     }   
 
@@ -39,6 +43,10 @@ class Controller extends Thread{
                     // Pop item from queue
                     inbox.remove(dataTransmission);
                 }
+                if(outbox.size() > 0){
+                    processOutboxItems();
+                }
+                
                 clock.increment();
                 this.solarSystem.updatePositions();
             }
@@ -66,6 +74,25 @@ class Controller extends Thread{
         }
     }
 
+    private void processOutboxItems(){
+        for (DataTransmission dataTransmission : outbox) {
+            // figure out what connection is needed 
+            Connection choosenConnection = this.controllerConnection;
+            // calculate arrivalTime of dataTransmission
+            //dataTransmission.calculateArrivalTime(choosenConnection.bandwidth);
+            
+            if (dataTransmission.arrivalTime < this.clock.getTicks()){
+                eventLog.writeFile("Sending " + dataTransmission.getType() + " across network " + choosenConnection);
+                // Boolean connected = false;
+                // while(!connected){
+                //     connected = transmitAttempt(dataTransmission, choosenConnection);
+                // } 
+                choosenConnection.sendFile(dataTransmission);
+                outbox.remove(dataTransmission);
+            }
+        }
+    }
+
     private void checkTelemetry(DataTransmission dataTransmission) {
         // Read telemetry content
         String content = dataTransmission.getContent();
@@ -87,6 +114,7 @@ class Controller extends Thread{
     private void sendDataTransmission(Mission mission, DataTransmission dataTransmission) {
         // Network network = mission.getControllerToSpacecraftNet();
         // network.postFiles(dataTransmission);
+        outbox.add(dataTransmission);   
         mission.spacecraft.recieveFile(dataTransmission);
     }
 

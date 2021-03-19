@@ -48,10 +48,10 @@ public class Mission implements Runnable{
         this.eventLog = eventLog;
         this.stage = new Stage(this, eventLog);
         //mission creates two networks, one for connections from M to C, the other fro connections from C to M 
-        this.controllerToSpacecraftNet = new Network(controller, this, eventLog);
-        networkExecutor.execute(controllerToSpacecraftNet);
-        this.spacecraftToControllerNet = new Network(controller, this, eventLog);
-        networkExecutor.execute(spacecraftToControllerNet);
+        // this.controllerToSpacecraftNet = new Network(controller, this, eventLog);
+        // networkExecutor.execute(controllerToSpacecraftNet);
+        // this.spacecraftToControllerNet = new Network(controller, this, eventLog);
+        // networkExecutor.execute(spacecraftToControllerNet);
         this.missionComplete = false;
         this.missionFailed = false;
     }
@@ -105,6 +105,10 @@ public class Mission implements Runnable{
                 //System.out.println(destination);
                 // Check inbox
                 this.spacecraft.checkInbox();
+                if(this.spacecraft.outbox.size() > 0){
+                    this.spacecraft.processOutboxItems();
+                }
+                
                 // check stage duration
                 checkStageDuration();
             }
