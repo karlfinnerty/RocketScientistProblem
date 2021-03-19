@@ -69,38 +69,43 @@ public class RSSim{
 			4498396441.0, 
 			4498396441.0);
 
-		StarSystem solarSystem = new StarSystem(new Celestial[]{sol, earth, mars, venus, neptune}, clock);
+		Celestial mercury = new Celestial(
+			"mercury", 
+			sol, 
+			new Spherical(new double[]{57909227.0, 0.0, 0.0}), 
+			3.285 * Math.pow(10, 23), 
+			2439.0, 
+			57909227.0, 
+			57909227.0);
 
-		// // Do tests
-		// System.out.println("!!!!TEST START!!!!");
-		// System.out.println(earth.slDistance(sol));
-		// System.out.print("Earth speed(m/s): ");
-		// System.out.println(earth.coVelocity());
-		// System.out.print("Earth orbital period(days): ");
-		// System.out.println(earth.getOrbitalPeriod()/DAY);
-		// System.out.println();
-		// System.out.println("Satellite test: ");
-		// System.out.println(satellite.coVelocity());
-		// System.out.println(satellite.coOrbit());
-		// System.out.println();
-		// System.out.println("Earth stats at day 1: ");
-		// System.out.println(earth);
-		// System.out.println("Mars stats at day 1: ");
-		// System.out.println(mars);
-		// System.out.println();
+		Celestial jupiter = new Celestial(
+			"jupiter", 
+			sol, 
+			new Spherical(new double[]{778340821.0, 0.0, 0.0}), 
+			1.898 * Math.pow(10, 27), 
+			69911.0, 
+			778340821.0, 
+			778340821.0);
 
-		// for(int ticks=0; ticks<175; ticks++){
-		// 	earth.incrementAz(earth.getAngularVelocity()*DAY);
-		// 	//mars.incrementAz(mars.getAngularVelocity()*DAY);
-		// }
-		// mars.incrementAz(mars.getAngularVelocity()*DAY*175);
+		Celestial saturn = new Celestial(
+			"saturn", 
+			sol, 
+			new Spherical(new double[]{1426666422.0, 0.0, 0.0}), 
+			5.683 * Math.pow(10, 26), 
+			58232.0, 
+			1426666422.0, 
+			1426666422.0);
 
-		// System.out.println("Earth stats at day 175: ");
-		// System.out.println(earth);
-		// System.out.println("Mars stats at day 175: ");
-		// System.out.println(mars);
-		// System.out.println("!!!!TEST FINISH!!!!");
-		// System.out.println();
+		Celestial uranus = new Celestial(
+			"uranus", 
+			sol, 
+			new Spherical(new double[]{2870658186.0, 0.0, 0.0}), 
+			8.681  * Math.pow(10, 25), 
+			25362.0, 
+			2870658186.0, 
+			2870658186.0);
+		
+		StarSystem solarSystem = new StarSystem(new Celestial[]{sol, earth, mars, venus, neptune, mercury, jupiter, saturn, uranus}, clock);
 
 		// Initialise CLI
 		try{

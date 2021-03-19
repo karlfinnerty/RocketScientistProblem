@@ -79,6 +79,11 @@ public class CLI {
                     String name = userInput.nextLine().toLowerCase();
                     String destination = "none";
                     while(!validDestination(destination) && !destination.equals("cancel")){
+                        System.out.print("Available destinations: ");
+                        for(String planet : solarSystem.getSystemObjects().keySet()){
+                            System.out.print(planet + " ");
+                        }
+                        System.out.println("");
                         System.out.println("\nEnter mission destination:");
                         destination = userInput.nextLine().toLowerCase();
                         if(validDestination(destination)){
