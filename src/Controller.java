@@ -19,6 +19,9 @@ class Controller extends Thread{
     // System.out.println(Runtime.getRuntime().availableProcessors()); // Amount of cores varies depending on intel architeure... 
     ThreadPoolExecutor missionExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
     Connection controllerConnection = new Connection(1.0, 16000000, this);
+    Connection lowBWConnection; 
+	Connection midBWConnection; 
+	Connection highBWConnection; 
 
     Controller(EventLog eventLog, StarSystem starSystem, Clock clock){
         this.missions = new ArrayList<Mission>();
@@ -28,7 +31,9 @@ class Controller extends Thread{
         this.solarSystem = starSystem;
         this.clock = clock;
         this.controllerId = "ground_control";
-
+        this.lowBWConnection = new Connection(0.999, 20, this); //20bits
+        this.midBWConnection = new Connection(0.9, 16000 , this); //2kb
+        this.highBWConnection = new Connection(0.8, 16000000 , this); //2mb
         
     }   
 
@@ -77,7 +82,7 @@ class Controller extends Thread{
     private void processOutboxItems(){
         for (DataTransmission dataTransmission : outbox) {
             // figure out what connection is needed 
-            Connection choosenConnection = this.controllerConnection;
+            Connection choosenConnection = chooseConnection(dataTransmission);
             // calculate arrivalTime of dataTransmission
             //dataTransmission.calculateArrivalTime(choosenConnection.bandwidth);
             
@@ -92,6 +97,22 @@ class Controller extends Thread{
             }
         }
     }
+
+    private Connection chooseConnection(DataTransmission dataTransmission) {
+        // Small essential or small telemtries are sent across most reliable network
+        if (dataTransmission.getBitSize() < 8400){
+            return this.lowBWConnection;
+        }
+        if (dataTransmission.getType().equals("report") || dataTransmission.getType().equals("telemetry") || dataTransmission.getType().equals("stageChange")){
+            return this.midBWConnection;
+        }
+        if (dataTransmission.getType().equals("swUpdate")){
+            return this.highBWConnection;
+        }
+        // Default
+        return this.highBWConnection;
+    }
+
 
     private void checkTelemetry(DataTransmission dataTransmission) {
         // Read telemetry content

@@ -16,9 +16,9 @@ public class Network{
     //     this.buffer = new LinkedBlockingQueue<DataTransmission>(); ; 
     //     this.eventLog = eventLog;
     //     // Set up connections 
-    //     this.lowBWConnection = new Connection(0.999, 20, controller, mission); //20bits
-    //     this.midBWConnection = new Connection(0.9, 16000 , controller, mission); //2kb
-    //     this.highBWConnection = new Connection(0.8, 16000000 , controller, mission); //2mb
+        // this.lowBWConnection = new Connection(0.999, 20, controller, mission); //20bits
+        // this.midBWConnection = new Connection(0.9, 16000 , controller, mission); //2kb
+        // this.highBWConnection = new Connection(0.8, 16000000 , controller, mission); //2mb
     // }
 
     // public void run() {

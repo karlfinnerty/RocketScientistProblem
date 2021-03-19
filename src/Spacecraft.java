@@ -12,6 +12,10 @@ public class Spacecraft{
 	double distance;
 	double maxAcceleration;
 	Connection spacecraftConnection; 
+	Connection lowBWConnection; 
+	Connection midBWConnection; 
+	Connection highBWConnection; 
+
 	//tranmsitQueue
 
 	public Spacecraft(Mission mission, EventLog eventLog){
@@ -19,6 +23,9 @@ public class Spacecraft{
 		this.eventLog = eventLog;
 		this.id = "LE" + "-" + this.mission.getMissionId();
 		this.spacecraftConnection = new Connection(1.0, 16000000, mission.controller);
+		this.lowBWConnection = new Connection(0.999, 20, mission.controller); //20bits
+        this.midBWConnection = new Connection(0.9, 16000 , mission.controller); //2kb
+        this.highBWConnection = new Connection(0.8, 16000000 , mission.controller); //2mb
 	}
 
 	public String getSpacecraftId(){
@@ -60,7 +67,7 @@ public class Spacecraft{
 	public void processOutboxItems(){
         for (DataTransmission dataTransmission : outbox) {
             // figure out what connection is needed 
-            Connection choosenConnection = this.spacecraftConnection;
+            Connection choosenConnection = chooseConnection(dataTransmission);//this.highBWConnection;
             // calculate arrivalTime of dataTransmission
             //dataTransmission.calculateArrivalTime(choosenConnection.bandwidth);
             
@@ -74,6 +81,21 @@ public class Spacecraft{
                 outbox.remove(dataTransmission);
             }
         }
+    }
+
+	private Connection chooseConnection(DataTransmission dataTransmission) {
+        // Small essential or small telemtries are sent across most reliable network
+        if (dataTransmission.getBitSize() < 8400){
+            return this.lowBWConnection;
+        }
+        if (dataTransmission.getType().equals("report") || dataTransmission.getType().equals("telemetry") || dataTransmission.getType().equals("stageChange")){
+            return this.midBWConnection;
+        }
+        if (dataTransmission.getType().equals("swUpdate")){
+            return this.highBWConnection;
+        }
+        // Default
+        return this.highBWConnection;
     }
 
 	public void enqueueTransmit(String transmissionType, String content) throws InterruptedException{
