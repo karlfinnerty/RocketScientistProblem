@@ -27,6 +27,8 @@ public class Spacecraft{
 	Antenna antenna;
 	ThreadPoolExecutor componentExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
 	//tranmsitQueue
+	long [] reportSchedule;
+	int nReports = 0;
 
 	public Spacecraft(Mission mission, EventLog eventLog){
 		this.mission = mission;
@@ -37,7 +39,13 @@ public class Spacecraft{
 
 	public void initComponents(){
 		for(Component component : this.components.values()){
-			component.createReportSchedule();
+			this.reportSchedule = component.createReportSchedule();
+			componentExecutor.execute(component);
+		}
+	}
+
+	public void checkComponents(){
+		for(Component component : this.components.values()){
 			componentExecutor.execute(component);
 		}
 	}

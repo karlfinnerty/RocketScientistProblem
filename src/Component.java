@@ -16,7 +16,7 @@ public class Component implements Runnable{
 	boolean status;					// Indicate if component is working or broken
 	Spacecraft spacecraft; 			// Spacecraft components are located on
 	double quantity;					// quantity of contents of component where applicable e.g. fuel
-	long [] reportSchedule;
+	
 
 	public Component(String type, int id, double quantity, Spacecraft spacecraft){
 		this.type = type;
@@ -34,10 +34,10 @@ public class Component implements Runnable{
 		return this.type;
 	}
 
-	public void createReportSchedule(){
+	public long[] createReportSchedule(){
 		long initReport = 0;
 		long midReport = (long) this.spacecraft.mission.getTof()/2;
-		this.reportSchedule = new long[]{initReport, midReport};
+		return new long[]{initReport, midReport};
 	}
 
 	public void run(){
@@ -45,14 +45,13 @@ public class Component implements Runnable{
 		// int i = 0;
 		// System.out.println("COMPONENT RUN");
 		// while (i < reportSchedule.length){
-			// if(this.spacecraft.mission.controller.clock.getTicks() < reportSchedule[i] + this.spacecraft.mission.startTime){
-				try {
-					report();
-					//i++;
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			// }
+			// System.out.println("Time: " + this.spacecraft.mission.controller.clock.getTicks());
+			// System.out.println("Report: " + this.reportSchedule[nReports] + this.spacecraft.mission.startTime);
+			try {
+				report();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		// }
 	}
 

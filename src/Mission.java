@@ -108,6 +108,13 @@ public class Mission implements Runnable{
     public void run(){
         while (missionComplete==false && missionFailed==false){
             if(!this.clock.isPaused()){
+                if(this.spacecraft.nReports < this.spacecraft.reportSchedule.length){
+                    if (this.clock.getTicks() > this.spacecraft.reportSchedule[this.spacecraft.nReports] + this.spacecraft.mission.startTime ){
+                        spacecraft.checkComponents();
+                        this.spacecraft.nReports++;
+                    }
+                }
+                
                 //System.out.println(destination);
                 // Check inbox
                 this.spacecraft.checkInbox();
