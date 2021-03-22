@@ -11,7 +11,9 @@ Description:
 */
 import java.util.HashMap;
 import java.util.Random;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class Spacecraft{
 	String id;
@@ -23,6 +25,7 @@ public class Spacecraft{
 	double distance;
 	double maxAcceleration;
 	Antenna antenna;
+	ThreadPoolExecutor componentExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
 	//tranmsitQueue
 
 	public Spacecraft(Mission mission, EventLog eventLog){
@@ -30,6 +33,13 @@ public class Spacecraft{
 		this.eventLog = eventLog;
 		this.id = "LE" + "-" + this.mission.getMissionId();
 		this.antenna = new Antenna(mission.controller, eventLog);
+	}
+
+	public void initComponents(){
+		for(Component component : this.components.values()){
+			component.createReportSchedule();
+			componentExecutor.execute(component);
+		}
 	}
 
 	public String getSpacecraftId(){
@@ -46,6 +56,7 @@ public class Spacecraft{
 
 	public void addComponent(Component component){
 		this.components.put(component.getId(), component);
+		
 	}
 
 	public void createStageChangeRequest(){
@@ -75,16 +86,17 @@ public class Spacecraft{
         }
     }
 
-	public void enqueueTransmit(String transmissionType, String content) throws InterruptedException{
-		DataTransmission tx = new DataTransmission(
-			this.mission, 
-			transmissionType, 
-			content, 
-			this.mission.controller.getControllerId(), 
-			getSpacecraftId());
+	// public void enqueueTransmit(String transmissionType, String content) throws InterruptedException{
+		
+	// 	DataTransmission tx = new DataTransmission(
+	// 		this.mission, 
+	// 		transmissionType, 
+	// 		content, 
+	// 		this.mission.controller.getControllerId(), 
+	// 		getSpacecraftId());
 
-		this.outbox.put(tx);
-	}
+	// 	this.outbox.put(tx);
+	// }
 
 	public void sendDataTransmission(DataTransmission dataTransmission) {    
 		eventLog.writeFile(dataTransmission.toString());

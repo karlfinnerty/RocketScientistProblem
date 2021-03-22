@@ -37,7 +37,8 @@ public class Mission implements Runnable{
     Boolean missionComplete;
     Boolean stageChangeRequest = false;
     Boolean missionFailed;
-    ThreadPoolExecutor networkExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
+    //ThreadPoolExecutor networkExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
+    
 
     Mission(Controller controller, String id, String name, Celestial source, Celestial destination, Clock clock, EventLog eventLog){
         this.id = id;
@@ -46,17 +47,18 @@ public class Mission implements Runnable{
         this.source = source;
         this.destination = destination;
         this.clock = clock;
+        this.startTime = clock.getTicks();
+        this.eventLog = eventLog;
+        this.stage = new Stage(this, eventLog);
+        this.missionComplete = false;
+        this.missionFailed = false;
         this.spacecraft = new Spacecraft(this, eventLog);
         buildSpacecraft(this.spacecraft);
         double flightParams[] = brachistochroneTrajectory(this.source, this.destination, this.spacecraft);
         this.tof = flightParams[0];
         this.distance = flightParams[1];
         assignFuel(spacecraft, tof);
-        this.startTime = clock.getTicks();
-        this.eventLog = eventLog;
-        this.stage = new Stage(this, eventLog);
-        this.missionComplete = false;
-        this.missionFailed = false;
+        this.spacecraft.initComponents();
         
     }
 
@@ -79,19 +81,19 @@ public class Mission implements Runnable{
         int power = 2 + rand.nextInt(3);            // 1 power plant for spacecraft, 1 for rover, and a random number of backup plants
 
         for(int i = 0; i < thruster; i++){
-            spacecraft.addComponent(new Component("thruster", i, 0));
+            spacecraft.addComponent(new Component("thruster", i, 0, spacecraft));
         }
 
         for(int i = 0; i < control; i++){
-            spacecraft.addComponent(new Component("control", i, 0));
+            spacecraft.addComponent(new Component("control", i, 0, spacecraft));
         }
 
         for(int i = 0; i < instrument; i++){
-            spacecraft.addComponent(new Component("instrument", i, 0));
+            spacecraft.addComponent(new Component("instrument", i, 0, spacecraft));
         }
 
         for(int i = 0; i < power; i++){
-            spacecraft.addComponent(new Component("power", i, 0));
+            spacecraft.addComponent(new Component("power", i, 0, spacecraft));
         }
 
     }
@@ -99,7 +101,7 @@ public class Mission implements Runnable{
     // Make the assumption that amount of fuel required is 1 per G of acceleration per second
     public void assignFuel(Spacecraft spacecraft, double tof){
         double fuel = tof*spacecraft.getAcceleration();
-        spacecraft.addComponent(new Component("fuel", 0, fuel));
+        spacecraft.addComponent(new Component("fuel", 0, fuel, spacecraft));
     }
 
     // Do the mission stuff
@@ -127,6 +129,7 @@ public class Mission implements Runnable{
         }else{
             eventLog.writeFile(this.id + " has failed :(");
         }
+        spacecraft.componentExecutor.shutdown();
         
     }
 
